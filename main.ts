@@ -304,7 +304,7 @@ namespace kitronik_ec_board {
 	 * @param numZips number of leds in the strip, eg: 60
      */
     //% subcategory="ZIP LEDs"
-    //% blockId="kitronik_ec_board_display_create" block="to Halo HD with %numZips|ZIP LEDs"
+    //% blockId="kitronik_ec_board_display_create" block="to EC Board ZIP LEDs"
     //% weight=100 blockGap=8
     //% trackArgs=0,2
     //% blockSetVariable=statusLEDs
@@ -312,7 +312,7 @@ namespace kitronik_ec_board {
         let statusLEDs = new ecZIPLEDs;
         statusLEDs.buf = pins.createBuffer(numZips * 3);
         statusLEDs.start = 0;
-        statusLEDs._length = numZips;
+        statusLEDs._length = 3;
         statusLEDs.setBrightness(128)
         statusLEDs.pin = DigitalPin.P8;
         pins.digitalWritePin(statusLEDs.pin, 0);
