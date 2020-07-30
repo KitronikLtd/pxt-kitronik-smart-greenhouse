@@ -60,7 +60,7 @@ enum DateParameter {
  * Kitronik ENVIRONMENTAL CONTROL BOARD (CHANGE NAME) MakeCode Package
  */
 
-//% weight=100 color=#00A654 icon="\uf111" block="EC Board"
+//% weight=100 color=#00A654 icon="\uf06c" block="EC Board"
 //% groups='["Set Time", "Set Date", "Read Time", "Read Date", "Alarm", "Servo", "General Inputs/Outputs", "High Power Outputs"]'
 namespace kitronik_ec_board {
     ////////////////////////////////
