@@ -1131,7 +1131,7 @@ namespace kitronik_ec_board {
     /**
      * High Power Output pin options
      */
-    enum HighPowerPins {
+    export enum HighPowerPins {
         //% block=P13
         pin13 = 13,
         //% block=P14
@@ -1161,7 +1161,7 @@ namespace kitronik_ec_board {
     //% blockId=kitronik_ec_board_high_power_on_off 
     //% block="turn %pin|%output=on_off_toggle"
     //% weight=95 blockGap=8
-    export function controlHighPowerPin(pin: HighPowerPins, output: boolean) {
+    export function controlHighPowerPin(pin: kitronik_ec_board.HighPowerPins, output: boolean) {
         if (pin == 13) {
             if (output == true) {
                 pins.digitalWritePin(DigitalPin.P13, 1)
@@ -1186,6 +1186,7 @@ namespace kitronik_ec_board {
     //% blockId=on_off_toggle
     //% block="$on"
     //% on.shadow="toggleOnOff"
+    //% blockHidden=true
     export function onOff(on: boolean): boolean {
         return on;
     }
