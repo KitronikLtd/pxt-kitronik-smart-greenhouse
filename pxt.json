@@ -2,7 +2,8 @@
     "name": "pxt-kitronik-ec-board",
     "dependencies": {
         "core": "*",
-        "radio": "*"
+        "ws2812b": "github:KitronikLtd/pxt-ws2812b#v0.0.5",
+        "kitronik_RTC": "github:KitronikLtd/pxt-kitronik-rtc-base#v0.0.12"
     },
     "files": [
         "README.md",
@@ -15,5 +16,14 @@
     "supportedTargets": [
         "microbit"
     ],
-    "preferredEditor": "blocksprj"
+    "preferredEditor": "tsprj",
+    "yotta": {
+        "config": {
+            "microbit-dal": {
+                "bluetooth": {
+                    "enabled": 0
+                }
+            }
+        }
+    }
 }
