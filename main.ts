@@ -61,7 +61,7 @@ enum DateParameter {
  */
 
 //% weight=100 color=#00A654 icon="\uf111" block="EC Board"
-//% groups='["Set Time", "Set Date", "Read Time", "Read Date", "Alarm"]'
+//% groups='["Set Time", "Set Date", "Read Time", "Read Date", "Alarm", "Servo", "IO Pins", "High Power Outputs"]'
 namespace kitronik_ec_board {
     ////////////////////////////////
     //           MUSIC            //
@@ -1062,6 +1062,7 @@ namespace kitronik_ec_board {
 	* Read Pressure from sensor as Number.
 	* Units for pressure are in Pa (Pascals) or mBar (millibar) according to selection
 	*/
+    //% subcategory="Sensors"
     //% blockId=kitronik_ec_board_read_pressure
     //% block="Read Pressure in %pressure_unit"
     //% weight=85 blockGap=8
@@ -1085,6 +1086,7 @@ namespace kitronik_ec_board {
 	* Read Temperature from sensor as Number.
 	* Units for temperature are in °C (Celsius) or °F (Fahrenheit) according to selection
 	*/
+    //% subcategory="Sensors"
     //% blockId="kitronik_ec_board_read_temperature"
     //% block="Read Temperature in %temperature_unit"
     //% weight=80 blockGap=8
@@ -1108,6 +1110,7 @@ namespace kitronik_ec_board {
 	* Read Humidity from sensor as Number.
 	* Units for humidity are as a percentage
 	*/
+    //% subcategory="Sensors"
     //% blockId=kitronik_ec_board_read_humidity
     //% block="Read Humidity"
     //% weight=75 blockGap=8
@@ -1122,6 +1125,69 @@ namespace kitronik_ec_board {
     }    
 
     ////////////////////////////////
-    //        PIN OUTPUTS         //
+    //     PIN INPUT/OUTPUTS      //
     ////////////////////////////////
+
+    /**
+     * High Power Output pin options
+     */
+    enum HighPowerPins {
+        //% block=P13
+        pin13 = 13,
+        //% block=P14
+        pin14 = 14
+    }
+
+    /**
+     * Control the servo output
+     * @param angle to set the servo
+     */
+    //% subcategory="Inputs/Outputs"
+    //% group=Servo
+    //% blockId=kitronik_ec_board_servo_write 
+    //% block="set servo to %angle|degrees"
+    //% weight=100 blockGap=8
+    export function servoWrite(angle: number): void {
+        pins.servoWritePin(AnalogPin.P15, angle)
+    }
+
+    /**
+     * Turn high power outputs on and off
+     * @param pin which high power output pin to control
+     * @param output is the boolean output of the pin, either ON or OFF
+     */
+    //% subcategory="Inputs/Outputs"
+    //% group="High Power Outputs"
+    //% blockId=kitronik_ec_board_high_power_on_off 
+    //% block="turn %pin|%output=on_off_toggle"
+    //% weight=95 blockGap=8
+    export function controlHighPowerPin(pin: HighPowerPins, output: boolean) {
+        if (pin == 13) {
+            if (output == true) {
+                pins.digitalWritePin(DigitalPin.P13, 1)
+            }
+            else {
+                pins.digitalWritePin(DigitalPin.P13, 0)
+            }
+        }
+        else if (pin == 14) {
+            if (output == true) {
+                pins.digitalWritePin(DigitalPin.P14, 1)
+            }
+            else {
+                pins.digitalWritePin(DigitalPin.P14, 0)
+            }
+        }
+    }
+
+    /**
+     * Render a boolean as a on/off toggle
+     */
+    //% blockId=on_off_toggle
+    //% block="$on"
+    //% on.shadow="toggleOnOff"
+    export function onOff(on: boolean): boolean {
+        return on;
+    }
+
 } 
