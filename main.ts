@@ -61,7 +61,7 @@ enum DateParameter {
  */
 
 //% weight=100 color=#00A654 icon="\uf111" block="EC Board"
-//% groups='["Set Time", "Set Date", "Read Time", "Read Date", "Alarm", "Servo", "IO Pins", "High Power Outputs"]'
+//% groups='["Set Time", "Set Date", "Read Time", "Read Date", "Alarm", "Servo", "General Inputs/Outputs", "High Power Outputs"]'
 namespace kitronik_ec_board {
     ////////////////////////////////
     //           MUSIC            //
@@ -1129,6 +1129,28 @@ namespace kitronik_ec_board {
     ////////////////////////////////
 
     /**
+     * General IO pin type
+     */
+    export enum PinType {
+        //% block=Analog
+        analog = 0,
+        //% block=Digital
+        digital = 1
+    }
+
+    /**
+     * General IO pins
+     */
+    export enum IOPins {
+        //% block=P0
+        p0 = 0,
+        //% block=P1
+        p1 = 1,
+        //% block=P2
+        p2 = 2
+    }
+
+    /**
      * High Power Output pin options
      */
     export enum HighPowerPins {
@@ -1145,10 +1167,97 @@ namespace kitronik_ec_board {
     //% subcategory="Inputs/Outputs"
     //% group=Servo
     //% blockId=kitronik_ec_board_servo_write 
-    //% block="set servo to %angle|degrees"
+    //% block="set servo to $angle|degrees"
+    //% angle.shadow="protractorPicker"
     //% weight=100 blockGap=8
     export function servoWrite(angle: number): void {
         pins.servoWritePin(AnalogPin.P15, angle)
+    }
+
+    /**
+     * Read value from IO pins, either Digital or Analog
+     * @param readType is either Digital or Analog
+     * @param pin which IO pin to read
+     */
+    //% subcategory="Inputs/Outputs"
+    //% group="General Inputs/Outputs"
+    //% blockId=kitronik_ec_board_read_io_pins 
+    //% block="%readType|read %pin"
+    //% weight=95 blockGap=8
+    export function readIOPin(readType: kitronik_ec_board.PinType, pin: kitronik_ec_board.IOPins): number {
+        let readValue = 0
+        if (pin == 0) {
+            if (readType == 0) {
+                readValue = pins.analogReadPin(AnalogPin.P0)
+            }
+            else if (readType == 1) {
+                readValue = pins.digitalReadPin(DigitalPin.P0)
+            }
+        }
+        else if (pin == 1) {
+            if (readType == 0) {
+                readValue = pins.analogReadPin(AnalogPin.P1)
+            }
+            else if (readType == 1) {
+                readValue = pins.digitalReadPin(DigitalPin.P1)
+            }
+        }
+        else if (pin == 2) {
+            if (readType == 0) {
+                readValue = pins.analogReadPin(AnalogPin.P2)
+            }
+            else if (readType == 1) {
+                readValue = pins.digitalReadPin(DigitalPin.P2)
+            }
+        }
+
+        return readValue
+    }
+
+    /**
+     * Digital write value to IO pins
+     * @param pin which IO pin to read
+     * @param value to write to the pin, eg: 0
+     */
+    //% subcategory="Inputs/Outputs"
+    //% group="General Inputs/Outputs"
+    //% blockId=kitronik_ec_board_digital_write_io_pins 
+    //% block="digital write pin %pin|to %value"
+    //% value.min=0 value.max=1
+    //% weight=90 blockGap=8
+    export function digitalWriteIOPin(pin: kitronik_ec_board.IOPins, value: number): void {
+        if (pin == 0) {
+            pins.digitalWritePin(DigitalPin.P0, value)
+        }
+        else if (pin == 1) {
+            pins.digitalWritePin(DigitalPin.P1, value)
+        }
+        else if (pin == 2) {
+            pins.digitalWritePin(DigitalPin.P2, value)
+        }
+    }
+
+    /**
+     * Analog write value to IO pins
+     * @param pin which IO pin to read
+     * @param value to write to the pin, eg: 1023
+     */
+    //% subcategory="Inputs/Outputs"
+    //% group="General Inputs/Outputs"
+    //% blockId=kitronik_ec_board_analog_write_io_pins 
+    //% block="analog write pin %pin|to %value"
+    //% value.min=0 value.max=1023
+    //% weight=85 blockGap=8
+    export function analogWriteIOPin(pin: kitronik_ec_board.IOPins, value: number): void {
+        if (pin == 0) {
+            pins.analogWritePin(AnalogPin.P0, value)
+        }
+        else if (pin == 1) {
+            pins.analogWritePin(AnalogPin.P1, value)
+        }
+        else if (pin == 2) {
+            pins.analogWritePin(AnalogPin.P2, value)
+        }
     }
 
     /**
@@ -1159,9 +1268,9 @@ namespace kitronik_ec_board {
     //% subcategory="Inputs/Outputs"
     //% group="High Power Outputs"
     //% blockId=kitronik_ec_board_high_power_on_off 
-    //% block="turn %pin|%output=on_off_toggle"
-    //% weight=95 blockGap=8
-    export function controlHighPowerPin(pin: kitronik_ec_board.HighPowerPins, output: boolean) {
+    //% block="turn high power %pin|%output=on_off_toggle"
+    //% weight=80 blockGap=8
+    export function controlHighPowerPin(pin: kitronik_ec_board.HighPowerPins, output: boolean): void {
         if (pin == 13) {
             if (output == true) {
                 pins.digitalWritePin(DigitalPin.P13, 1)
