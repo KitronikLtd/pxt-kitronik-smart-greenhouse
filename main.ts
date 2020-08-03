@@ -300,17 +300,16 @@ namespace kitronik_ec_board {
     }
 
     /**
-     * Create a new ZIP LED driver for ZIP Halo Display.
-	 * @param numZips number of leds in the strip, eg: 60
+     * Create a new ZIP LED driver for EC Board (the 3 onboard ZIP LEDs).
      */
     //% subcategory="ZIP LEDs"
     //% blockId="kitronik_ec_board_display_create" block="to EC Board ZIP LEDs"
     //% weight=100 blockGap=8
     //% trackArgs=0,2
     //% blockSetVariable=statusLEDs
-    export function createECZIPDisplay(numZips: number): ecZIPLEDs {
+    export function createECZIPDisplay(): ecZIPLEDs {
         let statusLEDs = new ecZIPLEDs;
-        statusLEDs.buf = pins.createBuffer(numZips * 3);
+        statusLEDs.buf = pins.createBuffer(3 * 3);
         statusLEDs.start = 0;
         statusLEDs._length = 3;
         statusLEDs.setBrightness(128)
