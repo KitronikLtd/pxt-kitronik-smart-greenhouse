@@ -173,17 +173,13 @@ namespace kitronik_ec_board {
         }
 
         /** 
-         * Create a range of LEDs.
-         * @param start offset in the LED strip to start the range
-         * @param length number of LEDs in the range. eg: 2
+         * Create a range for the on-board Status LEDs.
          */
         //% subcategory="ZIP LEDs"
-        //% weight=89 blockGap=8
+        //% weight=99 blockGap=8
         //% blockId="kitronik_ec_board_status_leds_range" block="%zipLEDs|range from 0 with 3 LEDs"
         //% blockSetVariable=statusLEDs
-        statusLedsRange(start: number, length: number): ecZIPLEDs {
-            start = start >> 0;
-            length = length >> 0;
+        statusLedsRange(): ecZIPLEDs {
             let statusLEDs = new ecZIPLEDs();
             statusLEDs.buf = this.buf;
             statusLEDs.pin = this.pin;
@@ -193,6 +189,23 @@ namespace kitronik_ec_board {
             return statusLEDs;
         }
 
+        /** 
+         * Create a range for the external ZIP Stick LEDs.
+         */
+        //% subcategory="ZIP LEDs"
+        //% weight=98 blockGap=8
+        //% blockId="kitronik_ec_board_zip_stick_range" block="%zipLEDs|range from 3 with 5 LEDs"
+        //% blockSetVariable=zipStick
+        zipStickRange(): ecZIPLEDs {
+            let zipStick = new ecZIPLEDs();
+            zipStick.buf = this.buf;
+            zipStick.pin = this.pin;
+            zipStick.brightness = this.brightness;
+            zipStick.start = this.start + Math.clamp(0, this._length - 1, 3);
+            zipStick._length = Math.clamp(0, this._length - (zipStick.start - this.start), 5);
+            return zipStick;
+        }
+
         /**
          * Rotate LEDs forward.
          * You need to call ``show`` to make the changes visible.
@@ -200,7 +213,7 @@ namespace kitronik_ec_board {
          */
         //% subcategory="ZIP LEDs"
         //% blockId="kitronik_ec_board_display_rotate" block="%zipLEDs|rotate ZIP LEDs by %offset" blockGap=8
-        //% weight=93
+        //% weight=92
         rotate(offset: number = 1): void {
             this.buf.rotate(-offset * 3, this.start * 3, this._length * 3)
         }
@@ -210,7 +223,7 @@ namespace kitronik_ec_board {
          */
         //% subcategory="ZIP LEDs"
         //% blockId="kitronik_ec_board_display_only_set_strip_color" block="%zipLEDs|set color %rgb=kitronik_ec_board_colors" 
-        //% weight=99 blockGap=8
+        //% weight=96 blockGap=8
         setColor(rgb: number) {
         	rgb = rgb >> 0;
             this.setAllRGB(rgb);
@@ -221,7 +234,7 @@ namespace kitronik_ec_board {
          */
         //% subcategory="ZIP LEDs"
         //% blockId="kitronik_ec_board_display_set_strip_color" block="%zipLEDs|show color %rgb=kitronik_ec_board_colors" 
-        //% weight=99 blockGap=8
+        //% weight=97 blockGap=8
         showColor(rgb: number) {
         	rgb = rgb >> 0;
             this.setAllRGB(rgb);
@@ -236,7 +249,7 @@ namespace kitronik_ec_board {
          */
         //% subcategory="ZIP LEDs"
         //% blockId="kitronik_ec_board_set_zip_color" block="%zipLEDs|set ZIP LED %zipLedNum|to %rgb=kitronik_ec_board_colors" 
-        //% weight=98 blockGap=8
+        //% weight=95 blockGap=8
         setZipLedColor(zipLedNum: number, rgb: number): void {
             this.setPixelRGB(zipLedNum >> 0, rgb >> 0);
         }
@@ -246,7 +259,7 @@ namespace kitronik_ec_board {
          */
         //% subcategory="ZIP LEDs"
         //% blockId="kitronik_ec_board_display_show" block="%zipLEDs|show" blockGap=8
-        //% weight=96
+        //% weight=94
         show() {
             //use the Kitronik version which respects brightness for all 
             ws2812b.sendBuffer(this.buf, this.pin, this.brightness);
@@ -258,7 +271,7 @@ namespace kitronik_ec_board {
          */
         //% subcategory="ZIP LEDs"
         //% blockId="kitronik_ec_board_display_clear" block="%zipLEDs|clear"
-        //% weight=95 blockGap=8
+        //% weight=93 blockGap=8
         clear(): void {
             this.buf.fill(0, this.start * 3, this._length * 3);
         }
@@ -269,7 +282,7 @@ namespace kitronik_ec_board {
          */
         //% subcategory="ZIP LEDs"
         //% blockId="kitronik_ec_board_display_set_brightness" block="%zipLEDs|set brightness %brightness" blockGap=8
-        //% weight=92
+        //% weight=91
         //% brightness.min=0 brightness.max=255
         setBrightness(brightness: number): void {
             //Clamp incoming variable at 0-255 as values out of this range cause unexpected brightnesses as the lower level code only expects a byte.
