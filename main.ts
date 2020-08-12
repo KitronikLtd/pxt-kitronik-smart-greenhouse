@@ -1303,7 +1303,7 @@ namespace kitronik_ec_board {
     //% subcategory="Inputs/Outputs"
     //% group="High Power Outputs"
     //% blockId=kitronik_ec_board_high_power_on_off 
-    //% block="turn high power %pin|%output=on_off_toggle| || with %dutyCycle|% duty cycle"
+    //% block="turn high power %pin|%output=on_off_toggle||with duty cycle %dutyCycle"
     //% expandableArgumentMode="toggle"
     //% weight=80 blockGap=8
     export function controlHighPowerPin(pin: kitronik_ec_board.HighPowerPins, output: boolean, dutyCycle: number = 100): void {
