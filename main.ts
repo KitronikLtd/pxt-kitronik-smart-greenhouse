@@ -1298,16 +1298,23 @@ namespace kitronik_ec_board {
      * Turn high power outputs on and off
      * @param pin which high power output pin to control
      * @param output is the boolean output of the pin, either ON or OFF
+     * @param dutyCycle is an optional parameter to set the duty cycle for the pin eg: 50
      */
     //% subcategory="Inputs/Outputs"
     //% group="High Power Outputs"
     //% blockId=kitronik_ec_board_high_power_on_off 
-    //% block="turn high power %pin|%output=on_off_toggle"
+    //% block="turn high power %pin|%output=on_off_toggle || with %dutyCycle|% duty cycle"
     //% weight=80 blockGap=8
-    export function controlHighPowerPin(pin: kitronik_ec_board.HighPowerPins, output: boolean): void {
+    export function controlHighPowerPin(pin: kitronik_ec_board.HighPowerPins, output: boolean, dutyCycle: number = 100): void {
         if (pin == 13) {
             if (output == true) {
-                pins.digitalWritePin(DigitalPin.P13, 1)
+                if (dutyCycle != 100) {
+                    let pin13Analog = dutyCycle * (1023/100)
+                    pins.analogWritePin(AnalogPin.P13, pin13Analog)
+                }
+                else {
+                    pins.digitalWritePin(DigitalPin.P13, 1)
+                }
             }
             else {
                 pins.digitalWritePin(DigitalPin.P13, 0)
@@ -1315,7 +1322,14 @@ namespace kitronik_ec_board {
         }
         else if (pin == 14) {
             if (output == true) {
-                pins.digitalWritePin(DigitalPin.P14, 1)
+                if (dutyCycle != 100) {
+                    let pin14Analog = dutyCycle * (1023/100)
+                    pins.analogWritePin(AnalogPin.P14, pin14Analog)
+                }
+                else {
+                    pins.digitalWritePin(DigitalPin.P14, 1)
+                }
+                
             }
             else {
                 pins.digitalWritePin(DigitalPin.P14, 0)
@@ -1324,7 +1338,7 @@ namespace kitronik_ec_board {
     }
 
     /**
-     * Render a boolean as a on/off toggle
+     * Render a boolean as an on/off toggle
      */
     //% blockId=on_off_toggle
     //% block="$on"
