@@ -93,7 +93,7 @@ namespace kitronik_ec_board {
          * @param endHue the end hue value for the rainbow, eg: 360
          */
         //% subcategory="ZIP LEDs"
-        //% blockId="kitronik_ec_board_rainbow" block="%statusLEDs|show rainbow from %startHue|to %endHue" 
+        //% blockId="kitronik_ec_board_rainbow" block="%zipLEDs|show rainbow from %startHue|to %endHue" 
         //% weight=94 blockGap=8
         showRainbow(startHue: number = 1, endHue: number = 360) {
             if (this._length <= 0) return;
@@ -152,23 +152,44 @@ namespace kitronik_ec_board {
             this.show();
         }
 
-		 /** 
+		/** 
          * Create a range of LEDs.
          * @param start offset in the LED strip to start the range
-         * @param length number of LEDs in the range. eg: 4
+         * @param length number of LEDs in the range. eg: 2
          */
         //% subcategory="ZIP LEDs"
         //% weight=89 blockGap=8
-        //% blockId="kitronik_ec_board_range" block="%statusLEDs|range from %start|with %length|leds"
+        //% blockId="kitronik_ec_board_range" block="%zipLEDs|range from %start|with %length|LEDs"
         range(start: number, length: number): ecZIPLEDs {
+            start = start >> 0;
+            length = length >> 0;
+            let zipLEDs = new ecZIPLEDs();
+            zipLEDs.buf = this.buf;
+            zipLEDs.pin = this.pin;
+            zipLEDs.brightness = this.brightness;
+            zipLEDs.start = this.start + Math.clamp(0, this._length - 1, start);
+            zipLEDs._length = Math.clamp(0, this._length - (zipLEDs.start - this.start), length);
+            return zipLEDs;
+        }
+
+        /** 
+         * Create a range of LEDs.
+         * @param start offset in the LED strip to start the range
+         * @param length number of LEDs in the range. eg: 2
+         */
+        //% subcategory="ZIP LEDs"
+        //% weight=89 blockGap=8
+        //% blockId="kitronik_ec_board_range" block="%zipLEDs|range from 0 with 3 LEDs"
+        //% blockSetVariable=statusLEDs
+        statusLedsRange(start: number, length: number): ecZIPLEDs {
             start = start >> 0;
             length = length >> 0;
             let statusLEDs = new ecZIPLEDs();
             statusLEDs.buf = this.buf;
             statusLEDs.pin = this.pin;
             statusLEDs.brightness = this.brightness;
-            statusLEDs.start = this.start + Math.clamp(0, this._length - 1, start);
-            statusLEDs._length = Math.clamp(0, this._length - (statusLEDs.start - this.start), length);
+            statusLEDs.start = this.start + Math.clamp(0, this._length - 1, 0);
+            statusLEDs._length = Math.clamp(0, this._length - (statusLEDs.start - this.start), 3);
             return statusLEDs;
         }
 
@@ -178,7 +199,7 @@ namespace kitronik_ec_board {
          * @param offset number of ZIP LEDs to rotate forward, eg: 1
          */
         //% subcategory="ZIP LEDs"
-        //% blockId="kitronik_ec_board_display_rotate" block="%statusLEDs|rotate ZIP LEDs by %offset" blockGap=8
+        //% blockId="kitronik_ec_board_display_rotate" block="%zipLEDs|rotate ZIP LEDs by %offset" blockGap=8
         //% weight=93
         rotate(offset: number = 1): void {
             this.buf.rotate(-offset * 3, this.start * 3, this._length * 3)
@@ -188,7 +209,7 @@ namespace kitronik_ec_board {
          * @param rgb RGB color of the LED
          */
         //% subcategory="ZIP LEDs"
-        //% blockId="kitronik_ec_board_display_only_set_strip_color" block="%statusLEDs|set color %rgb=kitronik_ec_board_colors" 
+        //% blockId="kitronik_ec_board_display_only_set_strip_color" block="%zipLEDs|set color %rgb=kitronik_ec_board_colors" 
         //% weight=99 blockGap=8
         setColor(rgb: number) {
         	rgb = rgb >> 0;
@@ -199,7 +220,7 @@ namespace kitronik_ec_board {
          * @param rgb RGB color of the LED
          */
         //% subcategory="ZIP LEDs"
-        //% blockId="kitronik_ec_board_display_set_strip_color" block="%statusLEDs|show color %rgb=kitronik_ec_board_colors" 
+        //% blockId="kitronik_ec_board_display_set_strip_color" block="%zipLEDs|show color %rgb=kitronik_ec_board_colors" 
         //% weight=99 blockGap=8
         showColor(rgb: number) {
         	rgb = rgb >> 0;
@@ -214,7 +235,7 @@ namespace kitronik_ec_board {
          * @param rgb RGB color of the ZIP LED
          */
         //% subcategory="ZIP LEDs"
-        //% blockId="kitronik_ec_board_set_zip_color" block="%statusLEDs|set ZIP LED %zipLedNum|to %rgb=kitronik_ec_board_colors" 
+        //% blockId="kitronik_ec_board_set_zip_color" block="%zipLEDs|set ZIP LED %zipLedNum|to %rgb=kitronik_ec_board_colors" 
         //% weight=98 blockGap=8
         setZipLedColor(zipLedNum: number, rgb: number): void {
             this.setPixelRGB(zipLedNum >> 0, rgb >> 0);
@@ -224,7 +245,7 @@ namespace kitronik_ec_board {
          * Send all the changes to the ZIP Halo display.
          */
         //% subcategory="ZIP LEDs"
-        //% blockId="kitronik_ec_board_display_show" block="%statusLEDs|show" blockGap=8
+        //% blockId="kitronik_ec_board_display_show" block="%zipLEDs|show" blockGap=8
         //% weight=96
         show() {
             //use the Kitronik version which respects brightness for all 
@@ -236,7 +257,7 @@ namespace kitronik_ec_board {
          * You need to call ``show`` to make the changes visible.
          */
         //% subcategory="ZIP LEDs"
-        //% blockId="kitronik_ec_board_display_clear" block="%statusLEDs|clear"
+        //% blockId="kitronik_ec_board_display_clear" block="%zipLEDs|clear"
         //% weight=95 blockGap=8
         clear(): void {
             this.buf.fill(0, this.start * 3, this._length * 3);
@@ -247,7 +268,7 @@ namespace kitronik_ec_board {
          * @param brightness a measure of LED brightness in 0-255. eg: 255
          */
         //% subcategory="ZIP LEDs"
-        //% blockId="kitronik_ec_board_display_set_brightness" block="%statusLEDs|set brightness %brightness" blockGap=8
+        //% blockId="kitronik_ec_board_display_set_brightness" block="%zipLEDs|set brightness %brightness" blockGap=8
         //% weight=92
         //% brightness.min=0 brightness.max=255
         setBrightness(brightness: number): void {
@@ -300,22 +321,23 @@ namespace kitronik_ec_board {
     }
 
     /**
-     * Create a new ZIP LED driver for EC Board (the 3 onboard ZIP LEDs).
+     * Create a new ZIP LED driver for EC Board (LEDs on and off board).
+     * @param zipNum is the total number of ZIP LEDs eg: 3
      */
     //% subcategory="ZIP LEDs"
-    //% blockId="kitronik_ec_board_display_create" block="to EC Board ZIP LEDs"
+    //% blockId="kitronik_ec_board_display_create" block="to EC Board with %zipNum|ZIP LEDs"
     //% weight=100 blockGap=8
     //% trackArgs=0,2
-    //% blockSetVariable=statusLEDs
-    export function createECZIPDisplay(): ecZIPLEDs {
-        let statusLEDs = new ecZIPLEDs;
-        statusLEDs.buf = pins.createBuffer(3 * 3);
-        statusLEDs.start = 0;
-        statusLEDs._length = 3;
-        statusLEDs.setBrightness(128)
-        statusLEDs.pin = DigitalPin.P8;
-        pins.digitalWritePin(statusLEDs.pin, 0);
-        return statusLEDs;
+    //% blockSetVariable=zipLEDs
+    export function createECZIPDisplay(zipNum: number): ecZIPLEDs {
+        let zipLEDs = new ecZIPLEDs;
+        zipLEDs.buf = pins.createBuffer(zipNum * 3);
+        zipLEDs.start = 0;
+        zipLEDs._length = zipNum;
+        zipLEDs.setBrightness(128)
+        zipLEDs.pin = DigitalPin.P8;
+        pins.digitalWritePin(zipLEDs.pin, 0);
+        return zipLEDs;
     }
 
     /**
