@@ -179,7 +179,7 @@ namespace kitronik_ec_board {
          */
         //% subcategory="ZIP LEDs"
         //% weight=89 blockGap=8
-        //% blockId="kitronik_ec_board_range" block="%zipLEDs|range from 0 with 3 LEDs"
+        //% blockId="kitronik_ec_board_status_leds_range" block="%zipLEDs|range from 0 with 3 LEDs"
         //% blockSetVariable=statusLEDs
         statusLedsRange(start: number, length: number): ecZIPLEDs {
             start = start >> 0;
