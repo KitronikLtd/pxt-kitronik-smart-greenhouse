@@ -1100,7 +1100,7 @@ namespace kitronik_ec_board {
     //% blockId=kitronik_ec_board_read_pressure
     //% block="Read Pressure in %pressure_unit"
     //% weight=85 blockGap=8
-    export function pressure(pressure_unit: PressureUnitList): number {
+    export function pressure(pressure_unit: kitronik_BME280.PressureUnitList): number {
         if (kitronik_BME280.initalised == false)
             kitronik_BME280.secretIncantation()
 
@@ -1108,7 +1108,7 @@ namespace kitronik_ec_board {
         kitronik_BME280.convertReadings();
 
 		//Change pressure from Pascals to millibar
-        if (pressure_unit == PressureUnitList.mBar)
+        if (pressure_unit == kitronik_BME280.PressureUnitList.mBar)
             kitronik_BME280.pressureReading = + kitronik_BME280.pressureReading / 100
 
 		kitronik_BME280.pressureReading = Math.round(kitronik_BME280.pressureReading)
@@ -1124,7 +1124,7 @@ namespace kitronik_ec_board {
     //% blockId="kitronik_ec_board_read_temperature"
     //% block="Read Temperature in %temperature_unit"
     //% weight=80 blockGap=8
-    export function temperature(temperature_unit: TemperatureUnitList): number {
+    export function temperature(temperature_unit: kitronik_BME280.TemperatureUnitList): number {
         if (kitronik_BME280.initalised == false)
             kitronik_BME280.secretIncantation()
 
@@ -1132,7 +1132,7 @@ namespace kitronik_ec_board {
         kitronik_BME280.convertReadings();
 
 		//Change temperature from degrees C to degrees F
-        if (temperature_unit == TemperatureUnitList.F)
+        if (temperature_unit == kitronik_BME280.TemperatureUnitList.F)
             kitronik_BME280.temperatureReading = + ((kitronik_BME280.temperatureReading * 18) + 320) / 10
 		
 		kitronik_BME280.temperatureReading = Math.round(kitronik_BME280.temperatureReading)
