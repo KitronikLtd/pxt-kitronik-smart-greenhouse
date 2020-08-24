@@ -1408,10 +1408,10 @@ namespace kitronik_ec_board {
             else if (stringBuild == "title")
                 build = titleBuild
 
-            if (anyText.length >= 12)
-                build = build + anyText.substr(0, 12) + delimiter
+            if (anyText.length >= 10)
+                build = build + anyText.substr(0, 10) + delimiter
             else {
-                let numberSpace = 12 - anyText.length
+                let numberSpace = 10 - anyText.length
                 for (let whitespace=0; whitespace < numberSpace; whitespace++){
                     anyText = anyText + " "
                 }
@@ -1501,7 +1501,7 @@ namespace kitronik_ec_board {
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * Input title of saved data as a column header, logged in string format. Titles will only output the first 8 characters of the string.
+     * Input title of saved data as a column header, logged in string format. Titles will only output the first 10 characters of the string.
      * Maximum of 100 entries stored
      * @param title1 of any title to save eg: " "
      * @param title2 of any title to save eg: " " 
