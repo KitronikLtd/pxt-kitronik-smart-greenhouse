@@ -76,7 +76,7 @@ enum PressureUnitList {
  * Kitronik ENVIRONMENTAL CONTROL BOARD (CHANGE NAME) MakeCode Package
  */
 
-//% weight=100 color=#00A654 icon="\uf06c" block="EC Board"
+//% weight=100 color=#00A654 icon="\uf06c" block="Environmental"
 //% groups='["Set Time", "Set Date", "Read Time", "Read Date", "Alarm", "Servo", "General Inputs/Outputs", "High Power Outputs", "Setup", "Entries", "Transfer"]'
 namespace kitronik_ec_board {
     ////////////////////////////////
@@ -1408,10 +1408,10 @@ namespace kitronik_ec_board {
             else if (stringBuild == "title")
                 build = titleBuild
 
-            if (anyText.length >= 10)
-                build = build + anyText.substr(0, 10) + delimiter
+            if (anyText.length >= 12)
+                build = build + anyText.substr(0, 12) + delimiter
             else {
-                let numberSpace = 10 - anyText.length
+                let numberSpace = 12 - anyText.length
                 for (let whitespace=0; whitespace < numberSpace; whitespace++){
                     anyText = anyText + " "
                 }
@@ -1535,16 +1535,16 @@ namespace kitronik_ec_board {
 
     /**
      * Input data to be saved to the logger in string format. To save numbers, convert numbers to a string.
-     * @param entry1 of any data to save eg: " "
-     * @param entry2 of any data to save eg: " "
-     * @param entry3 of any data to save eg: " "
-     * @param entry4 of any data to save eg: " "
-     * @param entry5 of any data to save eg: " "
-     * @param entry6 of any data to save eg: " "
-     * @param entry7 of any data to save eg: " "
-     * @param entry8 of any data to save eg: " "
-     * @param entry9 of any data to save eg: " "
-     * @param entry10 of any data to save eg: " "
+     * @param entry1 of any data to save
+     * @param entry2 of any data to save
+     * @param entry3 of any data to save
+     * @param entry4 of any data to save
+     * @param entry5 of any data to save
+     * @param entry6 of any data to save
+     * @param entry7 of any data to save
+     * @param entry8 of any data to save
+     * @param entry9 of any data to save
+     * @param entry10 of any data to save
      */
     //% subcategory="Data Logging"
     //% group=Entries
@@ -1552,7 +1552,7 @@ namespace kitronik_ec_board {
     //% blockId=kitronik_ec_board_add
     //% block="add data %entry1|| %entry2 %entry3 %entry4 %entry5 %entry6 %entry7 %entry8 %entry9 %entry10"
     //% expandableArgumentMode="enabled" inlineInputMode=inline
-    export function addData(entry1: string, entry2?: string, entry3?: string, entry4?: string, entry5?: string, entry6?: string, entry7?: string, entry8?: string, entry9?: string, entry10?: string): void{
+    export function addData(entry1: any, entry2?: any, entry3?: any, entry4?: any, entry5?: any, entry6?: any, entry7?: any, entry8?: any, entry9?: any, entry10?: any): void{
         if (comms == NONE)
             setDataForUSB()
         entryBuild = ""
