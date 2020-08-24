@@ -1371,7 +1371,6 @@ namespace kitronik_ec_board {
 
     let NONE = 0
     let USB = 1
-    let PIN = 2
 
     let storedList: string[] = []
     let delimiter = " "
@@ -1381,57 +1380,12 @@ namespace kitronik_ec_board {
     let entryBuild = ""
     let titleBuild = ""
     let kitronikHeader = " Kitronik Data Logger\r\n----------------------\r\n  www.kitronik.co.uk\r\n\r\n"
+
     export enum ListNumber{
         //% block="Send"
         Send,
         //% block="Don't Send"
         DontSend
-    };
-
-    export enum PinList{
-        //% block="P0"
-        P0 = 7,
-        //% block="P1"
-        P1 = 8,
-        //% block="P2"
-        P2 = 9,
-        //% block="P8"
-        P8 = 15,
-        //% block="P12"
-        P12 = 19,
-        //% block="P13"
-        P13 = 20,
-        //% block="P14"
-        P14 = 21,
-        //% block="P15"
-        P15 = 22,
-        //% block="P16"
-        P16 = 23
-    };
-    
-    export enum BaudRate {
-      //% block=115200
-      BaudRate115200,
-      //% block=57600
-      BaudRate57600,
-      //% block=38400
-      BaudRate38400,
-      //% block=31250
-      BaudRate31250,
-      //% block=28800
-      BaudRate28800,
-      //% block=19200
-      BaudRate19200,
-      //% block=14400
-      BaudRate14400,
-      //% block=9600
-      BaudRate9600,
-      //% block=4800
-      BaudRate4800,
-      //% block=2400
-      BaudRate2400,
-      //% block=1200
-      BaudRate1200
     };
     
     export enum Separator {
@@ -1444,77 +1398,6 @@ namespace kitronik_ec_board {
       //% block="Space"
       space
     };
-    
-    function sortSelection(selection: number){
-        let pin;
-        switch (selection)
-        {
-            case PinList.P0:
-                pin = SerialPin.P0
-                break;
-            case PinList.P1:
-                pin = SerialPin.P1
-                break;
-            case PinList.P2:
-                pin = SerialPin.P2
-                break;
-            case PinList.P8:
-                pin = SerialPin.P8
-                break;
-            case PinList.P12:
-                pin = SerialPin.P12
-                break;
-            case PinList.P12:
-                pin = SerialPin.P12
-                break;
-            case PinList.P13:
-                pin = SerialPin.P13
-                break;
-            case PinList.P14:
-                pin = SerialPin.P14
-                break;
-            case PinList.P15:
-                pin = SerialPin.P15
-                break;
-            case PinList.P16:
-                pin = SerialPin.P16
-                break;
-            case BaudRate.BaudRate115200:
-                pin = 115200
-                break;
-            case BaudRate.BaudRate57600:
-                pin = 57600
-                break;
-            case BaudRate.BaudRate38400:
-                pin = 38400
-                break;
-            case BaudRate.BaudRate31250:
-                pin = 31250
-                break;
-            case BaudRate.BaudRate28800:
-                pin = 28800
-                break;
-            case BaudRate.BaudRate19200:
-                pin = 19200
-                break;
-            case BaudRate.BaudRate14400:
-                pin = 14400
-                break;
-            case BaudRate.BaudRate9600:
-                pin = 9600
-                break;
-            case BaudRate.BaudRate4800:
-                pin = 4800
-                break;
-            case BaudRate.BaudRate2400:
-                pin = 2400
-                break;
-            case BaudRate.BaudRate1200:
-                pin = 1200
-                break;
-        }   
-        return pin
-    }
 
     function checkAndAdd(addText: any, stringBuild: string): void{
         if (addText){
@@ -1566,25 +1449,6 @@ namespace kitronik_ec_board {
         comms = USB
         serial.redirectToUSB()
     }
-
-    /**
-     * Choice of which pins to connect the data output and the selected baud rate
-     * @param tx is the selection of pin microbit transmitting data
-     * @param rx is the selection of pin microbit receiving data
-     * @param rate is the selection of BaudRate speed
-     */
-    //% subcategory="Data Logging"
-    //% group=Setup
-    //% weight=95 blockGap=8
-    //% blockId=kitronik_ec_board_output_to_serial
-    //% block="set data output to TX %tx|RX %rx|at baud rate %rate|"
-    export function setDataForSerial(tx: PinList, rx: PinList, rate: BaudRate): void{
-        comms = PIN
-        let txn = sortSelection(tx)
-        let rxn = sortSelection(rx)
-        let dataRate = sortSelection(rate)
-        serial.redirect(txn, rxn, dataRate)
-    }
     
     /**
      * Choice of which character to put between each data entry (the default is a space)
@@ -1630,7 +1494,7 @@ namespace kitronik_ec_board {
     ////                     NO BLOCKS ARE ABLE TO BE MOVED, ADDED, DELETED OR ANYTHING.                           ////
     ////     REQUIRES THE TAB TO BE CLOSED AND A NEW WINDOW OF MAKECODE OPENED TO GET THINGS WORKING AGAIN.        ////
     ////                                           THIS MUST BE FIXED!!!                                           ////
-    ////                 I        IT'S SOMETHING TO DO WITH THE 'checkAndAdd' FUNCTION...                          ////
+    ////                          IT'S SOMETHING TO DO WITH THE 'checkAndAdd' FUNCTION...                          ////
     ////                          SEEMS TO HAVE GONE AWAY BY ITSELF, BUT BE SUSPICIOUS                             ////
     ////                                                                                                           ////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
