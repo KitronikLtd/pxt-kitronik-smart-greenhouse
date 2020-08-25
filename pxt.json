@@ -10,7 +10,8 @@
     "files": [
         "README.md",
         "main.blocks",
-        "main.ts"
+        "main.ts",
+        "a_VisualThermometerTutorial.md"
     ],
     "testFiles": [
         "test.ts"
