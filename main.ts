@@ -354,7 +354,7 @@ namespace kitronik_environmental_board {
      * @param zipNum is the total number of ZIP LEDs eg: 3
      */
     //% subcategory="ZIP LEDs"
-    //% blockId="kitronik_environmental_board_display_create" block="to EC Board with %zipNum|ZIP LEDs"
+    //% blockId="kitronik_environmental_board_display_create" block="Environmental Board with %zipNum|ZIP LEDs"
     //% weight=100 blockGap=8
     //% trackArgs=0,2
     //% blockSetVariable=zipLEDs
