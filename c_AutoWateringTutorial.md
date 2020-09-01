@@ -1,13 +1,14 @@
 ### @activities true
 ### @explicitHints true
 
-# Displaying Temperature, Humidity & Soil Moisture
+# Automatic Plant Watering
 
-## Temperature on a Single LED
+## Soil Moisture Alarm
 ### Introduction Step @unplugged
-In the "Greenhouse Visual Thermometer" tutorial (click [here](https://makecode.microbit.org/#tutorial:https://github.com/KitronikLtd/pxt-kitronik-ec-board/a_VisualThermometerTutorial) to view) all the ZIP LEDs were used to display the temperature. However, this isn't always very helpful as there are other measurements it would be good to display, such as humidity and soil moisture.
-
-In this tutorial, learn how to use the ZIP LED hue feature to display data on a single status LED.
+In the "Displaying Temperature, Humidity & Soil Moisture" tutorial (click [here](https://makecode.microbit.org/#tutorial:https://github.com/KitronikLtd/pxt-kitronik-ec-board/b_UsingZIPLEDHueTutorial) to view) the ZIP LED colour hue was used to display the sensor values. In this tutorial, soil moisture will be displayed in the same way, but the measurement will also be used to control when a plant is watered.  
+  
+This tutorial is going to require the Prong to be connected to the Environmental Control Board using crocodile clips.  
+Connect Prong 3V to one of the 3V pads, Prong GND to one of the GND pads and Prong P1 to the Pin1 pad. Stick it into a plant pot.
 
 ![Ticking Halo HD Clock animation](https://KitronikLtd.github.io/pxt-kitronik-halohd/assets/Ticking-Clock-Animation.gif)
 
@@ -22,52 +23,66 @@ let statusLEDs = zipLEDs.statusLedsRange()
 ```
 
 ### Step 2
-Next, create a new variable called ``||variables:tempHue||``. This will be used to set and store the ZIP LED colour hue based on the temperature reading from the sensor.  
+Next, create a new variable called ``||variables:soilHue||``. This will be used to set and store the ZIP LED colour hue based on the soil moisture reading from the sensor.  
 In the ``||basic:forever||`` loop, ``||variables:set tempHue to||`` ``||math:map 0 from low 0 high 1023 to low 0 high 4||`` - this block can be found in the ``||math:Math||`` category.
 
 #### ~ tutorialhint
 ```blocks
 basic.forever(function () {
-    tempHue = Math.map(0, 0, 1023, 0, 4)
+    soilHue = Math.map(0, 0, 1023, 0, 4)
 })
 ```
 
 ### Step 3
-The ``||math.map||`` function changes the possible range of a value - in this case temperature - to another range, changing in relative amounts. This is very useful, as it means temperature, measured between 0 and 40°C, can then be converted to a colour hue value (these range from 0-360, red all the way round a colour wheel to red again).  
-In the ``||math:map||`` block, put the ``||kitronik_environmental_board.Read Temperature in °C||`` block in the first slot - this can be found in the ``||kitronik_environmental_board.Sensors||`` section of the ``||kitronik_environmental_board.Environmental||`` category. Then, set ``||math:from low 0 high 40 to low 210 high 0||`` to give blue colours for cold, and red colours for hot.
+In the ``||math:map||`` block, put the ``||kitronik_environmental_board.Analog read P1||`` block in the first slot - this can be found in the ``||kitronik_environmental_board.Inputs/Outputs||`` section of the ``||kitronik_environmental_board.Environmental||`` category. Then, set ``||math:from low 0 high 1023 to low 35 high 150||`` to give a desert sand colour for a low moisture reading and a watery colour for a high moisture reading.
 
 #### ~ tutorialhint
 ```blocks
 basic.forever(function () {
-    tempHue = Math.map(kitronik_environmental_board.temperature(TemperatureUnitList.C), 0, 40, 210, 0)
+    soilHue = Math.map(kitronik_environmental_board.readIOPin(kitronik_environmental_board.PinType.analog, kitronik_environmental_board.IOPins.p1), 0, 1023, 35, 150)
 })
 ```
 
 ### Step 4
-Now that the temperature hue has been set and stored, the ZIP LED colour can now be set.  
-After the ``||variables:set tempHue||`` block, add a  ``||kitronik_environmental_board.set ZIP LED 0 to red||`` block from the  ``||kitronik_environmental_board.ZIP LEDs||`` section of the  ``||kitronik_environmental_board.Environmental||`` category (remember to change the variable drop-down to be ``||variables:statusLEDs||``). Instead of selecting a colour from the drop-down list, insert a  ``||kitronik_environmental_board.hue 0||`` block into the slot, and put the variable ``||variables:tempHue||`` in place of the 0.  
-Finally, put a ``||variables:statusLEDs||``  ``||kitronik_environmental_board.show||`` block at the end of the ``||basic:forever||`` loop.
+Now that the soil moisture hue has been set and stored, the ZIP LED colour can now be set.  
+After the ``||variables:set soilHue||`` block, add a  ``||kitronik_environmental_board.ZIP LED 2 to hue||`` ``||variables:soilHue||``. Finally, put a ``||variables:statusLEDs||``  ``||kitronik_environmental_board.show||`` block at the end of the ``||basic:forever||`` loop.
 
 #### ~ tutorialhint
 ```blocks
 let statusLEDs: kitronik_environmental_board.ecZIPLEDs = null
 basic.forever(function () {
-    tempHue = Math.map(kitronik_environmental_board.temperature(TemperatureUnitList.C), 0, 40, 210, 0)
-    statusLEDs.setZipLedColor(0, kitronik_environmental_board.hueToRGB(tempHue))
+    soilHue = Math.map(kitronik_environmental_board.readIOPin(kitronik_environmental_board.PinType.analog, kitronik_environmental_board.IOPins.p1), 0, 1023, 35, 150)
+    statusLEDs.setZipLedColor(2, kitronik_environmental_board.hueToRGB(soilHue))
     statusLEDs.show()
 })
 ```
 
 ### Step 5
-Click ``|Download|`` and transfer the code to the Environmental Control Board.  
-Try putting the board in locations with different temperatures to see the ZIP LED colour change.
+Displaying the soil moisture has now been set up, but it isn't being used to control anything yet.  
+After the ``||kitronik_environmental_board.show||`` block, add in an ``||logic:if else||`` block from the ``||logic:Logic||`` category. Check whether the measured soil moisture value is less than 400 - the ``||logic:if||`` statement should read: ``||logic:if||`` ``||kitronik_environmental_board.Analog read P1||`` ``||logic:≤ 400 then||``. 
+
+#### ~ tutorialhint
+```blocks
+let statusLEDs: kitronik_environmental_board.ecZIPLEDs = null
+basic.forever(function () {
+    soilHue = Math.map(kitronik_environmental_board.readIOPin(kitronik_environmental_board.PinType.analog, kitronik_environmental_board.IOPins.p1), 0, 1023, 35, 150)
+    statusLEDs.setZipLedColor(2, kitronik_environmental_board.hueToRGB(soilHue))
+    statusLEDs.show()
+    if (kitronik_environmental_board.readIOPin(kitronik_environmental_board.PinType.analog, kitronik_environmental_board.IOPins.p1) <= 400) {
+        
+    } else {
+        
+    }
+})
+```
+
 
 ## Temperature, Humidity & Soil Moisture
 ### Introduction Step @unplugged
 Now that temperature is working, humidity and soil moisture can be added to ZIP LEDs 1 and 2.  
   
 This stage of the tutorial is going to require the Prong to be connected to the Environmental Control Board using crocodile clips.  
-Connect Prong 3V to one of the 3V pads, Prong GND to one of the GND pads and Prong P1 to the Pin1 pad. Stick it into a plant pot.
+Connect Prong 3V to one of the 3V pads, Prong GND to one of the GND pads and Prong P1 to the Pin1 pad.
 
 ![Picture of Prong connected to Environmental Control Board]
 

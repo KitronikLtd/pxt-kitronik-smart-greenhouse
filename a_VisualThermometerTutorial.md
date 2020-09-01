@@ -61,7 +61,7 @@ basic.forever(function () {
 ### Step 5
 Having set up the temperature zone boundaries, different LEDs can now be set to particular colours inside the ``||logic:if||`` statements.  
 For ``||variables:temperature||`` ``||logic:< 20||``, ``||kitronik_environmental_board.set ZIP LED 0 to blue||`` (make sure to change the first drop-down to ``||variables:statusLEDs||``).
-For ``||variables:temperature||`` ``||logic:>= 20 and <= 30||``, ``||kitronik_environmental_board.set ZIP LED 1 to green||``, and for ``||variables:temperature||`` ``||logic:> 30||``, ``||kitronik_environmental_board.set ZIP LED 2 to red||``.
+For ``||variables:temperature||`` ``||logic:≥ 20 and ≤ 30||``, ``||kitronik_environmental_board.set ZIP LED 1 to green||``, and for ``||variables:temperature||`` ``||logic:> 30||``, ``||kitronik_environmental_board.set ZIP LED 2 to red||``.
 
 #### ~ tutorialhint
 ```blocks

@@ -12,7 +12,8 @@
         "main.blocks",
         "main.ts",
         "a_VisualThermometerTutorial.md",
-        "b_UsingZIPLEDHueTutorial.md"
+        "b_UsingZIPLEDHueTutorial.md",
+        "c_AutoWateringTutorial.md"
     ],
     "testFiles": [
         "test.ts"
