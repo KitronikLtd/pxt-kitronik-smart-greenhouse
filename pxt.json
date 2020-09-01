@@ -11,7 +11,8 @@
         "README.md",
         "main.blocks",
         "main.ts",
-        "a_VisualThermometerTutorial.md"
+        "a_VisualThermometerTutorial.md",
+        "b_UsingZIPLEDHueTutorial.md"
     ],
     "testFiles": [
         "test.ts"
