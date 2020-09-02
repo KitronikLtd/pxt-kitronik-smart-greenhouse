@@ -13,7 +13,8 @@
         "main.ts",
         "a_VisualThermometerTutorial.md",
         "b_UsingZIPLEDHueTutorial.md",
-        "c_AutoWateringTutorial.md"
+        "c_AutoWateringTutorial.md",
+        "e_TimeSchedulingTutorial.md"
     ],
     "testFiles": [
         "test.ts"
