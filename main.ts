@@ -1,5 +1,5 @@
 /*
-  Kitronik package for use with the ENVIRONMENTAL CONTROL BOARD (CHANGE NAME) (www.kitronik.co.uk/5697)
+  Kitronik package for use with the Smart Greenhouse (www.kitronik.co.uk/5699)
   This package pulls in other packages to deal with the lower level work for:
     Bit banging the WS2182 protocol
     Setting and reading a Real Time Clock chip
@@ -73,12 +73,12 @@ enum PressureUnitList {
 }
 
 /**
- * Kitronik Environmental Control Board MakeCode Package
+ * Kitronik Smart Greenhouse MakeCode Package
  */
 
-//% weight=100 color=#00A654 icon="\uf06c" block="Environmental"
+//% weight=100 color=#00A654 icon="\uf06c" block="Greenhouse"
 //% groups='["Set Time", "Set Date", "Read Time", "Read Date", "Alarm", "Servo", "General Inputs/Outputs", "High Power Outputs", "Setup", "Entries", "Transfer"]'
-namespace kitronik_environmental_board {
+namespace kitronik_smart_greenhouse {
     ////////////////////////////////
     //           MUSIC            //
     ////////////////////////////////
@@ -86,7 +86,7 @@ namespace kitronik_environmental_board {
     /**
      * Setup micro:bit to play music through on board buzzer
      */
-    //% blockId="kitronik_environmental_board_buzzer_setup" block="set music pin for buzzer"
+    //% blockId="kitronik_smart_greenhouse_buzzer_setup" block="set music pin for buzzer"
     //% weight=100 blockGap=8
     export function setBuzzerPin(): void {
         pins.analogSetPitchPin(AnalogPin.P12)
@@ -96,7 +96,7 @@ namespace kitronik_environmental_board {
     //         ZIP LEDS           //
     ////////////////////////////////
 
-    export class ecZIPLEDs {
+    export class greenhouseZIPLEDs {
     	buf: Buffer;
     	pin: DigitalPin;
     	brightness: number;
@@ -109,7 +109,7 @@ namespace kitronik_environmental_board {
          * @param endHue the end hue value for the rainbow, eg: 360
          */
         //% subcategory="ZIP LEDs"
-        //% blockId="kitronik_environmental_board_rainbow" block="%zipLEDs|show rainbow from %startHue|to %endHue" 
+        //% blockId="kitronik_smart_greenhouse_rainbow" block="%zipLEDs|show rainbow from %startHue|to %endHue" 
         //% weight=94 blockGap=8
         showRainbow(startHue: number = 1, endHue: number = 360) {
             if (this._length <= 0) return;
@@ -175,11 +175,11 @@ namespace kitronik_environmental_board {
          */
         //% subcategory="ZIP LEDs"
         //% weight=89 blockGap=8
-        //% blockId="kitronik_environmental_board_range" block="%zipLEDs|range from %start|with %length|LEDs"
-        range(start: number, length: number): ecZIPLEDs {
+        //% blockId="kitronik_smart_greenhouse_range" block="%zipLEDs|range from %start|with %length|LEDs"
+        range(start: number, length: number): greenhouseZIPLEDs {
             start = start >> 0;
             length = length >> 0;
-            let zipLEDs = new ecZIPLEDs();
+            let zipLEDs = new greenhouseZIPLEDs();
             zipLEDs.buf = this.buf;
             zipLEDs.pin = this.pin;
             zipLEDs.brightness = this.brightness;
@@ -193,10 +193,10 @@ namespace kitronik_environmental_board {
          */
         //% subcategory="ZIP LEDs"
         //% weight=99 blockGap=8
-        //% blockId="kitronik_environmental_board_status_leds_range" block="%zipLEDs|range from 0 with 3 LEDs"
+        //% blockId="kitronik_smart_greenhouse_status_leds_range" block="%zipLEDs|range from 0 with 3 LEDs"
         //% blockSetVariable=statusLEDs
-        statusLedsRange(): ecZIPLEDs {
-            let statusLEDs = new ecZIPLEDs();
+        statusLedsRange(): greenhouseZIPLEDs {
+            let statusLEDs = new greenhouseZIPLEDs();
             statusLEDs.buf = this.buf;
             statusLEDs.pin = this.pin;
             statusLEDs.brightness = this.brightness;
@@ -210,10 +210,10 @@ namespace kitronik_environmental_board {
          */
         //% subcategory="ZIP LEDs"
         //% weight=98 blockGap=8
-        //% blockId="kitronik_environmental_board_zip_stick_range" block="%zipLEDs|range from 3 with 5 LEDs"
+        //% blockId="kitronik_smart_greenhouse_zip_stick_range" block="%zipLEDs|range from 3 with 5 LEDs"
         //% blockSetVariable=zipStick
-        zipStickRange(): ecZIPLEDs {
-            let zipStick = new ecZIPLEDs();
+        zipStickRange(): greenhouseZIPLEDs {
+            let zipStick = new greenhouseZIPLEDs();
             zipStick.buf = this.buf;
             zipStick.pin = this.pin;
             zipStick.brightness = this.brightness;
@@ -228,7 +228,7 @@ namespace kitronik_environmental_board {
          * @param offset number of ZIP LEDs to rotate forward, eg: 1
          */
         //% subcategory="ZIP LEDs"
-        //% blockId="kitronik_environmental_board_display_rotate" block="%zipLEDs|rotate ZIP LEDs by %offset" blockGap=8
+        //% blockId="kitronik_smart_greenhouse_display_rotate" block="%zipLEDs|rotate ZIP LEDs by %offset" blockGap=8
         //% weight=92
         rotate(offset: number = 1): void {
             this.buf.rotate(-offset * 3, this.start * 3, this._length * 3)
@@ -238,7 +238,7 @@ namespace kitronik_environmental_board {
          * @param rgb RGB color of the LED
          */
         //% subcategory="ZIP LEDs"
-        //% blockId="kitronik_environmental_board_display_only_set_strip_color" block="%zipLEDs|set color %rgb=kitronik_environmental_board_colors" 
+        //% blockId="kitronik_smart_greenhouse_display_only_set_strip_color" block="%zipLEDs|set color %rgb=kitronik_environmental_board_colors" 
         //% weight=96 blockGap=8
         setColor(rgb: number) {
         	rgb = rgb >> 0;
@@ -249,7 +249,7 @@ namespace kitronik_environmental_board {
          * @param rgb RGB color of the LED
          */
         //% subcategory="ZIP LEDs"
-        //% blockId="kitronik_environmental_board_display_set_strip_color" block="%zipLEDs|show color %rgb=kitronik_environmental_board_colors" 
+        //% blockId="kitronik_smart_greenhouse_display_set_strip_color" block="%zipLEDs|show color %rgb=kitronik_environmental_board_colors" 
         //% weight=97 blockGap=8
         showColor(rgb: number) {
         	rgb = rgb >> 0;
@@ -264,7 +264,7 @@ namespace kitronik_environmental_board {
          * @param rgb RGB color of the ZIP LED
          */
         //% subcategory="ZIP LEDs"
-        //% blockId="kitronik_environmental_board_set_zip_color" block="%zipLEDs|set ZIP LED %zipLedNum|to %rgb=kitronik_environmental_board_colors" 
+        //% blockId="kitronik_smart_greenhouse_set_zip_color" block="%zipLEDs|set ZIP LED %zipLedNum|to %rgb=kitronik_smart_greenhouse_colors" 
         //% weight=95 blockGap=8
         setZipLedColor(zipLedNum: number, rgb: number): void {
             this.setPixelRGB(zipLedNum >> 0, rgb >> 0);
@@ -274,7 +274,7 @@ namespace kitronik_environmental_board {
          * Send all the changes to the ZIP Halo display.
          */
         //% subcategory="ZIP LEDs"
-        //% blockId="kitronik_environmental_board_display_show" block="%zipLEDs|show" blockGap=8
+        //% blockId="kitronik_smart_greenhouse_display_show" block="%zipLEDs|show" blockGap=8
         //% weight=94
         show() {
             //use the Kitronik version which respects brightness for all 
@@ -286,7 +286,7 @@ namespace kitronik_environmental_board {
          * You need to call ``show`` to make the changes visible.
          */
         //% subcategory="ZIP LEDs"
-        //% blockId="kitronik_environmental_board_display_clear" block="%zipLEDs|clear"
+        //% blockId="kitronik_smart_greenhouse_display_clear" block="%zipLEDs|clear"
         //% weight=93 blockGap=8
         clear(): void {
             this.buf.fill(0, this.start * 3, this._length * 3);
@@ -297,7 +297,7 @@ namespace kitronik_environmental_board {
          * @param brightness a measure of LED brightness in 0-255. eg: 255
          */
         //% subcategory="ZIP LEDs"
-        //% blockId="kitronik_environmental_board_display_set_brightness" block="%zipLEDs|set brightness %brightness" blockGap=8
+        //% blockId="kitronik_smart_greenhouse_display_set_brightness" block="%zipLEDs|set brightness %brightness" blockGap=8
         //% weight=91
         //% brightness.min=0 brightness.max=255
         setBrightness(brightness: number): void {
@@ -350,16 +350,16 @@ namespace kitronik_environmental_board {
     }
 
     /**
-     * Create a new ZIP LED driver for EC Board (LEDs on and off board).
+     * Create a new ZIP LED driver for Smart Greenhouse (LEDs on and off board).
      * @param zipNum is the total number of ZIP LEDs eg: 3
      */
     //% subcategory="ZIP LEDs"
-    //% blockId="kitronik_environmental_board_display_create" block="Environmental Board with %zipNum|ZIP LEDs"
+    //% blockId="kitronik_smart_greenhouse_display_create" block="Smart Greenhouse with %zipNum|ZIP LEDs"
     //% weight=100 blockGap=8
     //% trackArgs=0,2
     //% blockSetVariable=zipLEDs
-    export function createECZIPDisplay(zipNum: number): ecZIPLEDs {
-        let zipLEDs = new ecZIPLEDs;
+    export function createGreenhouseZIPDisplay(zipNum: number): greenhouseZIPLEDs {
+        let zipLEDs = new greenhouseZIPLEDs;
         zipLEDs.buf = pins.createBuffer(zipNum * 3);
         zipLEDs.start = 0;
         zipLEDs._length = zipNum;
@@ -375,7 +375,7 @@ namespace kitronik_environmental_board {
      */
     //% subcategory="ZIP LEDs"
     //% weight=1 blockGap=8
-    //% blockId="kitronik_environmental_board_wavelength" block="wavelength %wavelength|nm"
+    //% blockId="kitronik_smart_greenhouse_wavelength" block="wavelength %wavelength|nm"
     //% wavelength.min=470 wavelength.max=625
     export function wavelength(wavelength: number): number {
      /*  The LEDs we are using have centre wavelengths of 470nm (Blue) 525nm(Green) and 625nm (Red) 
@@ -405,7 +405,7 @@ namespace kitronik_environmental_board {
      */
     //% subcategory="ZIP LEDs"
     //% weight=1 blockGap=8
-    //% blockId="kitronik_environmental_board_hue" block="hue %hue"
+    //% blockId="kitronik_smart_greenhouse_hue" block="hue %hue"
     //% hue.min=0 hue.max=360
     export function hueToRGB(hue: number): number {
         let redVal = 0
@@ -439,7 +439,7 @@ namespace kitronik_environmental_board {
      */
     //% subcategory="ZIP LEDs"
     //% weight=1 blockGap=8
-    //% blockId="kitronik_environmental_board_rgb" block="red %red|green %green|blue %blue"
+    //% blockId="kitronik_smart_greenhouse_rgb" block="red %red|green %green|blue %blue"
     export function rgb(red: number, green: number, blue: number): number {
         return packRGB(red, green, blue);
     }
@@ -449,7 +449,7 @@ namespace kitronik_environmental_board {
     */
     //% subcategory="ZIP LEDs"
     //% weight=2 blockGap=8
-    //% blockId="kitronik_environmental_board_colors" block="%color"
+    //% blockId="kitronik_smart_greenhouse_colors" block="%color"
     export function colors(color: ZipLedColors): number {
         return color;
     }
@@ -563,7 +563,7 @@ namespace kitronik_environmental_board {
     */
     //% subcategory="Clock"
     //% group="Set Time"
-    //% blockId=kitronik_environmental_board_set_time 
+    //% blockId=kitronik_smart_greenhouse_set_time 
     //% block="Set Time to %setHours|hrs %setMinutes|mins %setSeconds|secs"
     //% setHours.min=0 setHours.max=23
     //% setMinutes.min=0 setMinutes.max=59
@@ -602,7 +602,7 @@ namespace kitronik_environmental_board {
     */
     //% subcategory="Clock"
     //% group="Read Time"
-    //% blockId=kitronik_environmental_board_read_time 
+    //% blockId=kitronik_smart_greenhouse_read_time 
     //% block="Read Time as String"
     //% weight=95 blockGap=8
     export function readTime(): string {
@@ -632,7 +632,7 @@ namespace kitronik_environmental_board {
     */
     //% subcategory="Clock"
     //% group="Set Date"
-    //% blockId=kitronik_environmental_board_set_date 
+    //% blockId=kitronik_smart_greenhouse_set_date 
     //% block="Set Date to %setDays|Day %setMonths|Month %setYear|Year"
     //% setDay.min=1 setDay.max=31
     //% setMonth.min=1 setMonth.max=12
@@ -710,7 +710,7 @@ namespace kitronik_environmental_board {
     */
     //% subcategory="Clock"
     //% group="Read Date"
-    //% blockId=kitronik_environmental_board_read_date 
+    //% blockId=kitronik_smart_greenhouse_read_date 
     //% block="Read Date as String"
     //% weight=85 blockGap=8
     export function readDate(): string {
@@ -734,7 +734,7 @@ namespace kitronik_environmental_board {
     /**Read time parameter from RTC*/
     //% subcategory="Clock"
     //% group="Read Time"
-    //% blockId=kitronik_environmental_board_read_time_parameter 
+    //% blockId=kitronik_smart_greenhouse_read_time_parameter 
     //% block="Read %selectParameter| as Number"
     //% weight=75 blockGap=8
     export function readTimeParameter(selectParameter: TimeParameter): number {
@@ -766,7 +766,7 @@ namespace kitronik_environmental_board {
     */
     //% subcategory="Clock"
     //% group="Set Time"
-    //% blockId=kitronik_environmental_board_write_hours 
+    //% blockId=kitronik_smart_greenhouse_write_hours 
     //% block="Set Hours to %hours|hrs"
     //% hours.min=0 hours.max=23
     //% weight=80 blockGap=8
@@ -795,7 +795,7 @@ namespace kitronik_environmental_board {
     */
     //% subcategory="Clock"
     //% group="Set Time"
-    //% blockId=kitronik_environmental_board_write_minutes 
+    //% blockId=kitronik_smart_greenhouse_write_minutes 
     //% block="Set Minutes to %minutes|mins"
     //% minutes.min=0 minutes.max=59
     //% weight=70 blockGap=8
@@ -824,7 +824,7 @@ namespace kitronik_environmental_board {
     */
     //% subcategory="Clock"
     //% group="Set Time"
-    //% blockId=kitronik_environmental_board_write_seconds 
+    //% blockId=kitronik_smart_greenhouse_write_seconds 
     //% block="Set Seconds to %seconds|secs"
     //% seconds.min=0 seconds.max=59
     //% weight=60 blockGap=8
@@ -847,7 +847,7 @@ namespace kitronik_environmental_board {
     /**Read time parameter from RTC*/
     //% subcategory="Clock"
     //% group="Read Date"
-    //% blockId=kitronik_environmental_board_read_date_parameter 
+    //% blockId=kitronik_smart_greenhouse_read_date_parameter 
     //% block="Read %selectParameter| as Number"
     //% weight=65 blockGap=8
     export function readDateParameter(selectParameter: DateParameter): number {
@@ -879,7 +879,7 @@ namespace kitronik_environmental_board {
     */
     //% subcategory="Clock"
     //% group="Set Date"
-    //% blockId=kitronik_environmental_board_write_day
+    //% blockId=kitronik_smart_greenhouse_write_day
     //% block="Set Day to %day|day"
     //% day.min=1 day.max=31
     //% weight=50 blockGap=8
@@ -908,7 +908,7 @@ namespace kitronik_environmental_board {
     */
     //% subcategory="Clock"
     //% group="Set Date"
-    //% blockId=kitronik_environmental_board_write_month 
+    //% blockId=kitronik_smart_greenhouse_write_month 
     //% block="Set Month to %month|month"
     //% month.min=1 month.max=12
     //% weight=40 blockGap=8
@@ -937,7 +937,7 @@ namespace kitronik_environmental_board {
     */
     //% subcategory="Clock"
     //% group="Set Date"
-    //% blockId=kitronik_environmental_board_write_year 
+    //% blockId=kitronik_smart_greenhouse_write_year 
     //% block="Set Year to %year|year"
     //% year.min=0 year.max=99
     //% weight=30 blockGap=8
@@ -969,7 +969,7 @@ namespace kitronik_environmental_board {
     */
     //% subcategory="Clock"
     //% group=Alarm
-    //% blockId=kitronik_environmental_board_simple_set_alarm 
+    //% blockId=kitronik_smart_greenhouse_simple_set_alarm 
     //% block="set %alarmType|alarm to %hour|:%min|with %alarmSilence"
     //% hour.min=0 hour.max=23
     //% min.min=0 min.max=59
@@ -1051,7 +1051,7 @@ namespace kitronik_environmental_board {
      */
     //% subcategory="Clock"
     //% group=Alarm
-    //% blockId=kitronik_environmental_board_on_alarm block="on alarm trigger"
+    //% blockId=kitronik_smart_greenhouse_on_alarm block="on alarm trigger"
     //% weight=25 blockGap=8
     export function onAlarmTrigger(alarmTriggerHandler: Action): void {
         alarmHandler = alarmTriggerHandler
@@ -1062,7 +1062,7 @@ namespace kitronik_environmental_board {
     */
     //% subcategory="Clock"
     //% group=Alarm
-    //% blockId=kitronik_environmental_board_simple_check_alarm 
+    //% blockId=kitronik_smart_greenhouse_simple_check_alarm 
     //% block="alarm triggered"
     //% weight=24 blockGap=8
     export function simpleAlarmCheck(): boolean {
@@ -1087,7 +1087,7 @@ namespace kitronik_environmental_board {
     */
     //% subcategory="Clock"
     //% group=Alarm
-    //% blockId=kitronik_environmental_board_alarm_off 
+    //% blockId=kitronik_smart_greenhouse_alarm_off 
     //% block="turn off alarm"
     //% weight=23 blockGap=8
     export function simpleAlarmOff(): void {
@@ -1113,7 +1113,7 @@ namespace kitronik_environmental_board {
 	* Units for pressure are in Pa (Pascals) or mBar (millibar) according to selection
 	*/
     //% subcategory="Sensors"
-    //% blockId=kitronik_environmental_board_read_pressure
+    //% blockId=kitronik_smart_greenhouse_read_pressure
     //% block="Read Pressure in %pressure_unit"
     //% weight=85 blockGap=8
     export function pressure(pressure_unit: PressureUnitList): number {
@@ -1137,7 +1137,7 @@ namespace kitronik_environmental_board {
 	* Units for temperature are in °C (Celsius) or °F (Fahrenheit) according to selection
 	*/
     //% subcategory="Sensors"
-    //% blockId="kitronik_environmental_board_read_temperature"
+    //% blockId="kitronik_smart_greenhouse_read_temperature"
     //% block="Read Temperature in %temperature_unit"
     //% weight=80 blockGap=8
     export function temperature(temperature_unit: TemperatureUnitList): number {
@@ -1161,7 +1161,7 @@ namespace kitronik_environmental_board {
 	* Units for humidity are as a percentage
 	*/
     //% subcategory="Sensors"
-    //% blockId=kitronik_environmental_board_read_humidity
+    //% blockId=kitronik_smart_greenhouse_read_humidity
     //% block="Read Humidity"
     //% weight=75 blockGap=8
     export function humidity(): number {
@@ -1216,7 +1216,7 @@ namespace kitronik_environmental_board {
      */
     //% subcategory="Inputs/Outputs"
     //% group=Servo
-    //% blockId=kitronik_environmental_board_servo_write 
+    //% blockId=kitronik_smart_greenhouse_servo_write 
     //% block="set servo to $angle|degrees"
     //% angle.shadow="protractorPicker"
     //% weight=100 blockGap=8
@@ -1231,10 +1231,10 @@ namespace kitronik_environmental_board {
      */
     //% subcategory="Inputs/Outputs"
     //% group="General Inputs/Outputs"
-    //% blockId=kitronik_environmental_board_read_io_pins 
+    //% blockId=kitronik_smart_greenhouse_read_io_pins 
     //% block="%readType|read %pin"
     //% weight=95 blockGap=8
-    export function readIOPin(readType: kitronik_environmental_board.PinType, pin: kitronik_environmental_board.IOPins): number {
+    export function readIOPin(readType: kitronik_smart_greenhouse.PinType, pin: kitronik_smart_greenhouse.IOPins): number {
         let readValue = 0
         if (pin == 0) {
             if (readType == 0) {
@@ -1271,11 +1271,11 @@ namespace kitronik_environmental_board {
      */
     //% subcategory="Inputs/Outputs"
     //% group="General Inputs/Outputs"
-    //% blockId=kitronik_environmental_board_digital_write_io_pins 
+    //% blockId=kitronik_smart_greenhouse_digital_write_io_pins 
     //% block="digital write pin %pin|to %value"
     //% value.min=0 value.max=1
     //% weight=90 blockGap=8
-    export function digitalWriteIOPin(pin: kitronik_environmental_board.IOPins, value: number): void {
+    export function digitalWriteIOPin(pin: kitronik_smart_greenhouse.IOPins, value: number): void {
         if (pin == 0) {
             pins.digitalWritePin(DigitalPin.P0, value)
         }
@@ -1294,11 +1294,11 @@ namespace kitronik_environmental_board {
      */
     //% subcategory="Inputs/Outputs"
     //% group="General Inputs/Outputs"
-    //% blockId=kitronik_environmental_board_analog_write_io_pins 
+    //% blockId=kitronik_smart_greenhouse_analog_write_io_pins 
     //% block="analog write pin %pin|to %value"
     //% value.min=0 value.max=1023
     //% weight=85 blockGap=8
-    export function analogWriteIOPin(pin: kitronik_environmental_board.IOPins, value: number): void {
+    export function analogWriteIOPin(pin: kitronik_smart_greenhouse.IOPins, value: number): void {
         if (pin == 0) {
             pins.analogWritePin(AnalogPin.P0, value)
         }
@@ -1314,7 +1314,7 @@ namespace kitronik_environmental_board {
      * Turn high power outputs on and off
      * @param pin which high power output pin to control
      * @param output is the boolean output of the pin, either ON or OFF
-     * @param dutyCycle is an optional parameter to set the duty cycle for the pin eg: 50
+     * @param dutyCycle is an optional parameter to set the duty cycle for the pin
      */
     //% subcategory="Inputs/Outputs"
     //% group="High Power Outputs"
@@ -1322,7 +1322,7 @@ namespace kitronik_environmental_board {
     //% block="turn high power %pin|%output=on_off_toggle||with duty cycle %dutyCycle"
     //% expandableArgumentMode="toggle"
     //% weight=80 blockGap=8
-    export function controlHighPowerPin(pin: kitronik_environmental_board.HighPowerPins, output: boolean, dutyCycle: number = 100): void {
+    export function controlHighPowerPin(pin: kitronik_smart_greenhouse.HighPowerPins, output: boolean, dutyCycle: number = 100): void {
         if (pin == 13) {
             if (output == true) {
                 if (dutyCycle != 100) {
@@ -1443,7 +1443,7 @@ namespace kitronik_environmental_board {
     //% subcategory="Data Logging"
     //% group=Setup
     //% weight=100 blockGap=8
-    //% blockId=kitronik_environmental_board_output_to_usb
+    //% blockId=kitronik_smart_greenhouse_output_to_usb
     //% block="set data output to USB"
     export function setDataForUSB() {
         comms = USB
@@ -1457,7 +1457,7 @@ namespace kitronik_environmental_board {
     //% subcategory="Data Logging"
     //% group=Setup
     //% weight=90 blockGap=8
-    //% blockId=kitronik_environmental_board_select_separator
+    //% blockId=kitronik_smart_greenhouse_select_separator
     //% block="separate entries with %charSelect"
     export function selectSeparator(charSelect: Separator): void{
         if (charSelect == Separator.tab)
@@ -1477,7 +1477,7 @@ namespace kitronik_environmental_board {
     //% subcategory="Data Logging"
     //% group=Setup
     //% weight=85 blockGap=8
-    //% blockId=kitronik_environmental_board_entry_numbers
+    //% blockId=kitronik_smart_greenhouse_entry_numbers
     //% block="%sendSelection|entry positions with data"
     export function optionSendEntryNumber(sendSelection: ListNumber): void{
         if (sendSelection == ListNumber.Send)
@@ -1517,7 +1517,7 @@ namespace kitronik_environmental_board {
     //% subcategory="Data Logging"
     //% group=Setup
     //% weight=83 blockGap=8
-    //% blockId=kitronik_environmental_board_entry_title
+    //% blockId=kitronik_smart_greenhouse_entry_title
     //% block="add data entry headings: %title1|| %title2 %title3 %title4 %title5 %title6 %title7 %title8 %title9 %title10"
     //% expandableArgumentMode="enabled" inlineInputMode=inline
     export function addTitle(title1: string, title2?: string, title3?: string, title4?: string, title5?: string, title6?: string, title7?: string, title8?: string, title9?: string, title10?: string): void{
@@ -1549,7 +1549,7 @@ namespace kitronik_environmental_board {
     //% subcategory="Data Logging"
     //% group=Entries
     //% weight=80 blockGap=8
-    //% blockId=kitronik_environmental_board_add
+    //% blockId=kitronik_smart_greenhouse_add
     //% block="add data %entry1|| %entry2 %entry3 %entry4 %entry5 %entry6 %entry7 %entry8 %entry9 %entry10"
     //% expandableArgumentMode="enabled" inlineInputMode=inline
     export function addData(entry1: any, entry2?: any, entry3?: any, entry4?: any, entry5?: any, entry6?: any, entry7?: any, entry8?: any, entry9?: any, entry10?: any): void{
@@ -1587,7 +1587,7 @@ namespace kitronik_environmental_board {
     //% subcategory="Data Logging"
     //% group=Entries
     //% weight=70 blockGap=8
-    //% blockId=kitronik_environmental_board_clear
+    //% blockId=kitronik_smart_greenhouse_clear
     //% block="clear all data"
     export function clearData(): void{
         storedList = []
@@ -1600,7 +1600,7 @@ namespace kitronik_environmental_board {
     //% subcategory="Data Logging"
     //% group=Transfer
     //% weight=65 blockGap=8
-    //% blockId=kitronik_environmental_board_send_all
+    //% blockId=kitronik_smart_greenhouse_send_all
     //% block="transmit all data"
     export function sendAllData(): void{
         if (comms == NONE)
@@ -1633,7 +1633,7 @@ namespace kitronik_environmental_board {
     //% subcategory="Data Logging"
     //% group=Transfer
     //% weight=60 blockGap=8
-    //% blockId=kitronik_environmental_board_send_selected
+    //% blockId=kitronik_smart_greenhouse_send_selected
     //% block="transmit data at entry %position"
     //% position.min=1 position.max=100 position.defl=1
     export function sendSelectedData(position: number): void{
