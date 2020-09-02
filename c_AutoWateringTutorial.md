@@ -150,8 +150,56 @@ basic.forever(function () {
 ```
 
 ### Step 2
-Next, from the ``||kitronik_smart_greenhouse.Inputs/Outputs||`` section of the ``||kitronik_smart_greenhouse.Greenhouse||`` category, add a ``||kitronik_smart_greenhouse.turn high power P13 ON||`` block inside the ``||loops:repeat||`` loop.
+Next, from the ``||kitronik_smart_greenhouse.Inputs/Outputs||`` section of the ``||kitronik_smart_greenhouse.Greenhouse||`` category, add a ``||kitronik_smart_greenhouse.turn high power P13 ON||`` block inside the ``||loops:repeat||`` loop. After this, add a 1 second ``||basic:pause||``, then turn **OFF** ``||kitronik_smart_greenhouse.high power P13||``, and finally add a 2 second ``||basic:pause||`` at the end. This section of code will now turn the water pump on for 1 second, turn it off for 2 seconds, and repeat this 5 times.
 
-### Step 6
+#### ~ tutorialhint
+```blocks
+basic.forever(function () {
+    if (kitronik_smart_greenhouse.readIOPin(kitronik_smart_greenhouse.PinType.analog, kitronik_smart_greenhouse.IOPins.p1) <= 400) {
+        basic.showIcon(IconNames.Sad)
+        music.startMelody(music.builtInMelody(Melodies.BaDing), MelodyOptions.Forever)
+        basic.pause(2000)
+        music.stopMelody(MelodyStopOptions.All)
+        for (let index = 0; index < 5; index++) {
+            kitronik_smart_greenhouse.controlHighPowerPin(kitronik_smart_greenhouse.HighPowerPins.pin13, kitronik_smart_greenhouse.onOff(true))
+            basic.pause(1000)
+            kitronik_smart_greenhouse.controlHighPowerPin(kitronik_smart_greenhouse.HighPowerPins.pin13, kitronik_smart_greenhouse.onOff(false))
+            basic.pause(2000)
+        }
+    } else {
+        basic.showIcon(IconNames.Happy)
+    }
+})
+```
+
+### Step 3
+At the moment, the program checks the soil moisture level constantly, but when water is poured into a pot it doesn't immediately soak through all the soil evenly. To leave time for the mositure level to actually change, the program needs to increase the time between each measurement. To do this, add a 10000ms ``||basic:pause||`` after the ``||logic:if else||`` block in the ``||basic:forever||`` loop.
+
+#### ~ tutorialhint
+```blocks
+let statusLEDs: kitronik_smart_greenhouse.greenhouseZIPLEDs = null
+basic.forever(function () {
+    soilHue = Math.map(kitronik_smart_greenhouse.readIOPin(kitronik_smart_greenhouse.PinType.analog, kitronik_smart_greenhouse.IOPins.p1), 0, 1023, 35, 150)
+    statusLEDs.setZipLedColor(2, kitronik_smart_greenhouse.hueToRGB(soilHue))
+    statusLEDs.show()
+    if (kitronik_smart_greenhouse.readIOPin(kitronik_smart_greenhouse.PinType.analog, kitronik_smart_greenhouse.IOPins.p1) <= 400) {
+        basic.showIcon(IconNames.Sad)
+        music.startMelody(music.builtInMelody(Melodies.BaDing), MelodyOptions.Forever)
+        basic.pause(2000)
+        music.stopMelody(MelodyStopOptions.All)
+        for (let index = 0; index < 5; index++) {
+            kitronik_smart_greenhouse.controlHighPowerPin(kitronik_smart_greenhouse.HighPowerPins.pin13, kitronik_smart_greenhouse.onOff(true))
+            basic.pause(1000)
+            kitronik_smart_greenhouse.controlHighPowerPin(kitronik_smart_greenhouse.HighPowerPins.pin13, kitronik_smart_greenhouse.onOff(false))
+            basic.pause(2000)
+        }
+    } else {
+        basic.showIcon(IconNames.Happy)
+    }
+    basic.pause(10000)
+})
+```
+
+### Step 4
 CODING COMPLETE! Click ``|Download|`` and transfer the code to the Environmental Control Board.  
-Try varying the conditions to see the sensor values displayed on the LEDs.
+Try sticking the Prong in soil with dry soil and see the pump automatically water the plant.
