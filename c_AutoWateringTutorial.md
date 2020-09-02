@@ -14,11 +14,11 @@ Connect Prong 3V to one of the 3V pads, Prong GND to one of the GND pads and Pro
 
 ### Step 1
 The first thing to do is to set up the ZIP LEDs and create the status LEDs range.
-From the ``||kitronik_smart_greenhouse.ZIP LEDs||`` section of the ``||kitronik_smart_greenhouse.Environmental||`` category, add the ``||variables:set zipLEDs to||`` ``||kitronik_smart_greenhouse.Environmental Board with 3 ZIP LEDs||`` block to the ``||basic:on start||`` section, followed by the ``||variables:set statusLEDs||`` block.
+From the ``||kitronik_smart_greenhouse.ZIP LEDs||`` section of the ``||kitronik_smart_greenhouse.Greenhouse||`` category, add the ``||variables:set zipLEDs to||`` ``||kitronik_smart_greenhouse.Smart Greenhouse with 8 ZIP LEDs||`` block to the ``||basic:on start||`` section, followed by the ``||variables:set statusLEDs||`` block.
 
 #### ~ tutorialhint
 ```blocks
-let zipLEDs = kitronik_smart_greenhouse.createECZIPDisplay(3)
+let zipLEDs = kitronik_smart_greenhouse.createGreenhouseZIPDisplay(8)
 let statusLEDs = zipLEDs.statusLedsRange()
 ```
 
@@ -34,7 +34,7 @@ basic.forever(function () {
 ```
 
 ### Step 3
-In the ``||math:map||`` block, put the ``||kitronik_smart_greenhouse.Analog read P1||`` block in the first slot - this can be found in the ``||kitronik_smart_greenhouse.Inputs/Outputs||`` section of the ``||kitronik_smart_greenhouse.Environmental||`` category. Then, set ``||math:from low 0 high 1023 to low 35 high 150||`` to give a desert sand colour for a low moisture reading and a watery colour for a high moisture reading.
+In the ``||math:map||`` block, put the ``||kitronik_smart_greenhouse.Analog read P1||`` block in the first slot - this can be found in the ``||kitronik_smart_greenhouse.Inputs/Outputs||`` section of the ``||kitronik_smart_greenhouse.Greenhouse||`` category. Then, set ``||math:from low 0 high 1023 to low 35 high 150||`` to give a desert sand colour for a low moisture reading and a watery colour for a high moisture reading.
 
 #### ~ tutorialhint
 ```blocks
@@ -49,7 +49,7 @@ After the ``||variables:set soilHue||`` block, add a  ``||kitronik_smart_greenho
 
 #### ~ tutorialhint
 ```blocks
-let statusLEDs: kitronik_smart_greenhouse.ecZIPLEDs = null
+let statusLEDs: kitronik_smart_greenhouse.greenhouseZIPLEDs = null
 basic.forever(function () {
     soilHue = Math.map(kitronik_smart_greenhouse.readIOPin(kitronik_smart_greenhouse.PinType.analog, kitronik_smart_greenhouse.IOPins.p1), 0, 1023, 35, 150)
     statusLEDs.setZipLedColor(2, kitronik_smart_greenhouse.hueToRGB(soilHue))
@@ -64,7 +64,7 @@ The ``||logic:if||`` statement should read: ``||logic:if||`` ``||kitronik_smart_
 
 #### ~ tutorialhint
 ```blocks
-let statusLEDs: kitronik_smart_greenhouse.ecZIPLEDs = null
+let statusLEDs: kitronik_smart_greenhouse.greenhouseZIPLEDs = null
 basic.forever(function () {
     soilHue = Math.map(kitronik_smart_greenhouse.readIOPin(kitronik_smart_greenhouse.PinType.analog, kitronik_smart_greenhouse.IOPins.p1), 0, 1023, 35, 150)
     statusLEDs.setZipLedColor(2, kitronik_smart_greenhouse.hueToRGB(soilHue))
@@ -79,13 +79,13 @@ basic.forever(function () {
 
 ### Step 6
 The ``||logic:if||`` statement is set up to check whether the soil is too dry, so now an action needs to be taken if this condition is met.  
-Audio is going to be used, so to set this up, add in the ``||kitronik_smart_greenhouse.set music pin for buzzer||`` block to the ``||basic:on start||`` section. This block is in the top level of the ``||kitronik_smart_greenhouse.Environmental||`` cateogry.  
+Audio is going to be used, so to set this up, add in the ``||kitronik_smart_greenhouse.set music pin for buzzer||`` block to the ``||basic:on start||`` section. This block is in the top level of the ``||kitronik_smart_greenhouse.Greenhouse||`` cateogry.  
 From the ``||music:Music||`` category, add a ``||music:start melody||`` block inside the ``||logic:if||`` statement, select a tune from the drop-down list and set the the repeat to ``||music:forever||``. After this, place a 2 second ``||basic:pause||``, followed by a ``||music:stop melody all||`` block. The audio alarm is now complete.
 
 #### ~ tutorialhint
 ```blocks
 kitronik_smart_greenhouse.setBuzzerPin()
-let zipLEDs = kitronik_smart_greenhouse.createECZIPDisplay(3)
+let zipLEDs = kitronik_smart_greenhouse.createGreenhouseZIPDisplay(3)
 let statusLEDs = zipLEDs.statusLedsRange()
 basic.forever(function () {
     if (kitronik_smart_greenhouse.readIOPin(kitronik_smart_greenhouse.PinType.analog, kitronik_smart_greenhouse.IOPins.p1) <= 400) {

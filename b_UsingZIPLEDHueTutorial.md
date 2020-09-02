@@ -13,11 +13,11 @@ In this tutorial, learn how to use the ZIP LED hue feature to display data on a 
 
 ### Step 1
 The first thing to do is to set up the ZIP LEDs and create the status LEDs range.
-From the ``||kitronik_smart_greenhouse.ZIP LEDs||`` section of the ``||kitronik_smart_greenhouse.Environmental||`` category, add the ``||variables:set zipLEDs to||`` ``||kitronik_smart_greenhouse.Environmental Board with 3 ZIP LEDs||`` block to the ``||basic:on start||`` section, followed by the ``||variables:set statusLEDs||`` block.
+From the ``||kitronik_smart_greenhouse.ZIP LEDs||`` section of the ``||kitronik_smart_greenhouse.Greenhouse||`` category, add the ``||variables:set zipLEDs to||`` ``||kitronik_smart_greenhouse.Smart Greenhouse with 8 ZIP LEDs||`` block to the ``||basic:on start||`` section, followed by the ``||variables:set statusLEDs||`` block.
 
 #### ~ tutorialhint
 ```blocks
-let zipLEDs = kitronik_smart_greenhouse.createECZIPDisplay(3)
+let zipLEDs = kitronik_smart_greenhouse.createGreenhouseZIPDisplay(8)
 let statusLEDs = zipLEDs.statusLedsRange()
 ```
 
@@ -34,7 +34,7 @@ basic.forever(function () {
 
 ### Step 3
 The ``||math.map||`` function changes the possible range of a value - in this case temperature - to another range, changing in relative amounts. This is very useful, as it means temperature, measured between 0 and 40°C, can then be converted to a colour hue value (these range from 0-360, red all the way round a colour wheel to red again).  
-In the ``||math:map||`` block, put the ``||kitronik_smart_greenhouse.Read Temperature in °C||`` block in the first slot - this can be found in the ``||kitronik_smart_greenhouse.Sensors||`` section of the ``||kitronik_smart_greenhouse.Environmental||`` category. Then, set ``||math:from low 0 high 40 to low 210 high 0||`` to give blue colours for cold, and red colours for hot.
+In the ``||math:map||`` block, put the ``||kitronik_smart_greenhouse.Read Temperature in °C||`` block in the first slot - this can be found in the ``||kitronik_smart_greenhouse.Sensors||`` section of the ``||kitronik_smart_greenhouse.Greenhouse||`` category. Then, set ``||math:from low 0 high 40 to low 210 high 0||`` to give blue colours for cold, and red colours for hot.
 
 #### ~ tutorialhint
 ```blocks
@@ -50,7 +50,7 @@ Finally, put a ``||variables:statusLEDs||``  ``||kitronik_smart_greenhouse.show|
 
 #### ~ tutorialhint
 ```blocks
-let statusLEDs: kitronik_smart_greenhouse.ecZIPLEDs = null
+let statusLEDs: kitronik_smart_greenhouse.greenhouseZIPLEDs = null
 basic.forever(function () {
     tempHue = Math.map(kitronik_smart_greenhouse.temperature(TemperatureUnitList.C), 0, 40, 210, 0)
     statusLEDs.setZipLedColor(0, kitronik_smart_greenhouse.hueToRGB(tempHue))
@@ -77,7 +77,7 @@ Directly after the ``||variables:set tempHue||`` block in the ``||basic:forever|
 
 #### ~ tutorialhint
 ```blocks
-let statusLEDs: kitronik_smart_greenhouse.ecZIPLEDs = null
+let statusLEDs: kitronik_smart_greenhouse.greenhouseZIPLEDs = null
 basic.forever(function () {
     tempHue = Math.map(kitronik_smart_greenhouse.temperature(TemperatureUnitList.C), 0, 40, 210, 0)
     humidHue = Math.map(0, 0, 1023, 0, 4)
@@ -88,11 +88,11 @@ basic.forever(function () {
 ```
 
 ### Step 2
-Similar to ``||variables:tempHue||``, ``||variables:set humidHue to||`` ``||math:map||`` ``||kitronik_smart_greenhouse.Read Humidity||`` - this block can be found in the ``||kitronik_smart_greenhouse.Sensors||`` section of the ``||kitronik_smart_greenhouse.Environmental||`` category. The mapping values should be: ``||math:from low 0 high 100 to low 35 high 150||``. This will give a desert sand colour for low humidity and a watery colour for high humidity.
+Similar to ``||variables:tempHue||``, ``||variables:set humidHue to||`` ``||math:map||`` ``||kitronik_smart_greenhouse.Read Humidity||`` - this block can be found in the ``||kitronik_smart_greenhouse.Sensors||`` section of the ``||kitronik_smart_greenhouse.Greenhouse||`` category. The mapping values should be: ``||math:from low 0 high 100 to low 35 high 150||``. This will give a desert sand colour for low humidity and a watery colour for high humidity.
 
 #### ~ tutorialhint
 ```blocks
-let statusLEDs: kitronik_smart_greenhouse.ecZIPLEDs = null
+let statusLEDs: kitronik_smart_greenhouse.greenhouseZIPLEDs = null
 basic.forever(function () {
     tempHue = Math.map(kitronik_smart_greenhouse.temperature(TemperatureUnitList.C), 0, 40, 210, 0)
     humidHue = Math.map(kitronik_smart_greenhouse.humidity(), 0, 100, 35, 150)
@@ -107,7 +107,7 @@ Now do the same thing for ``||variables:soilHue||``, but this time ``||math:map|
 
 #### ~ tutorialhint
 ```blocks
-let statusLEDs: kitronik_smart_greenhouse.ecZIPLEDs = null
+let statusLEDs: kitronik_smart_greenhouse.greenhouseZIPLEDs = null
 basic.forever(function () {
     tempHue = Math.map(kitronik_smart_greenhouse.temperature(TemperatureUnitList.C), 0, 40, 210, 0)
     humidHue = Math.map(kitronik_smart_greenhouse.humidity(), 0, 100, 35, 150)
@@ -123,7 +123,7 @@ Just before the ``||kitronik_smart_greenhouse.show||`` block, add in two more ``
 
 #### ~ tutorialhint
 ```blocks
-let statusLEDs: kitronik_smart_greenhouse.ecZIPLEDs = null
+let statusLEDs: kitronik_smart_greenhouse.greenhouseZIPLEDs = null
 basic.forever(function () {
     tempHue = Math.map(kitronik_smart_greenhouse.temperature(TemperatureUnitList.C), 0, 40, 210, 0)
     humidHue = Math.map(kitronik_smart_greenhouse.humidity(), 0, 100, 35, 150)
