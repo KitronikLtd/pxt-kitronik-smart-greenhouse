@@ -5,7 +5,7 @@
 
 ## Soil Moisture Alarm
 ### Introduction Step @unplugged
-In the "Displaying Temperature, Humidity & Soil Moisture" tutorial (click [here](https://makecode.microbit.org/#tutorial:https://github.com/KitronikLtd/pxt-kitronik-ec-board/b_UsingZIPLEDHueTutorial) to view) the ZIP LED colour hue was used to display the sensor values. In this tutorial, soil moisture will be displayed in the same way, but the measurement will also be used to control when a plant is watered.  
+In the "Displaying Temperature, Humidity & Soil Moisture" tutorial (click [here](https://makecode.microbit.org/#tutorial:https://github.com/KitronikLtd/pxt-kitronik-ec-board/b_UsingZIPLEDHueTutorial) to view) the ZIP LED colour hue was used to display the sensor values. In this tutorial, soil moisture will be displayed in the same way, but the measurement will also be used to trigger an alarm and control when a plant is watered.  
   
 This tutorial is going to require the Prong to be connected to the Environmental Control Board using crocodile clips.  
 Connect Prong 3V to one of the 3V pads, Prong GND to one of the GND pads and Prong P1 to the Pin1 pad. Stick it into a plant pot.
@@ -59,7 +59,8 @@ basic.forever(function () {
 
 ### Step 5
 Displaying the soil moisture has now been set up, but it isn't being used to control anything yet.  
-After the ``||kitronik_environmental_board.show||`` block, add in an ``||logic:if else||`` block from the ``||logic:Logic||`` category. Check whether the measured soil moisture value is less than 400 - the ``||logic:if||`` statement should read: ``||logic:if||`` ``||kitronik_environmental_board.Analog read P1||`` ``||logic:≤ 400 then||``. 
+After the ``||kitronik_environmental_board.show||`` block, add in an ``||logic:if else||`` block from the ``||logic:Logic||`` category. Check whether the measured soil moisture value is less than 400 (this value can be changed depending on how much water particular plants need, a lower value means drier soil).  
+The ``||logic:if||`` statement should read: ``||logic:if||`` ``||kitronik_environmental_board.Analog read P1||`` ``||logic:≤ 400 then||``. 
 
 #### ~ tutorialhint
 ```blocks
@@ -76,15 +77,56 @@ basic.forever(function () {
 })
 ```
 
+### Step 6
+The ``||logic:if||`` statement is set up to check whether the soil is too dry, so now an action needs to be taken if this condition is met.  
+Audio is going to be used, so to set this up, add in the ``||kitronik_environmental_board.set music pin for buzzer||`` block to the ``||basic:on start||`` section. This block is in the top level of the ``||kitronik_environmental_board.Environmental||`` cateogry.  
+From the ``||music:Music||`` category, add a ``||music:start melody||`` block inside the ``||logic:if||`` statement, select a tune from the drop-down list and set the the repeat to ``||music:forever||``. After this, place a 2 second ``||basic:pause||``, followed by a ``||music:stop melody all||`` block. The audio alarm is now complete.
 
-## Temperature, Humidity & Soil Moisture
+#### ~ tutorialhint
+```blocks
+kitronik_environmental_board.setBuzzerPin()
+let zipLEDs = kitronik_environmental_board.createECZIPDisplay(3)
+let statusLEDs = zipLEDs.statusLedsRange()
+basic.forever(function () {
+    if (kitronik_environmental_board.readIOPin(kitronik_environmental_board.PinType.analog, kitronik_environmental_board.IOPins.p1) <= 400) {
+        music.startMelody(music.builtInMelody(Melodies.BaDing), MelodyOptions.Forever)
+        basic.pause(2000)
+        music.stopMelody(MelodyStopOptions.All)
+    } else {
+        
+    }
+})
+```
+
+### Step 7
+The final stage of the alarm is to add some visual indicators as well. Inside the ``||logic:if||`` statement, just before the ``||music:start melody||`` block, add in a ``||basic:show icon||`` block with a sad face selected, and add another of these blocks inside the ``||logic:else||`` sectin, but this time with a happy face.  
+Now, the micro:bit will be happy when the plant has enough water and sad when it's too dry.
+
+#### ~ tutorialhint
+```blocks
+basic.forever(function () {
+    if (kitronik_environmental_board.readIOPin(kitronik_environmental_board.PinType.analog, kitronik_environmental_board.IOPins.p1) <= 400) {
+        basic.showIcon(IconNames.Sad)
+        music.startMelody(music.builtInMelody(Melodies.BaDing), MelodyOptions.Forever)
+        basic.pause(2000)
+        music.stopMelody(MelodyStopOptions.All)
+    } else {
+        basic.showIcon(IconNames.Happy)
+    }
+})
+```
+
+### Step 8
+The soil moisture alarm is now complete, so click ``|Download|`` and transfer the code to the Environmental Control Board.  
+Try sticking the Prong in soil with different moisture levels to see when the alarm is triggered.
+
+## Adding Automated Watering
 ### Introduction Step @unplugged
-Now that temperature is working, humidity and soil moisture can be added to ZIP LEDs 1 and 2.  
+The Environmental Control Board is now able to determine when the soil is too dry, and can even sound the alarm, but it would be great if it could sort out the watering as well!
   
-This stage of the tutorial is going to require the Prong to be connected to the Environmental Control Board using crocodile clips.  
-Connect Prong 3V to one of the 3V pads, Prong GND to one of the GND pads and Prong P1 to the Pin1 pad.
+This stage of the tutorial is going to require the Prong as before, and also the water pump to be connected to the high power output on P13 on the Environmental Control Board (follow the instructions in the booklet included .
 
-![Picture of Prong connected to Environmental Control Board]
+![Picture of Prong and water pump connected to Environmental Control Board]
 
 ### Step 1
 Create two more new variables, one called ``||variables:humidHue||`` and the other ``||variables:soilHue||``.  
