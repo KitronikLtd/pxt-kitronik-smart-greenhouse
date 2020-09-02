@@ -238,7 +238,7 @@ namespace kitronik_smart_greenhouse {
          * @param rgb RGB color of the LED
          */
         //% subcategory="ZIP LEDs"
-        //% blockId="kitronik_smart_greenhouse_display_only_set_strip_color" block="%zipLEDs|set color %rgb=kitronik_environmental_board_colors" 
+        //% blockId="kitronik_smart_greenhouse_display_only_set_strip_color" block="%zipLEDs|set color %rgb=kitronik_smart_greenhouse_colors" 
         //% weight=96 blockGap=8
         setColor(rgb: number) {
         	rgb = rgb >> 0;
@@ -249,7 +249,7 @@ namespace kitronik_smart_greenhouse {
          * @param rgb RGB color of the LED
          */
         //% subcategory="ZIP LEDs"
-        //% blockId="kitronik_smart_greenhouse_display_set_strip_color" block="%zipLEDs|show color %rgb=kitronik_environmental_board_colors" 
+        //% blockId="kitronik_smart_greenhouse_display_set_strip_color" block="%zipLEDs|show color %rgb=kitronik_smart_greenhouse_colors" 
         //% weight=97 blockGap=8
         showColor(rgb: number) {
         	rgb = rgb >> 0;
