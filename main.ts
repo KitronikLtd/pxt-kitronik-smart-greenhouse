@@ -351,7 +351,7 @@ namespace kitronik_smart_greenhouse {
 
     /**
      * Create a new ZIP LED driver for Smart Greenhouse (LEDs on and off board).
-     * @param zipNum is the total number of ZIP LEDs eg: 3
+     * @param zipNum is the total number of ZIP LEDs eg: 8
      */
     //% subcategory="ZIP LEDs"
     //% blockId="kitronik_smart_greenhouse_display_create" block="Smart Greenhouse with %zipNum|ZIP LEDs"
