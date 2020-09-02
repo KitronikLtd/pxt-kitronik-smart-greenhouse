@@ -11,19 +11,19 @@ Learn how to visually represent temperature using the status ZIP LEDs on the Evi
 
 ### Step 1
 The first thing to do is to set up the ZIP LEDs and create the status LEDs range.
-From the ``||kitronik_smart_greenhouse.ZIP LEDs||`` section of the ``||kitronik_smart_greenhouse.Environmental||`` category, add the ``||variables:set zipLEDs to||`` ``||kitronik_smart_greenhouse.Environmental Board with 3 ZIP LEDs||`` block to the ``||basic:on start||`` section, followed by the ``||variables:set statusLEDs||`` block.  
+From the ``||kitronik_smart_greenhouse.ZIP LEDs||`` section of the ``||kitronik_smart_greenhouse.Greenhouse||`` category, add the ``||variables:set zipLEDs to||`` ``||kitronik_smart_greenhouse.Smart Greenhouse with 8 ZIP LEDs||`` block to the ``||basic:on start||`` section, followed by the ``||variables:set statusLEDs||`` block.  
 Also, to show that temperature is being displayed, add a ``||basic:show string "T"||`` block at the end of the ``||basic:on start||`` section.
 
 #### ~ tutorialhint
 ```blocks
-let zipLEDs = kitronik_smart_greenhouse.createECZIPDisplay(3)
+let zipLEDs = kitronik_smart_greenhouse.createGreenhouseZIPDisplay(8)
 let statusLEDs = zipLEDs.statusLedsRange()
 basic.showString("T")
 ```
 
 ### Step 2
 Next, create a new variable called ``||variables:temperature||``. This will be used to store the temperature reading from the sensor.  
-In the ``||basic:forever||`` loop, ``||variables:set temperature to||`` ``||kitronik_smart_greenhouse.Read Temperature in °C||`` - this block can be found in the ``||kitronik_smart_greenhouse.Sensors||`` section of the ``||kitronik_smart_greenhouse.Environmental||`` category.
+In the ``||basic:forever||`` loop, ``||variables:set temperature to||`` ``||kitronik_smart_greenhouse.Read Temperature in °C||`` - this block can be found in the ``||kitronik_smart_greenhouse.Sensors||`` section of the ``||kitronik_smart_greenhouse.Greenhouse||`` category.
 
 #### ~ tutorialhint
 ```blocks
@@ -65,7 +65,7 @@ For ``||variables:temperature||`` ``||logic:≥ 20 and ≤ 30||``, ``||kitronik_
 
 #### ~ tutorialhint
 ```blocks
-let statusLEDs: kitronik_smart_greenhouse.ecZIPLEDs = null
+let statusLEDs: kitronik_smart_greenhouse.greenhouseZIPLEDs = null
 basic.forever(function () {
     temperature = kitronik_smart_greenhouse.temperature(TemperatureUnitList.C)
     if (temperature < 20) {
@@ -84,7 +84,7 @@ Finally, from the ``||basic:Basic||`` category, add a 1 second ``||basic:pause||
 
 #### ~ tutorialhint
 ```blocks
-let statusLEDs: kitronik_smart_greenhouse.ecZIPLEDs = null
+let statusLEDs: kitronik_smart_greenhouse.greenhouseZIPLEDs = null
 basic.forever(function () {
     temperature = kitronik_smart_greenhouse.temperature(TemperatureUnitList.C)
     statusLEDs.clear()
@@ -132,7 +132,7 @@ Set the ``||variables:temperature||`` comparison ranges and the status ZIP LED c
 #### ~ tutorialhint
 For the instances where all 3 ZIP LEDs are the same colour, use the single ``||kitronik_smart_greenhouse.set color||`` block:  
 ```blocks
-let statusLEDs: kitronik_smart_greenhouse.ecZIPLEDs = null
+let statusLEDs: kitronik_smart_greenhouse.greenhouseZIPLEDs = null
 statusLEDs.setColor(kitronik_smart_greenhouse.colors(ZipLedColors.Blue))
 ```
 
