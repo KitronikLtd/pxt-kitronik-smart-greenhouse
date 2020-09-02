@@ -1,0 +1,140 @@
+### @activities true
+### @explicitHints true
+
+# Setting the Time and Water Scheduling
+
+## Setting the Time and a Single Alarm
+### Introduction Step @unplugged
+In this tutorial, the Real Time Clock (RTC) on the Environmental Control Board will be used to create a watering schedule for plants.
+
+This stage of the tutorial is going to require the water pump to be connected to the high power output on P13 on the Environmental Control Board (follow the instructions Smart Greenhouse booklet to connect and prime the water pump).
+
+![Picture of water pump connected to Environmental Control Board]
+
+### Step 1
+In order for the clock to be used effectively, the time first needs to be set.  
+From the ``||kitronik_smart_greenhouse.Clock||`` section of the ``||kitronik_smart_greenhouse.Greenhouse||`` category, add the ``||kitronik_smart_greenhouse.Set Time||`` block to the ``||basic:on start||`` section. Set the time to be a few mins in the future (this should give enough time to complete the tutorial and download the code; alternatively, complete the rest of the tutorial and set the current time just before downloading the code). **Note:** The time is set in 24 hour mode.  
+To check that the time has set correctly, add an ``||input:on button A pressed||`` block, and inside, ``|basic:show string|`` ``||kitronik_smart_greenhouse.Read Time as String||`` (this block is also in the ``||kitronik_smart_greenhouse.Clock||`` section).
+
+#### ~ tutorialhint
+```blocks
+kitronik_smart_greenhouse.setTime(12, 0, 0)
+input.onButtonPressed(Button.A, function () {
+    basic.showString(kitronik_smart_greenhouse.readTime())
+})
+```
+
+### Step 2
+Now that the time is set and the RTC is running, an alarm can be set to trigger the plants being watered.  
+Again from the ``||kitronik_smart_greenhouse.Clock||`` section of the ``||kitronik_smart_greenhouse.Greenhouse||`` category, place a ``||kitronik_smart_greenhouse.set Single alarm||`` block at the end of the ``||basic:on start||`` section. Set the alarm time to be a short time after the initial clock setting - this will make it quicker and easier to check whether it's working! Make sure the alarm is in the ``||kitronik_smart_greenhouse.Auto Silence||`` mode.
+
+#### ~ tutorialhint
+```blocks
+kitronik_smart_greenhouse.setTime(12, 0, 0)
+kitronik_smart_greenhouse.simpleAlarmSet(kitronik_smart_greenhouse.AlarmType.Single, 12, 2, kitronik_smart_greenhouse.AlarmSilence.autoSilence)
+```
+
+### Step 3
+The clock is running and an alarm has been set - now something needs to happen when the alarm goes off.  
+There are two ways carrying out actions when an alarm has been triggered, the first of which makes use of an ``||logic:if||`` statement. Add a single ``||logic:if||`` statement to the ``||basic:forever||`` loop, and then, from the ``||kitronik_smart_greenhouse.Clock||`` section of the ``||kitronik_smart_greenhouse.Greenhouse||`` category, insert an ``||kitronik_smart_greenhouse.alarm triggered||`` block into the space which says ``||logic:true||`` in the ``||logic:if||`` statement (the alarm returns a **true** value when it triggers, which is what this statement looks for).
+
+#### ~ tutorialhint
+```blocks
+basic.forever(function () {
+    if (kitronik_smart_greenhouse.simpleAlarmCheck()) {
+        
+    }
+})
+```
+
+### Step 4
+Inside the ``||logic:if||`` section, add a ``||loops:repeat||`` loop, with the number of repeats set to **5**.  
+Inside the loop, add a ``||kitronik_smart_greenhouse.turn high power P13 ON||`` block from the ``||kitronik_smart_greenhouse.Inputs/Outputs||`` section of the ``||kitronik_smart_greenhouse.Greenhouse||`` category. After this, add a 1 second ``||basic:pause||``, then turn **OFF** ``||kitronik_smart_greenhouse.high power P13||``, and finally add a 2 second ``||basic:pause||`` at the end. This section of code will now turn the water pump on for 1 second, turn it off for 2 seconds, and repeat this 5 times.
+
+#### ~ tutorialhint
+```blocks
+basic.forever(function () {
+    if (kitronik_smart_greenhouse.simpleAlarmCheck()) {
+        for (let index = 0; index < 5; index++) {
+            kitronik_smart_greenhouse.controlHighPowerPin(kitronik_smart_greenhouse.HighPowerPins.pin13, kitronik_smart_greenhouse.onOff(true))
+            basic.pause(1000)
+            kitronik_smart_greenhouse.controlHighPowerPin(kitronik_smart_greenhouse.HighPowerPins.pin13, kitronik_smart_greenhouse.onOff(false))
+            basic.pause(2000)
+        }
+    }
+})
+```
+
+### Step 5
+Click ``|Download|`` and transfer the code to the Environmental Control Board.  
+Leave the program running and check that the alarm triggers at the set time and turns the water pump on.
+
+## Continuous Schedule
+Great! The water pump will now turn on when the alarm has been set. However, watering the plants just once won't be very good for their health, so the schedule needs to be continuous.
+
+### Step 1
+To make a continous schedule, a new alarm needs to be set everytime the current alarm is triggered. In this tutorial, there will always be a 1 hour gap between alarms, but gap could be any time value.  
+To start with, create two new variables: ``||variables:alarmHour||`` and ``||variables:alarmMin||``. After the ``||kitronik_smart_greenhouse.Set Time||`` block in ``||basic:on start||``, ``||variables:set alarmHour to||`` the hour number in the ``||kitronik_smart_greenhouse.set alarm||`` block, and ``||variables:set alarmMin to||`` the minute number in the ``||kitronik_smart_greenhouse.set alarm||`` block. Then, replace the numbers in the ``||kitronik_smart_greenhouse.set alarm||`` block with the ``||variables:alarmHour||`` and ``||variables:alarmMin||`` varaibles.
+
+#### ~ tutorialhint
+```blocks
+let alarmMin = 0
+let alarmHour = 0
+kitronik_smart_greenhouse.setTime(12, 0, 0)
+alarmHour = 12
+alarmMin = 30
+kitronik_smart_greenhouse.simpleAlarmSet(kitronik_smart_greenhouse.AlarmType.Single, alarmHour, alarmMin, kitronik_smart_greenhouse.AlarmSilence.autoSilence)
+```
+
+### Step 2
+The second method for carrying out actions when an alarm is triggered will now be used to set another alarm in an hours time.  
+From the ``||kitronik_smart_greenhouse.Clock||`` section of the ``||kitronik_smart_greenhouse.Greenhouse||`` category, add in an ``||kitronik_smart_greenhouse.on alarm trigger||`` block section. Inside this, add an ``||logic:if else||`` statement. 
+
+#### ~ tutorialhint
+```blocks
+kitronik_smart_greenhouse.onAlarmTrigger(function () {
+    if (true) {
+        
+    } else {
+        
+    }
+})
+```
+
+### Step 3
+In the ``||logic:else||`` section, add in a ``||variables:change alarmHour by 1||`` block. This will be the default action, incrementing the alarm time by 1 hour throughout the day. However, when the time needs to change from 23:00 to 0:00, the ``||variables:alarmHour||`` needs to reset back to 0. To do this, insert an ``||logic:if||`` statement checking whether ``||variables:alarmHour||`` ``||logic:= 23||``. Then, inside the ``||logic:if||`` section, ``||variables:set alarmHour to 0||``.
+
+#### ~ tutorialhint
+```blocks
+kitronik_smart_greenhouse.onAlarmTrigger(function () {
+    if (alarmHour == 23) {
+        alarmHour = 0
+    } else {
+        alarmHour += 1
+    }
+})
+```
+
+### Step 4
+Finally, for this section, duplicate the ``||kitronik_smart_greenhouse.set Single alarm||`` block from the ``||basic:on start section||`` and add it to the end of the ``||kitronik_smart_greenhouse.on alarm trigger||`` block.
+
+#### ~ tutorialhint
+```blocks
+kitronik_smart_greenhouse.onAlarmTrigger(function () {
+    if (alarmHour == 23) {
+        alarmHour = 0
+    } else {
+        alarmHour += 1
+    }
+    kitronik_smart_greenhouse.simpleAlarmSet(kitronik_smart_greenhouse.AlarmType.Single, alarmHour, alarmMin, kitronik_smart_greenhouse.AlarmSilence.autoSilence)
+})
+```
+
+### Step 5
+Click ``|Download|`` and transfer the code to the Environmental Control Board.  
+Leave the program running and see the alarm trigger multiple times during the day.  
+(To avoid waiting so long between each alarm, the code could be changed to set a new alarmm every minute instead).
+
+
+### Step 8
+CODING COMPLETE! Click ``|Download|`` and transfer your code to the Halo HD and enjoy a colourful clock with time setting functionality.
