@@ -22,16 +22,96 @@ The ZIP Stick can either be mounted on the inside or outside of the roof, slotti
 
 ## Changing Colour
 ### Step 1
-The first thing to do is to set up the ZIP LEDs and create the status LEDs range.
-From the ``||kitronik_smart_greenhouse.ZIP LEDs||`` section of the ``||kitronik_smart_greenhouse.Greenhouse||`` category, add the ``||variables:set zipLEDs to||`` ``||kitronik_smart_greenhouse.Smart Greenhouse with 8 ZIP LEDs||`` block to the ``||basic:on start||`` section, followed by the ``||variables:set statusLEDs||`` block.
+The first thing to do in the code is to set up the ZIP LEDs and create the ZIP Stick range.
+From the ``||kitronik_smart_greenhouse.ZIP LEDs||`` section of the ``||kitronik_smart_greenhouse.Greenhouse||`` category, add the ``||variables:set zipLEDs to||`` ``||kitronik_smart_greenhouse.Smart Greenhouse with 8 ZIP LEDs||`` block to the ``||basic:on start||`` section, followed by the ``||variables:set zipStick||`` block.
 
 #### ~ tutorialhint
 ```blocks
 let zipLEDs = kitronik_smart_greenhouse.createGreenhouseZIPDisplay(8)
-let statusLEDs = zipLEDs.statusLedsRange()
+let zipStick = zipLEDs.zipStickRange()
 ```
 
+### Step 2
+In order to see how well plants grow under different colour lights, there needs to be a way to switch between the colours displayed on the ZIP Stick.  
+To get started, create a new variables called ``||variables:colourSetting||``, and, in the ``||basic:on start||`` section, set it to be 0.
 
+#### ~ tutorialhint
+```blocks
+let colourSetting = 0
+let zipLEDs = kitronik_smart_greenhouse.createGreenhouseZIPDisplay(8)
+let zipStick = zipLEDs.zipStickRange()
+colourSetting = 0
+```
+
+### Step 3
+Next, add an ``||logic:if else||`` block to the ``||basic:forever|||`` loop, use the ``||logic:+||`` icon to add **5** ``||logic:else if||`` statements, and then use the ``||logic:-||`` icon to remove the ``||logic:else||`` statement.
+
+#### ~ tutorialhint
+```blocks
+basic.forever(function () {
+    if (true) {
+    	
+    } else if (false) {
+    	
+    } else if (false) {
+    	
+    } else if (false) {
+    	
+    } else if (false) {
+    	
+    } else if (false) {
+    	
+    }
+})
+```
+
+### Step 4
+Each ``||logic:if||`` condition statement will be very similar. Starting with the first ``||logic:if||`` statement, make it check whether ``||variables:colourSetting||`` ``||logic:= 0||``, then, for each ``||logic:else if||`` statement going down, check whether ``||variables:colourSetting||`` is any of the numbers **1, 2, 3, 4 or 5**.
+
+#### ~ tutorialhint
+```blocks
+basic.forever(function () {
+    if (colourSetting == 0) {
+        
+    } else if (colourSetting == 1) {
+        
+    } else if (colourSetting == 2) {
+        
+    } else if (colourSetting == 3) {
+        
+    } else if (colourSetting == 4) {
+        
+    } else if (colourSetting == 5) {
+        
+    }
+})
+```
+
+### Step 5
+The program now has 6 spaces for ZIP Stick grow lamp colour settings, so the next thing to do is provide some setting options.  
+In the first four ``||logic:if||`` statement sections, use the ``||kitronik_smart_greenhouse.show colour||`` block from the ``||kitronik_smart_greenhouse.ZIP LEDs||`` section of the ``||kitronik_smart_greenhouse.Greenhouse||`` category to display the colours: **white**, ``||variables:red||``, ``||loops:green||`` and ``||basic:blue||``. 
+
+#### ~ tutorialhint
+```blocks
+basic.forever(function () {
+    if (colourSetting == 0) {
+        zipStick.showColor(kitronik_smart_greenhouse.colors(ZipLedColors.White))
+    } else if (colourSetting == 1) {
+        zipStick.showColor(kitronik_smart_greenhouse.colors(ZipLedColors.Red))
+    } else if (colourSetting == 2) {
+        zipStick.showColor(kitronik_smart_greenhouse.colors(ZipLedColors.Green))
+    } else if (colourSetting == 3) {
+        zipStick.showColor(kitronik_smart_greenhouse.colors(ZipLedColors.Blue))
+    } else if (colourSetting == 4) {
+    	
+    } else if (colourSetting == 5) {
+    	
+    }
+})
+```
+
+### Step 6
+For ``||variables:colourSetting|`` option **4**
 
 ### Step 4
 CODING COMPLETE! Click ``|Download|`` and transfer the code to the Environmental Control Board to see a better representation of the temperature.
