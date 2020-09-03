@@ -70,6 +70,7 @@ Click ``|Download|`` and transfer the code to the Environmental Control Board.
 Leave the program running and check that the alarm triggers at the set time and turns the water pump on.
 
 ## Continuous Schedule
+### Introduction Step @unplugged
 Great! The water pump will now turn on when the alarm has been set. However, watering the plants just once won't be very good for their health, so the schedule needs to be continuous.
 
 ### Step 1
@@ -135,6 +136,111 @@ Click ``|Download|`` and transfer the code to the Environmental Control Board.
 Leave the program running and see the alarm trigger multiple times during the day.  
 (To avoid waiting so long between each alarm, the code could be changed to set a new alarmm every minute instead).
 
+## Schedule with Moisture Check
+### Introduction Step @unplugged
+The plants now have a continous watering schedule which will keep them growing nicely. However, depending on the external environmental conditions, the plants might not need watering every time the alarm comes round. Checking the soil moisture level first will mean they are only watered when they need it.  
+  
+This stage of the tutorial is going to require the water pump as before, and also the Prong connected to the Environmental Control Board using crocodile clips.  
+Connect Prong 3V to one of the 3V pads, Prong GND to one of the GND pads and Prong P1 to the Pin1 pad. Stick it into a plant pot.
+
+### Step 1
+The inside of the ``||logic:if||`` statement in the ``||basic:forever||`` loop is going to be changing slightly, so to start with, temporarily drag the ``||loops:repeat||`` loop out and put it to one side.
+
+#### ~ tutorialhint
+![Drag repeat loop out and leave to one side](https://KitronikLtd.github.io/pxt-kitronik-smart-greenhouse/assets/drag-repeat-loop-out.gif)
+
+### Step 2
+Next, place another ``||logic:if||`` statement inside the first one in the ``||basic:forever||`` loop. This second ``||logic:if||`` statement will check the soil moisture measurement. The checking statement should read: ``||logic:if||`` ``||kitronik_smart_greenhouse.Analog read P1||`` ``||logic:≤ 500 then||``. 
+
+#### ~ tutorialhint
+```block
+basic.forever(function () {
+    if (kitronik_smart_greenhouse.simpleAlarmCheck()) {
+        if (kitronik_smart_greenhouse.readIOPin(kitronik_smart_greenhouse.PinType.analog, kitronik_smart_greenhouse.IOPins.p1) <= 500) {
+            
+        }
+    }
+})
+```
+
+### Step 3
+Drag the ``||loops:repeat||`` loop back inside the second ``||logic:if||`` section. The program is now set up to only water the plant on an alarm trigger if it has got too dry.
+
+#### ~ tutorialhint
+```blocks
+basic.forever(function () {
+    if (kitronik_smart_greenhouse.simpleAlarmCheck()) {
+        if (kitronik_smart_greenhouse.readIOPin(kitronik_smart_greenhouse.PinType.analog, kitronik_smart_greenhouse.IOPins.p1) <= 500) {
+            for (let index = 0; index < 5; index++) {
+                kitronik_smart_greenhouse.controlHighPowerPin(kitronik_smart_greenhouse.HighPowerPins.pin13, kitronik_smart_greenhouse.onOff(true))
+                basic.pause(1000)
+                kitronik_smart_greenhouse.controlHighPowerPin(kitronik_smart_greenhouse.HighPowerPins.pin13, kitronik_smart_greenhouse.onOff(false))
+                basic.pause(2000)
+            }
+        }
+    }
+})
+```
+
+### Step 4
+There is one last thing to do to improve the watering system. What happens if the plant gets too dry inbetween alarms? There needs to be another option for triggering the automatic watering.  
+At the **end** of the ``||basic:forever||`` loop, add in another ``||logic:if||`` block. This time, the statement should read ``||logic:if||`` ``||kitronik_smart_greenhouse.Analog read P1||`` ``||logic:≤ 300 then||``, which means that the watering will only occur outside the alarm times if the plants becomes really dry.
+
+#### ~ tutorialhint
+```blocks
+ basic.forever(function () {
+    if (kitronik_smart_greenhouse.simpleAlarmCheck()) {
+        if (kitronik_smart_greenhouse.readIOPin(kitronik_smart_greenhouse.PinType.analog, kitronik_smart_greenhouse.IOPins.p1) <= 500) {
+            for (let index = 0; index < 5; index++) {
+                kitronik_smart_greenhouse.controlHighPowerPin(kitronik_smart_greenhouse.HighPowerPins.pin13, kitronik_smart_greenhouse.onOff(true))
+                basic.pause(1000)
+                kitronik_smart_greenhouse.controlHighPowerPin(kitronik_smart_greenhouse.HighPowerPins.pin13, kitronik_smart_greenhouse.onOff(false))
+                basic.pause(2000)
+            }
+        }
+    }
+    if (kitronik_smart_greenhouse.readIOPin(kitronik_smart_greenhouse.PinType.analog, kitronik_smart_greenhouse.IOPins.p1) <= 300) {
+        
+    }
+})
+```
+
+### Step 5
+The same watering code from the second ``||logic:if||`` section needs to be inside the third ``||logic:if||`` section, however, it can make the code very long to repeat the same blocks of code. A good way to avoid this problem is to make use of functions.  
+To begin creating a function, click on the **Advanced** drop-down in the category list, open the ``||functions:Functions||`` category and click the **Make a Function...** button. This will open the function creation window.
+
+### Step 6
+In the function creation window, rename the function to ``waterPlants`` and then click **Done**.  
+A new block, ``||functions:function waterPlants||``, will now have been added to the editing window. Drag the ``||loops:repeat||`` loop out of the ``||logic:if||`` statement and inside the function block.
+
+#### ~ tutorialhint
+![Create the waterPlants function](https://KitronikLtd.github.io/pxt-kitronik-smart-greenhouse/assets/create-function.gif)
+
+### Step 7
+Finally, from the ``||functions:Functions||`` category, add a ``||functions:call waterPlants||`` block to the second ``||logic:if||`` statement in place of the ``||loops:repeat||`` loop, and another ``||functions:call waterPlants||`` inside the third ``||logic:if||`` statement.
+
+#### ~ tutorialhint
+```blocks
+function waterPlants () {
+    for (let index = 0; index < 5; index++) {
+        kitronik_smart_greenhouse.controlHighPowerPin(kitronik_smart_greenhouse.HighPowerPins.pin13, kitronik_smart_greenhouse.onOff(true))
+        basic.pause(1000)
+        kitronik_smart_greenhouse.controlHighPowerPin(kitronik_smart_greenhouse.HighPowerPins.pin13, kitronik_smart_greenhouse.onOff(false))
+        basic.pause(2000)
+    }
+}
+basic.forever(function () {
+    if (kitronik_smart_greenhouse.simpleAlarmCheck()) {
+        if (kitronik_smart_greenhouse.readIOPin(kitronik_smart_greenhouse.PinType.analog, kitronik_smart_greenhouse.IOPins.p1) <= 500) {
+            waterPlants()
+        }
+    }
+    if (kitronik_smart_greenhouse.readIOPin(kitronik_smart_greenhouse.PinType.analog, kitronik_smart_greenhouse.IOPins.p1) <= 300) {
+        waterPlants()
+    }
+})
+```
 
 ### Step 8
-CODING COMPLETE! Click ``|Download|`` and transfer your code to the Halo HD and enjoy a colourful clock with time setting functionality.
+CODING COMPLETE! Click ``|Download|`` and transfer the code to the Environmental Control Board.  
+Leave the program running and see the plants watered when they're too dry or when the alarm is triggered.
