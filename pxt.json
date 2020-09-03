@@ -14,7 +14,8 @@
         "a_VisualThermometerTutorial.md",
         "b_UsingZIPLEDHueTutorial.md",
         "c_AutoWateringTutorial.md",
-        "e_TimeSchedulingTutorial.md"
+        "e_TimeSchedulingTutorial.md",
+        "d_GrowLightTutorial.md"
     ],
     "testFiles": [
         "test.ts"
