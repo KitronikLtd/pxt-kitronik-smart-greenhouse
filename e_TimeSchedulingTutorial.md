@@ -13,8 +13,9 @@ This stage of the tutorial is going to require the water pump to be connected to
 
 ### Step 1
 In order for the clock to be used effectively, the time first needs to be set.  
-From the ``||kitronik_smart_greenhouse.Clock||`` section of the ``||kitronik_smart_greenhouse.Greenhouse||`` category, add the ``||kitronik_smart_greenhouse.Set Time||`` block to the ``||basic:on start||`` section. Set the time to be a few mins in the future (this should give enough time to complete the tutorial and download the code; alternatively, complete the rest of the tutorial and set the current time just before downloading the code). **Note:** The time is set in 24 hour mode.  
-To check that the time has set correctly, add an ``||input:on button A pressed||`` block, and inside, ``|basic:show string|`` ``||kitronik_smart_greenhouse.Read Time as String||`` (this block is also in the ``||kitronik_smart_greenhouse.Clock||`` section).
+From the ``||kitronik_smart_greenhouse.Clock||`` section of the ``||kitronik_smart_greenhouse.Greenhouse||`` category, add the ``||kitronik_smart_greenhouse.Set Time||`` block to the ``||basic:on start||`` section. Set the time to be a few mins in the future (this should give enough time to complete the tutorial and download the code; alternatively, complete the rest of the tutorial and set the current time just before downloading the code).  
+**Note:** The time is set in 24 hour mode.  
+To check that the time has set correctly, add an ``||input:on button A pressed||`` block, and inside, ``||basic:show string||`` ``||kitronik_smart_greenhouse.Read Time as String||`` (this block is also in the ``||kitronik_smart_greenhouse.Clock||`` section).
 
 #### ~ tutorialhint
 ```blocks
