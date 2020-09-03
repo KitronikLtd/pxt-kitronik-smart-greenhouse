@@ -234,7 +234,7 @@ namespace kitronik_smart_greenhouse {
             this.buf.rotate(-offset * 3, this.start * 3, this._length * 3)
         }
     	/**
-         * Sets whole ZIP Halo display as a given color (range 0-255 for r, g, b). Call Show to make changes visible 
+         * Sets all the ZIP LEDs to a given color (range 0-255 for r, g, b). Call Show to make changes visible 
          * @param rgb RGB color of the LED
          */
         //% subcategory="ZIP LEDs"
@@ -245,7 +245,7 @@ namespace kitronik_smart_greenhouse {
             this.setAllRGB(rgb);
         }
     	/**
-         * Shows whole ZIP Halo display as a given color (range 0-255 for r, g, b). 
+         * Shows all the ZIP LEDs as a given color (range 0-255 for r, g, b). 
          * @param rgb RGB color of the LED
          */
         //% subcategory="ZIP LEDs"
@@ -271,7 +271,7 @@ namespace kitronik_smart_greenhouse {
         }
 
         /**
-         * Send all the changes to the ZIP Halo display.
+         * Send all the changes to the ZIP LEDs.
          */
         //% subcategory="ZIP LEDs"
         //% blockId="kitronik_smart_greenhouse_display_show" block="%zipLEDs|show" blockGap=8
@@ -282,7 +282,7 @@ namespace kitronik_smart_greenhouse {
         }
 
         /**
-         * Turn off all LEDs on the ZIP Halo display.
+         * Turn off all the ZIP LEDs.
          * You need to call ``show`` to make the changes visible.
          */
         //% subcategory="ZIP LEDs"
@@ -293,7 +293,7 @@ namespace kitronik_smart_greenhouse {
         }
 
         /**
-         * Set the brightness of the ZIP Halo display. This flag only applies to future show operation.
+         * Set the brightness of the ZIP LEDs. This flag only applies to future show operation.
          * @param brightness a measure of LED brightness in 0-255. eg: 255
          */
         //% subcategory="ZIP LEDs"
