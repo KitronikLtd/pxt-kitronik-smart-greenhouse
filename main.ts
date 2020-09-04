@@ -1504,8 +1504,8 @@ namespace kitronik_smart_greenhouse {
     /**
      * Input title of saved data as a column header, logged in string format. Titles will only output the first 10 characters of the string.
      * Maximum of 100 entries stored
-     * @param title1 of any title to save eg: " "
-     * @param title2 of any title to save eg: " " 
+     * @param title1 of any title to save 
+     * @param title2 of any title to save  
      * @param title3 of any title to save eg: " "
      * @param title4 of any title to save eg: " "
      * @param title5 of any title to save eg: " "
