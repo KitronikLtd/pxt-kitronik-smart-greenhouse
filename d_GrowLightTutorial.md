@@ -89,7 +89,7 @@ basic.forever(function () {
 
 ### Step 5
 The program now has 6 spaces for ZIP Stick grow lamp colour settings, so the next thing to do is provide some setting options.  
-In the first four ``||logic:if||`` statement sections, use the ``||kitronik_smart_greenhouse.show colour||`` block from the ``||kitronik_smart_greenhouse.ZIP LEDs||`` section of the ``||kitronik_smart_greenhouse.Greenhouse||`` category to display the colours: **white**, ``||variables:red||``, ``||loops:green||`` and ``||basic:blue||``. 
+In the first four ``||logic:if||`` statement sections, use the ``||kitronik_smart_greenhouse.show colour||`` block from the ``||kitronik_smart_greenhouse.ZIP LEDs||`` section of the ``||kitronik_smart_greenhouse.Greenhouse||`` category to display the colours: **white**, ``||variables:red||``, ``||loops:green||`` and ``||basic:blue||``. Remember to change the variable drop-down to ``||variables:zipStick||``.
 
 #### ~ tutorialhint
 ```blocks
@@ -110,8 +110,76 @@ basic.forever(function () {
 })
 ```
 
+### Explanation @unplugged
+To achieve the most effective photosynthesis, the light shining on the plants should match the colour blend best suited for photosynthesis (the graph in the introduction). That means quite a lot of red, quite a lot of blue, and a bit of green - which ends up as a purple colour. This is going to be the colour for ``||variables:colourSetting|`` option **4**.
+
 ### Step 6
-For ``||variables:colourSetting|`` option **4**
+Add a ``||kitronik_smart_greenhouse.show colour||`` block to the option 4 ``||logic:else if||`` section, but this time, rather than selecting a colour from the drop-down list, insert a ``||kitronik_smart_greenhouse.red 255 green 255 blue 255||`` block in it's place. This allows the individual colour settings to be customised.  
+Set the colours to: **red** = 255, **green** = 75 and **blue** = 200.
+
+#### ~ tutorialhint
+```blocks
+basic.forever(function () {
+    if (colourSetting == 0) {
+        zipStick.showColor(kitronik_smart_greenhouse.colors(ZipLedColors.White))
+    } else if (colourSetting == 1) {
+        zipStick.showColor(kitronik_smart_greenhouse.colors(ZipLedColors.Red))
+    } else if (colourSetting == 2) {
+        zipStick.showColor(kitronik_smart_greenhouse.colors(ZipLedColors.Green))
+    } else if (colourSetting == 3) {
+        zipStick.showColor(kitronik_smart_greenhouse.colors(ZipLedColors.Blue))
+    } else if (colourSetting == 4) {
+        zipStick.showColor(kitronik_smart_greenhouse.rgb(220, 75, 200))
+    } else if (colourSetting == 5) {
+    	
+    }
+})
+```
+
+### Step 7
+It would be good to have the option to turn off the lights, so add a ``||kitronik_smart_greenhouse.clear||`` followed by a ``||kitronik_smart_greenhouse.show||`` to the ``||variables:colourSetting||`` option **5** ``||logic:else if||`` section.
+
+#### ~ tutorialhint
+```blocks
+basic.forever(function () {
+    if (colourSetting == 0) {
+        zipStick.showColor(kitronik_smart_greenhouse.colors(ZipLedColors.White))
+    } else if (colourSetting == 1) {
+        zipStick.showColor(kitronik_smart_greenhouse.colors(ZipLedColors.Red))
+    } else if (colourSetting == 2) {
+        zipStick.showColor(kitronik_smart_greenhouse.colors(ZipLedColors.Green))
+    } else if (colourSetting == 3) {
+        zipStick.showColor(kitronik_smart_greenhouse.colors(ZipLedColors.Blue))
+    } else if (colourSetting == 4) {
+        zipStick.showColor(kitronik_smart_greenhouse.rgb(220, 75, 200))
+    } else if (colourSetting == 5) {
+        zipStick.clear()
+        zipStick.show()
+    }
+})
+```
+
+### Step 8
+Finally, for this stage, now that all the colour options are available, there needs to be a way of switching between them.  
+From the ``||inputs:Input||`` category, add an ``||input:on button pressed||`` block and changed the drop-down to be ``||inputs:A+B||``. Inside that, add an ``||logic:if else||`` statement. Pressing ``||input:buttons A+B||`` needs to cycle through the ``||varaiables:colourSetting||`` options, so in the ``||logic:else||`` section, add a ``||variables:change colourSetting by 1||`` block - this will be the default action. As it needs to cycle through, make the ``||logic:if||`` statement read ``||variables:colourSetting = 5||``, and add a ``||variables:set colourSetting to 0||`` block (also add one of these to the end of the ``||basic:on start||`` section - this will make the lights start as white).
+
+#### ~ tutorialhint
+```blocks
+let colourSetting = 0
+let zipLEDs = kitronik_smart_greenhouse.createGreenhouseZIPDisplay(8)
+let zipStick = zipLEDs.zipStickRange()
+colourSetting = 0
+input.onButtonPressed(Button.AB, function () {
+    if (colourSetting == 5) {
+        colourSetting = 0
+    } else {
+        colourSetting += 1
+    }
+})
+```
+
+### Step 9
+Click ``|Download|`` and transfer the code to the Environmental Control Board, and then try changing the colour by pressing ``||input:buttons A + B||`` together.
 
 ### Step 4
 CODING COMPLETE! Click ``|Download|`` and transfer the code to the Environmental Control Board to see a better representation of the temperature.
