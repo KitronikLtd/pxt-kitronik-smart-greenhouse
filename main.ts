@@ -1553,7 +1553,7 @@ namespace kitronik_smart_greenhouse {
     //% blockId=kitronik_smart_greenhouse_add
     //% block="add data %entry1|| %entry2 %entry3 %entry4 %entry5 %entry6 %entry7 %entry8 %entry9 %entry10"
     //% expandableArgumentMode="enabled" inlineInputMode=inline
-    export function addData(entry1: any, entry2?: any, entry3?: any, entry4?: any, entry5?: any, entry6?: any, entry7?: any, entry8?: any, entry9?: any, entry10?: any): void{
+    export function addData(entry1: number, entry2?: number, entry3?: number, entry4?: number, entry5?: number, entry6?: number, entry7?: number, entry8?: number, entry9?: number, entry10?: number): void{
         if (comms == NONE)
             setDataForUSB()
         entryBuild = ""
