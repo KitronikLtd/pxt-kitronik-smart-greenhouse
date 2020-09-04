@@ -93,6 +93,7 @@ In the first four ``||logic:if||`` statement sections, use the ``||kitronik_smar
 
 #### ~ tutorialhint
 ```blocks
+let statusLEDs: kitronik_smart_greenhouse.greenhouseZIPLEDs = null
 basic.forever(function () {
     if (colourSetting == 0) {
         zipStick.showColor(kitronik_smart_greenhouse.colors(ZipLedColors.White))
@@ -119,6 +120,7 @@ Set the colours to: **red** = 255, **green** = 75 and **blue** = 200.
 
 #### ~ tutorialhint
 ```blocks
+let statusLEDs: kitronik_smart_greenhouse.greenhouseZIPLEDs = null
 basic.forever(function () {
     if (colourSetting == 0) {
         zipStick.showColor(kitronik_smart_greenhouse.colors(ZipLedColors.White))
@@ -141,6 +143,7 @@ It would be good to have the option to turn off the lights, so add a ``||kitroni
 
 #### ~ tutorialhint
 ```blocks
+let statusLEDs: kitronik_smart_greenhouse.greenhouseZIPLEDs = null
 basic.forever(function () {
     if (colourSetting == 0) {
         zipStick.showColor(kitronik_smart_greenhouse.colors(ZipLedColors.White))
@@ -180,6 +183,8 @@ input.onButtonPressed(Button.AB, function () {
 
 ### Step 9
 Click ``|Download|`` and transfer the code to the Environmental Control Board, and then try changing the colour by pressing ``||input:buttons A + B||`` together.
+
+
 
 ### Step 4
 CODING COMPLETE! Click ``|Download|`` and transfer the code to the Environmental Control Board to see a better representation of the temperature.
