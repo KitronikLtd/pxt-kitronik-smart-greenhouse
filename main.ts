@@ -1535,6 +1535,19 @@ namespace kitronik_smart_greenhouse {
     }
 
     /**
+     * Test Block for expandable argument with 'any' data type
+     * @param testEntry1
+     * @param testEntry2
+     */
+    //% weight=100 blockGap = 8
+    //% blockId=kitronik_test_expandable_block
+    //% block="do something with %testEntry1 || and %testEntry2"
+    //% expandableArgumentMode="enabled"
+    export function testExpand(testEntry1: any, testEntry2?: any) {
+        return 0;
+    }
+
+    /**
      * Input data to be saved to the logger in string format. To save numbers, convert numbers to a string.
      * @param entry1 of any data to save
      * @param entry2 of any data to save
