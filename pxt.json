@@ -15,7 +15,8 @@
         "b_UsingZIPLEDHueTutorial.md",
         "c_AutoWateringTutorial.md",
         "e_TimeSchedulingTutorial.md",
-        "d_GrowLightTutorial.md"
+        "d_GrowLightTutorial.md",
+        "g_DataLoggingTutorial.md"
     ],
     "testFiles": [
         "test.ts"
