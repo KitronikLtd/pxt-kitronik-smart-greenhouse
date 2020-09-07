@@ -1535,19 +1535,6 @@ namespace kitronik_smart_greenhouse {
     }
 
     /**
-     * Test Block for expandable argument with 'any' data type
-     * @param testEntry1
-     * @param testEntry2
-     */
-    //% weight=100 blockGap = 8
-    //% blockId=kitronik_test_expandable_block
-    //% block="do something with %testEntry1 || and %testEntry2"
-    //% expandableArgumentMode="enabled"
-    export function testExpand(testEntry1: any, testEntry2?: any) {
-        return 0;
-    }
-
-    /**
      * Input data to be saved to the logger in string format. To save numbers, convert numbers to a string.
      * @param entry1 of any data to save
      * @param entry2 of any data to save
@@ -1564,10 +1551,10 @@ namespace kitronik_smart_greenhouse {
     //% group=Entries
     //% weight=80 blockGap=8
     //% blockId=kitronik_smart_greenhouse_add_entry
-    //% block="add data %entry1||%entry2%entry3%entry4%entry5%entry6%entry7%entry8%entry9%entry10"
+    //% block="add data %entry1 || %entry2 %entry3 %entry4 %entry5 %entry6 %entry7 %entry8 %entry9 %entry10"
     //% expandableArgumentMode="enabled" 
     //% inlineInputMode=inline
-    export function addData(entry1: any, entry2?: any, entry3?: any, entry4?: any, entry5?: any, entry6?: any, entry7?: any, entry8?: any, entry9?: any, entry10?: any): void{
+    export function addData(entry1: string, entry2?: string, entry3?: string, entry4?: string, entry5?: string, entry6?: string, entry7?: string, entry8?: string, entry9?: string, entry10?: string): void{
         if (comms == NONE)
             setDataForUSB()
         entryBuild = ""
