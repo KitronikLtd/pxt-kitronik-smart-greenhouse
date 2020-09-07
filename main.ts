@@ -1504,8 +1504,8 @@ namespace kitronik_smart_greenhouse {
     /**
      * Input title of saved data as a column header, logged in string format. Titles will only output the first 10 characters of the string.
      * Maximum of 100 entries stored
-     * @param title1 of any title to save 
-     * @param title2 of any title to save  
+     * @param title1 of any title to save eg: " "
+     * @param title2 of any title to save eg: " "
      * @param title3 of any title to save eg: " "
      * @param title4 of any title to save eg: " "
      * @param title5 of any title to save eg: " "
@@ -1521,7 +1521,7 @@ namespace kitronik_smart_greenhouse {
     //% blockId=kitronik_smart_greenhouse_entry_title
     //% block="add data entry headings: %title1|| %title2 %title3 %title4 %title5 %title6 %title7 %title8 %title9 %title10"
     //% expandableArgumentMode="enabled" inlineInputMode=inline
-    export function addTitle(title1: any, title2?: any, title3?: string, title4?: string, title5?: string, title6?: string, title7?: string, title8?: string, title9?: string, title10?: string): void{
+    export function addTitle(title1: string, title2?: string, title3?: string, title4?: string, title5?: string, title6?: string, title7?: string, title8?: string, title9?: string, title10?: string): void{
         checkAndAdd(title1, "title")
         checkAndAdd(title2, "title")
         checkAndAdd(title3, "title")
@@ -1552,8 +1552,8 @@ namespace kitronik_smart_greenhouse {
     //% weight=80 blockGap=8
     //% blockId=kitronik_smart_greenhouse_add_entry
     //% block="add data %entry1 || %entry2 %entry3 %entry4 %entry5 %entry6 %entry7 %entry8 %entry9 %entry10"
-    //% expandableArgumentMode="enabled" inlineInputMode=inline
-    export function addData(entry1: any, entry2?: any, entry3?: number, entry4?: number, entry5?: number, entry6?: number, entry7?: number, entry8?: number, entry9?: number, entry10?: number): void{
+    //% expandableArgumentMode="toggle" inlineInputMode=inline
+    export function addData(entry1: any, entry2?: any, entry3?: any, entry4?: any, entry5?: any, entry6?: any, entry7?: any, entry8?: any, entry9?: any, entry10?: any): void{
         if (comms == NONE)
             setDataForUSB()
         entryBuild = ""
