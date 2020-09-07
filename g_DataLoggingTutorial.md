@@ -81,7 +81,7 @@ input.onButtonPressed(Button.A, function () {
 The data logging functionality has been set up and the data measurement process has been organised, the next thing is triggering the transmission of the collected data.  
 From the ``||input:Input||`` category, add an ``||input:on button B pressed||`` block, and inside, put a ``||kitronik_smart_greenhouse.transmit all data||`` block from the ``||kitronik_smart_greenhouse.Data Logging||`` section of the ``||kitronik_smart_greenhouse.Greenhouse||`` category. 
 
-### ~ tutorialhint
+#### ~ tutorialhint
 ```blocks
 input.onButtonPressed(Button.B, function () {
     kitronik_smart_greenhouse.sendAllData()
@@ -113,7 +113,26 @@ Press ``||input:Button B||`` on the micro:bit. This will will make the "**Show c
 ![Click on Show console button](https://KitronikLtd.github.io/pxt-kitronik-smart-greenhouse/assets/show-console-button.gif)
 
 ### Step 2
-After clicking the console button
+After clicking the console button, the code editor window will disappear and be replaced with either a white screen (in which case, press ``||input:Button B||`` again) or a screen with a scrolling chart at the top and the transmitted data text at the bottom - this is the console display.  
+In the top right corner of the window there are three buttons. To export and download the data as a text file, click the button furthest to the right.
+
+#### ~ tutorialhint
+![Export data as text file](https://KitronikLtd.github.io/pxt-kitronik-smart-greenhouse/assets/export-data-text-file.gif)
+
+### Step 3
+Now open a new spreadsheet in Microsoft Excel (this has also been tested in Google Sheets and LibreOffice Calc, although they have a slightly different import process).  
+Select a cell in the spreadsheet, and then go to the "Data" tab in the top bar. Click on "From Text" to begin the data import process.
+
+#### ~ tutorialhint
+![Export data as text file](https://KitronikLtd.github.io/pxt-kitronik-smart-greenhouse/assets/excel-data-from-text.gif)
+
+### Step 4
+A File Explorer window will have now opened. Go the folder where the text file from MakeCode was downloaded (probably "Downloads") and select the file. Click the "Import" button at the bottom of the window. This will start the "Text Import Wizard".
 
 ### Step 5
-CODING COMPLETE! Click ``|Download|`` and transfer the code to the Environmental Control Board and then try out varying the colour and the brightness.
+Make sure the "Delimited" box is checked, as the data is separated by semicolons. Click "Next".
+Check the "Semicolon" box and uncheck the "Tab" box this will make sure that the correct separator between data entries is identfied. Click "Next" and then "Finish".  
+In the final window, make sure "Existing worksheet" is checked as the import location and then click "OK". The data will now have been imported to the spreadsheet and is ready to be analysed. 
+
+#### ~ tutorialhint
+![Export data as text file](https://KitronikLtd.github.io/pxt-kitronik-smart-greenhouse/assets/excel-text-import-wizard.gif)
