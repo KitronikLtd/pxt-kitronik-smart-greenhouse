@@ -16,7 +16,8 @@
         "c_AutoWateringTutorial.md",
         "e_TimeSchedulingTutorial.md",
         "d_GrowLightTutorial.md",
-        "g_DataLoggingTutorial.md"
+        "g_DataLoggingTutorial.md",
+        "f_DIYWaterLevelSensorTutorial.md"
     ],
     "testFiles": [
         "test.ts"
