@@ -3,7 +3,7 @@
 
 # Data Logging
 
-## Setup and Data Collection
+## Setup and Simple Data Collection
 ### Introduction Step @unplugged
 A really useful feature of the Smart Greenhouse is the data logging functionality - being able to measure, store and then transmit data to a computer. This means that the relationships between environmental factors such as temperature, humidity, soil moisture and light levels can be analysed and the results used to improve plant care and growth. This tutorial will go through the basics of gathering data readings, storing them and then transmitting them to a computer via USB. It will also cover the use of the MakeCode serial console and importing data into Microsoft Excel. 
 
@@ -104,7 +104,7 @@ Click ``|Download|`` and transfer the code to the Environmental Control Board.
 Press ``||input:Button A||`` and then vary the brightness of light visible to the micro:bit LED display (for example, shine a torch, then cover the screen, or tilt it up towards ceiling lights). A tick will be displayed when the data collection is complete.  
 Keep the micro:bit plugged in through the data collection, and once complete, move onto the next stage of the tutorial.
 
-## Transmitting the Data
+## Simple Data Transmission
 ### Step 1
 Some light level measurements will now be stored on the micro:bit, ready to be transferred to the computer via the USB cable.  
 Press ``||input:Button B||`` on the micro:bit. This will will make the "**Show console** Device" button appear under the micro:bit simulation image. Click on the new button.
@@ -132,7 +132,60 @@ A File Explorer window will have now opened. Go the folder where the text file f
 ### Step 5
 Make sure the "Delimited" box is checked, as the data is separated by semicolons. Click "Next".
 Check the "Semicolon" box and uncheck the "Tab" box this will make sure that the correct separator between data entries is identfied. Click "Next" and then "Finish".  
-In the final window, make sure "Existing worksheet" is checked as the import location and then click "OK". The data will now have been imported to the spreadsheet and is ready to be analysed. 
+In the final window, make sure "Existing worksheet" is checked as the import location and then click "OK". The data will now have been imported to the spreadsheet and is ready to be analysed, manipulated and understood. 
 
 #### ~ tutorialhint
 ![Export data as text file](https://KitronikLtd.github.io/pxt-kitronik-smart-greenhouse/assets/excel-text-import-wizard.gif)
+
+## Adding More Data
+### Introduction Step @unplugged
+The tutorial so far has just looked at collecting and transmitting a single type of data, but the ``||kitronik_smart_greenhouse.Data Logging||`` blocks are able to do lots more. In fact, there can be 10 different measurements or pieces of data in each data entry, and 100 data entries can be stored and transmitted. This final section of the tutorial will look at adding some more measurements and some extra information to the data entries. The structure of the code written so far is going to stay almost exactly the same, just a few new blocks will be added and some others expanded.
+
+### Step 1
+When collecting data, it can be very useful to know **when** the measurements were taken, so the first addition will be setting the date and time on the Environmental Control Board.  
+From the ``||kitronik_smart_greenhouse.Clock||`` section of the ``||kitronik_smart_greenhouse.Greenhouse||`` category, add in the ``||kitronik_smart_greenhouse.Set Date||`` and ``||kitronik_smart_greenhouse.Set Time||`` blocks to the beginning of the ``||basic:on start||`` section. Set the date to today's date, and the time can be set the current time just before the program is downloaded to the micro:bit.
+
+#### ~ tutorialhint
+```blocks
+kitronik_smart_greenhouse.setDate(8, 9, 20)
+kitronik_smart_greenhouse.setTime(8, 30, 0)
+kitronik_smart_greenhouse.setDataForUSB()
+kitronik_smart_greenhouse.selectSeparator(kitronik_smart_greenhouse.Separator.semicolon)
+kitronik_smart_greenhouse.addTitle("Light")
+```
+
+### Step 2
+Next, as there are going to be more pieces of data in each data entry, there need to be more data entry titles.  
+Click the ``||kitronik_smart_greenhouse.+||`` icon on the ``||kitronik_smart_greenhouse.data entry headings||`` block **3** times so that there are four text boxes available. Type these titles in (replacing "Light"): "Date", "Time", "Temp" and "Humidity". (**Note:** Titles are limited to 10 characters in length, which is why "Temperature" has been shortened).
+
+#### ~ tutorialhint
+```blocks
+kitronik_smart_greenhouse.setDate(8, 9, 20)
+kitronik_smart_greenhouse.setTime(8, 30, 0)
+kitronik_smart_greenhouse.setDataForUSB()
+kitronik_smart_greenhouse.selectSeparator(kitronik_smart_greenhouse.Separator.semicolon)
+kitronik_smart_greenhouse.addTitle("Date", "Time", "Temp", "Humidity")
+```
+
+### Step 3
+The only other block to be changed is the ``||kitronik_smart_greenhouse.add data||`` block in the ``||input:button A||`` section.  
+Begin by dragging the ``||text:convert||`` ``||input:light level||`` ``||text:to text||`` block out and deleting it. Then, just like for the titles, click the ``||kitronik_smart_greenhouse.+||`` icon  **3** times so that there are four text boxes available. Now, making sure that the order matches the titles, insert the ``||kitronik_smart_greenhouse.Read Date as String||`` and ``||kitronik_smart_greenhouse.Read Time as String||`` blocks from the ``||kitronik_smart_greenhouse.Clock||`` section. (**Note:** These values are already strings, so there is no need to convert them to text).
+
+#### ~ tutorialhint
+```blocks
+input.onButtonPressed(Button.A, function () {
+    basic.clearScreen()
+    for (let index = 0; index < 25; index++) {
+        kitronik_smart_greenhouse.addData(kitronik_smart_greenhouse.readDate(), kitronik_smart_greenhouse.readTime(), "", "")
+        basic.pause(2000)
+    }
+    basic.showIcon(IconNames.Yes)
+})
+```
+
+### Step 4
+Finally, in the third and fourth text boxes, insert the ``||kitronik_smart_greenhouse.Read Temperature||`` and ``||kitronik_smart_greenhouse.Read Humidity||`` blocks from the ``||kitronik_smart_greenhouse.Sensors||`` section of the ``||kitronik_smart_greenhouse.Greenhouse||`` category. These blocks **must** be inside ``||text:convert to text||`` blocks as they are measured as numbers. 
+
+### Step 5
+CODING COMPLETE! Click ``|Download|`` and transfer the code to the Environmental Control Board.  
+Run through the same steps as covered earlier to take measurement readings, transfer the the code via USB, download and import the data to a spreadsheet, and then start using it!
