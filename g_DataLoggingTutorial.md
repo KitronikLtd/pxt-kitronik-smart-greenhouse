@@ -186,6 +186,18 @@ input.onButtonPressed(Button.A, function () {
 ### Step 4
 Finally, in the third and fourth text boxes, insert the ``||kitronik_smart_greenhouse.Read Temperature||`` and ``||kitronik_smart_greenhouse.Read Humidity||`` blocks from the ``||kitronik_smart_greenhouse.Sensors||`` section of the ``||kitronik_smart_greenhouse.Greenhouse||`` category. These blocks **must** be inside ``||text:convert to text||`` blocks as they are measured as numbers. 
 
+#### ~ tutorialhint
+```blocks
+input.onButtonPressed(Button.A, function () {
+    basic.clearScreen()
+    for (let index = 0; index < 25; index++) {
+        kitronik_smart_greenhouse.addData(kitronik_smart_greenhouse.readDate(), kitronik_smart_greenhouse.readTime(), convertToText(kitronik_smart_greenhouse.temperature(TemperatureUnitList.C)), convertToText(kitronik_smart_greenhouse.humidity()))
+        basic.pause(2000)
+    }
+    basic.showIcon(IconNames.Yes)
+})
+```
+
 ### Step 5
 CODING COMPLETE! Click ``|Download|`` and transfer the code to the Environmental Control Board.  
 Run through the same steps as covered earlier to take measurement readings, transfer the the code via USB, download and import the data to a spreadsheet, and then start using it!
