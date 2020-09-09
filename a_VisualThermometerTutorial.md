@@ -41,7 +41,7 @@ Add in an ``||logic:if||`` block to the ``||basic:forever||`` loop and press the
 ![Adding else if statements](https://KitronikLtd.github.io/pxt-kitronik-smart-greenhouse/assets/visual-thermometer-adding-if-else.gif)
 
 ### Step 4
-There are 3 status LEDs, so it makes sense to have 3 temperature 'zones' - cold, ideal and hot. For plants, 20-30°C is a good growing temperature, so that can be the 'Ideal' range. For 'Cold', less than 20°C, an for 'Hot', greater than 30°C.  
+There are 3 status LEDs, so it makes sense to have 3 temperature 'zones' - cold, ideal and hot. For plants, 20-30°C is a good growing temperature, so that can be the 'Ideal' range. For 'Cold', less than 20°C, and for 'Hot', greater than 30°C.  
 In the first ``||logic:if||`` statement, check whether ``||variables:temperature||`` is less than 20. In the second statement, check whether ``||variables:temperature||`` is greater than or equal to 20 ``||logic:and||`` less than or equal to 30. Finally, in the third statement, check whether ``||variables:temperature||`` is greater than 30.
 
 #### ~ tutorialhint
@@ -113,7 +113,7 @@ The ``||basic:on start||`` block will stay the same, as will the structure of th
 Start by adding 6 more ``||logic:else if||`` statements using the ``||logic:+||`` (and ``||logic:-||``) icons, and then delete the 3 ``||kitronik_smart_greenhouse.set ZIP LED||`` blocks from inside the original statements.
 
 ### Step 2
-Make sure that every ``||blocks:if||`` statement section has a ``||variables:temperature||`` comparison statement (don't worry about the actual values yet). The first ``||logic:if||`` should just check for **less than**, the final ``||logic:else if||`` should just check for **greater than**, and all the statements inbetween should 2 comparisons with an ``||logic:and||``.
+Make sure that every ``||logic:if||`` statement section has a ``||variables:temperature||`` comparison statement (don't worry about the actual values yet). The first ``||logic:if||`` should just check for **less than**, the final ``||logic:else if||`` should just check for **greater than**, and all the statements inbetween should have two comparisons with an ``||logic:and||`` inbetween.
 
 #### ~ tutorialhint
 Right click and duplicate the ``||logic:and||`` statements from first program to make things easier.
