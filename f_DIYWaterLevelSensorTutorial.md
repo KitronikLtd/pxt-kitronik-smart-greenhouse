@@ -52,4 +52,65 @@ basic.forever(function () {
 ```
 
 ### Step 3
-To make an alarm sound when the water level drops too low, add a ``||music:play tone||`` block 
+To make an alarm sound when the water level drops too low, add a ``||music:play tone||`` block inside the ``||logic:if||`` section. Choose a note to play using the keyboard selector, and keep the length to ``||music:1 beat||``. If the code was left like this, the note would play constantly without a break once the alarm triggered. It would be better if there was a gap between each sound, so add a 1 second ``||basic:pause||`` after the ``||music:play tone||`` block.
+
+#### ~ tutorialhint
+```blocks
+basic.forever(function () {
+    if (kitronik_smart_greenhouse.readIOPin(kitronik_smart_greenhouse.PinType.analog, kitronik_smart_greenhouse.IOPins.p0) < 300) {
+        music.playTone(392, music.beat(BeatFraction.Whole))
+        basic.pause(1000)
+    } else {
+    	
+    }
+})
+```
+
+### Step 4
+The audio alarm is now complete, so the next thing to do is to provide control for the water pump.  
+In order for other parts of the program to know that the water level is too low, a variable flag needs to be changed. Create a new variable called ``||variables:waterEmpty||``. At the start of the ``||logic:if||`` section, ``||variables:set waterEmpty to||`` ``||logic:true||``, and in the ``||logic:else||`` section, set it to ``||logic:false||``.
+
+#### ~ tutorialhint
+```blocks
+basic.forever(function () {
+    if (kitronik_smart_greenhouse.readIOPin(kitronik_smart_greenhouse.PinType.analog, kitronik_smart_greenhouse.IOPins.p0) < 300) {
+        waterEmpty = true
+        music.playTone(392, music.beat(BeatFraction.Whole))
+        basic.pause(1000)
+    } else {
+        waterEmpty = false
+    }
+})
+```
+
+### Step 5
+Now add in an ``||input:on button A pressed||`` block from the ``||input:Input||`` category, and inside place an ``||logic:if||`` block.  
+Inside this new ``||logic:if||`` section will be the code to actually turn the water pump on, so we only want to stop this running if ``||variables:waterEmpty||`` is false, or in other words, **not** true. Make the ``||logic:if||`` statement read: ``||logic:if not||`` ``||variables:waterEmpty||``. 
+
+#### ~ tutorialhint
+```blocks
+input.onButtonPressed(Button.A, function () {
+    if (!(waterEmpty)) {
+    	
+    }
+})
+```
+
+### Step 6
+Finally, the actual water pump pin control. From the ``||kitronik_smart_greenhouse.Inputs/Outputs||`` section of the ``||kitronik_smart_greenhouse.Greenhouse||`` category add in two ``||kitronik_smart_greenhouse.turn high power P13||`` blocks, the first one should turn the pin **ON** and the second should turn the pin **OFF**. Separate the blocks with a 2 second ``||basic:pause||``.  
+Now when ``||input:button A||`` is pressed, as long as there is enough water, the pump will turn on for 2 seconds.
+
+#### ~ tutorialhint
+```blocks
+input.onButtonPressed(Button.A, function () {
+    if (!(waterEmpty)) {
+        kitronik_smart_greenhouse.controlHighPowerPin(kitronik_smart_greenhouse.HighPowerPins.pin13, kitronik_smart_greenhouse.onOff(true))
+        basic.pause(2000)
+        kitronik_smart_greenhouse.controlHighPowerPin(kitronik_smart_greenhouse.HighPowerPins.pin13, kitronik_smart_greenhouse.onOff(false))
+    }
+})
+```
+
+### Step 7
+CODING COMPLETE! Click ``|Download|`` and transfer the code to the Environmental Control Board.  
+Run the pump until the water level drops low enough and check that the alarm sounds, and that the pump will not switch on.
