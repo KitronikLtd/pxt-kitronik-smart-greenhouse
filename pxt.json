@@ -1,5 +1,5 @@
 {
-    "name": "pxt-kitronik-ec-board",
+    "name": "pxt-kitronik-smart-greenhouse",
     "version": "0.0.73",
     "dependencies": {
         "core": "*",
