@@ -2,7 +2,7 @@ input.onButtonPressed(Button.A, function () {
     kitronik_smart_greenhouse.sendAllData()
 })
 kitronik_smart_greenhouse.onAlarmTrigger(function () {
-    music.startMelody(music.builtInMelody(Melodies.Punchline), MelodyOptions.Once)
+    music.playMelody("B F G - C5 E D G ", 120)
 })
 input.onButtonPressed(Button.AB, function () {
     kitronik_smart_greenhouse.simpleAlarmOff()
