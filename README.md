@@ -98,7 +98,7 @@ zipLEDs.setZipLedColor(3, kitronik_smart_greenhouse.wavelength(579))
 ## Clock
   
 These blocks are laid out in groups of linked functionality.  
-
+  
 ### Set Time
   
 These blocks are used to set the time on the Real Time Clock (RTC) chip. This can either be done with one block covering hours, minutes and seconds, or individually for each element.  
@@ -176,9 +176,94 @@ basic.showNumber(kitronik_smart_greenhouse.humidity())
   
 ## Inputs/Outputs
   
-
-
-
+These blocks are laid out in groups of linked functionality.  
+  
+### General Inputs/Outputs
+  
+These block are used to carry out reads and writes (both analogue and digital) for Pins 0, 1 and 2.  
+```blocks
+basic.showNumber(kitronik_smart_greenhouse.readIOPin(kitronik_smart_greenhouse.PinType.analog, kitronik_smart_greenhouse.IOPins.p1))
+basic.showNumber(kitronik_smart_greenhouse.readIOPin(kitronik_smart_greenhouse.PinType.digital, kitronik_smart_greenhouse.IOPins.p0))
+kitronik_smart_greenhouse.digitalWriteIOPin(kitronik_smart_greenhouse.IOPins.p2, 0)
+kitronik_smart_greenhouse.analogWriteIOPin(kitronik_smart_greenhouse.IOPins.p1, 545)
+```
+  
+### High Power Outputs
+  
+This block is used to control the high power outputs linked to Pins 13 and 14. Their default mode is to just switch the output ON or OFF.
+```blocks
+input.onButtonPressed(Button.A, function () {
+    kitronik_smart_greenhouse.controlHighPowerPin(kitronik_smart_greenhouse.HighPowerPins.pin13, kitronik_smart_greenhouse.onOff(true))
+    kitronik_smart_greenhouse.controlHighPowerPin(kitronik_smart_greenhouse.HighPowerPins.pin14, kitronik_smart_greenhouse.onOff(false))
+})
+```
+They also have another mode, where the duty cycle (0-100%) of the output can be adjusted (for example, to provide speed control to a motor).
+```blocks
+input.onButtonPressed(Button.B, function () {
+    kitronik_smart_greenhouse.controlHighPowerPin(kitronik_smart_greenhouse.HighPowerPins.pin13, kitronik_smart_greenhouse.onOff(true), 25)
+    kitronik_smart_greenhouse.controlHighPowerPin(kitronik_smart_greenhouse.HighPowerPins.pin14, kitronik_smart_greenhouse.onOff(true), 50)
+})
+```
+  
+### Servo
+  
+This block is used to control a servo connected to the output on Pin 15, setting the angle between 0° and 180°.  
+```blocks
+kitronik_smart_greenhouse.servoWrite(90)
+```
+  
+## Data Logging
+  
+The Data Logging blocks are used to organise and format measured information, and then transfer this information to a computer connected to the micro:bit via USB.  
+The blocks are laid out in groups of linked functionality.  
+  
+### Setup
+  
+This group of blocks is used to prepare the data formatting and transfer options.  
+As shown in the example below, the first block is used to set the data transfer to be via USB; then the separation between pieces of data can be selected from four different options:  
+* A tab
+* A semicolon ("**;**")
+* A comma ("**,**")
+* A space  
+The third block allows the user to choose whether or not to send the data entry line number, and the fourth block allows data entry column headings to be added (up to 10 in total). **Note:** Only the first 10 characters of a title will be transferred.  
+```blocks
+kitronik_smart_greenhouse.setDataForUSB()
+kitronik_smart_greenhouse.selectSeparator(kitronik_smart_greenhouse.Separator.semicolon)
+kitronik_smart_greenhouse.optionSendEntryNumber(kitronik_smart_greenhouse.ListNumber.Send)
+kitronik_smart_greenhouse.addTitle("Time", "Temper", "Light")
+```
+  
+### Entries
+  
+The ``||kitronik_smart_greenhouse.add data||`` block is used add a data entry to the data store (there is a maximum of 100 data entries, each able to include 10 pieces of information). **Note:** The information must be in a string format. If it is a numerical measurement, use a ``||text:convert to text||`` block from the ``||text:Text||`` category.  
+```blocks
+input.onButtonPressed(Button.A, function () {
+    kitronik_smart_greenhouse.addData(kitronik_smart_greenhouse.readTime(), convertToText(kitronik_smart_greenhouse.temperature(TemperatureUnitList.C)), convertToText(input.lightLevel()))
+})
+```
+The ``||kitronik_smart_greenhouse.clear all data||`` block does exactly what it says: it removes all the previously stored data entries.  
+```blocks
+input.onButtonPressed(Button.B, function () {
+    kitronik_smart_greenhouse.clearData()
+})
+```
+  
+### Transfer
+  
+Once data has been collected, it will need to be transferred to a connected computer.  
+All the data entries can be transmitted at once:  
+```blocks
+input.onButtonPressed(Button.A, function () {
+    kitronik_smart_greenhouse.sendAllData()
+})
+```
+Or an individual data entry can be sent:  
+```blocks
+input.onButtonPressed(Button.B, function () {
+    kitronik_smart_greenhouse.sendSelectedData(15)
+})
+```
+  
 ## License
 
 MIT
