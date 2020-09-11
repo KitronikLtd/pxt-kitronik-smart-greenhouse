@@ -77,7 +77,7 @@ enum PressureUnitList {
  */
 
 //% weight=100 color=#00A654 icon="\uf06c" block="Greenhouse"
-//% groups='["Set Time", "Set Date", "Read Time", "Read Date", "Alarm", "Servo", "General Inputs/Outputs", "High Power Outputs", "Setup", "Entries", "Transfer"]'
+//% groups='["Set Time", "Set Date", "Read Time", "Read Date", "Alarm", "General Inputs/Outputs", "High Power Outputs", "Servo", "Setup", "Entries", "Transfer"]'
 namespace kitronik_smart_greenhouse {
     ////////////////////////////////
     //           MUSIC            //
@@ -1219,7 +1219,7 @@ namespace kitronik_smart_greenhouse {
     //% blockId=kitronik_smart_greenhouse_servo_write 
     //% block="set servo to $angle|degrees"
     //% angle.shadow="protractorPicker"
-    //% weight=100 blockGap=8
+    //% weight=70 blockGap=8
     export function servoWrite(angle: number): void {
         pins.servoWritePin(AnalogPin.P15, angle)
     }

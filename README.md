@@ -3,6 +3,9 @@
 
 > Open this page at [https://kitronikltd.github.io/pxt-kitronik-smart-greenhouse/](https://kitronikltd.github.io/pxt-kitronik-smart-greenhouse/)
 
+Custom blocks for the Smart Greenhouse for BBC micro:bit (www.kitronik.co.uk/5699).  
+The blocks in this extension are in five main groups: ZIP LEDs, Clock, Sensors, Inputs/Outputs and Data Logging.
+
 ## Use as Extension
 
 This repository can be added as an **extension** in MakeCode.
@@ -10,23 +13,176 @@ This repository can be added as an **extension** in MakeCode.
 * open [https://makecode.microbit.org/](https://makecode.microbit.org/)
 * click on **New Project**
 * click on **Extensions** under the gearwheel menu
-* search for **https://github.com/kitronikltd/pxt-kitronik-smart-greenhouse** and import
+* search for **smart greenhouse** and import
 
-## Edit this project ![Build status badge](https://github.com/kitronikltd/pxt-kitronik-smart-greenhouse/workflows/MakeCode/badge.svg)
+## ZIP LEDs
+  
+The ZIP LEDs section contains blocks for controlling the 3 onboard status LEDs and any others connected to the ZIP LED OUT port (such as the supplied ZIP Stick).  
+**Note:** Any block which does not have "show" in the name needs to be followed by a ``||kitronik_smart_greenhouse.show||`` block to make the changes visible.  
+  
+The first block sets up the ZIP LEDs as a variable, enabling them to be controlled in the program. The default number is "8", as this covers the onboard LEDs and the external ZIP Stick.  
+The next two blocks create ranges for each of these, ``||variables:statusLEDs||`` and ``||variables:zipStick||``, so that they can be controlled separately.    
+```blocks
+let zipLEDs = kitronik_smart_greenhouse.createGreenhouseZIPDisplay(8)
+let statusLEDs = zipLEDs.statusLedsRange()
+let zipStick = zipLEDs.zipStickRange()
+```
+  
+To set the colour of all the ZIP LEDs (or a whole range), use the ``||kitronik_smart_greenhouse.set color||`` block. To view the changes there needs to be a ``||kitronik_smart_greenhouse.show||`` block after this block.  
+```blocks
+let zipLEDs: kitronik_smart_greenhouse.greenhouseZIPLEDs = null
+zipLEDs.setColor(kitronik_smart_greenhouse.colors(ZipLedColors.Red))
+```
+  
+To set the colour of all the ZIP LEDs (or a whole range) **and** then show the change, use the ``||kitronik_smart_greenhouse.show color||`` block.  
+```blocks
+let zipLEDs: kitronik_smart_greenhouse.greenhouseZIPLEDs = null
+zipLEDs.showColor(kitronik_smart_greenhouse.colors(ZipLedColors.Red))
+```
+  
+To set the colour of an individual LED, use the ``||kitronik_smart_greenhouse.set ZIP LED||`` block. To view the changes there needs to be a ``||kitronik_smart_greenhouse.show||`` block after this block.  
+```blocks
+let zipLEDs: kitronik_smart_greenhouse.greenhouseZIPLEDs = null
+zipLEDs.setZipLedColor(1, kitronik_smart_greenhouse.colors(ZipLedColors.Green))
+```
+  
+The ``||kitronik_smart_greenhouse.show||`` block makes visible the changes made since the last ``||kitronik_smart_greenhouse.show||``.  
+```blocks
+let zipLEDs: kitronik_smart_greenhouse.greenhouseZIPLEDs = null
+zipLEDs.show()
+```
+  
+``||kitronik_smart_greenhouse.show rainbow||`` displays a rainbow pattern across the LEDs **and** makes the changes visible straight away.  
+```blocks
+let zipLEDs: kitronik_smart_greenhouse.greenhouseZIPLEDs = null
+zipLEDs.showRainbow(1, 360)
+```
+  
+To turn the LEDs off, use the ``||kitronik_smart_greenhouse.clear||`` block. To view the changes there needs to be a ``||kitronik_smart_greenhouse.show||`` block after this block.  
+```blocks
+let zipLEDs: kitronik_smart_greenhouse.greenhouseZIPLEDs = null
+zipLEDs.clear()
+```
+  
+``||kitronik_smart_greenhouse.rotate||`` moves each LED colour setting along the chain, and then takes the end one back to the first. To view the changes there needs to be a ``||kitronik_smart_greenhouse.show||`` block after this block.  
+```blocks
+let zipLEDs: kitronik_smart_greenhouse.greenhouseZIPLEDs = null
+zipLEDs.rotate(1)
+```
+  
+The brightness of the LEDs can be controlled with the ``||kitronik_smart_greenhouse.set brightness||`` block. To view the changes there needs to be a ``||kitronik_smart_greenhouse.show||`` block after this block.  
+```blocks
+let zipLEDs: kitronik_smart_greenhouse.greenhouseZIPLEDs = null
+zipLEDs.setBrightness(180)
+```
+  
+The ``||kitronik_smart_greenhouse.range||`` block allows a variable to be created which represents a selection of the LEDs.  
+```blocks
+let zipLEDs: kitronik_smart_greenhouse.greenhouseZIPLEDs = null
+let range1 = zipLEDs.range(0, 6)
+```
+  
+The final four blocks in the ZIP LEDs section are all different ways of choosing or setting a colour for the LEDs.  
+* The first is a handy drop-down list of preset colours.
+* The second allows the individual Red, Green and Blue components of the colour to be manually set.
+* The third changes the Hue, moving round a colour wheel (0-360, red through green and blue and then back to red).
+* The fourth allows the wavelength of light to be set (470-625nm, blue to red).
+```blocks
+let zipLEDs: kitronik_smart_greenhouse.greenhouseZIPLEDs = null
+zipLEDs.setZipLedColor(0, kitronik_smart_greenhouse.colors(ZipLedColors.Purple))
+zipLEDs.setZipLedColor(1, kitronik_smart_greenhouse.rgb(160, 240, 50))
+zipLEDs.setZipLedColor(2, kitronik_smart_greenhouse.hueToRGB(157))
+zipLEDs.setZipLedColor(3, kitronik_smart_greenhouse.wavelength(579))
+```
+  
+## Clock
+  
+These blocks are laid out in groups of linked functionality.  
 
-To edit this repository in MakeCode.
+### Set Time
+  
+These blocks are used to set the time on the Real Time Clock (RTC) chip. This can either be done with one block covering hours, minutes and seconds, or individually for each element.  
+```blocks
+kitronik_smart_greenhouse.setTime(11, 45, 30)
+kitronik_smart_greenhouse.writeHours(11)
+kitronik_smart_greenhouse.writeMinutes(45)
+kitronik_smart_greenhouse.writeSeconds(30)
+```
+  
+### Set Date
+  
+These blocks are used to set the date on the RTC chip. This can either be done with one block covering day, month and year (DD/MM/YY), or individually for each element.  
+```blocks
+kitronik_smart_greenhouse.setDate(10, 9, 20)
+kitronik_smart_greenhouse.writeDay(10)
+kitronik_smart_greenhouse.writeMonth(9)
+kitronik_smart_greenhouse.writeYear(20)
+```
+  
+### Read Time
+  
+These blocks are used to read the current time as either a string of the complete time, or the individual elements as numbers.  
+```blocks
+basic.showString(kitronik_smart_greenhouse.readTime())
+basic.showNumber(kitronik_smart_greenhouse.readTimeParameter(TimeParameter.Hours))
+basic.showNumber(kitronik_smart_greenhouse.readTimeParameter(TimeParameter.Minutes))
+basic.showNumber(kitronik_smart_greenhouse.readTimeParameter(TimeParameter.Seconds))
+```
+  
+### Read Date
+  
+These blocks are used to read the current date as either a string of the complete date, or the individual elements as numbers.  
+```blocks
+basic.showString(kitronik_smart_greenhouse.readDate())
+basic.showNumber(kitronik_smart_greenhouse.readDateParameter(DateParameter.Day))
+basic.showNumber(kitronik_smart_greenhouse.readDateParameter(DateParameter.Month))
+basic.showNumber(kitronik_smart_greenhouse.readDateParameter(DateParameter.Year))
+```
+  
+### Alarm
+  
+The ``||kitronik_smart_greenhouse.set alarm||`` block allows the user to input a time for an alarm to trigger either once, or repeating daily. The alarm can either be silenced by the user, or silenced automatically.  
+```blocks
+kitronik_smart_greenhouse.simpleAlarmSet(kitronik_smart_greenhouse.AlarmType.Single, 9, 30, kitronik_smart_greenhouse.AlarmSilence.autoSilence)
+```
+  
+The ``||kitronik_smart_greenhouse.on alarm trigger||`` bracket block and ``||kitronik_smart_greenhouse.alarm triggered||`` block both allow actions to be carried out when the alarm goes off.  
+```blocks
+kitronik_smart_greenhouse.onAlarmTrigger(function () {
+    music.startMelody(music.builtInMelody(Melodies.PowerUp), MelodyOptions.Once)
+})
+basic.forever(function () {
+    if (kitronik_smart_greenhouse.simpleAlarmCheck()) {
+        music.startMelody(music.builtInMelody(Melodies.PowerUp), MelodyOptions.Once)
+    }
+})
+```
+  
+The ``||kitronik_smart_greenhouse.turn off alarm||`` block allows the alarm to be silenced by the user.  
+```blocks
+input.onButtonPressed(Button.A, function () {
+    kitronik_smart_greenhouse.simpleAlarmOff()
+})
+```
+  
+## Sensors
+  
+These blocks are used to take Pressure (Pa or mBar), Temperature (°C or °F) and Humidity (%) readings, which output as numbers.  
+```blocks
+basic.showNumber(kitronik_smart_greenhouse.pressure(PressureUnitList.Pa))
+basic.showNumber(kitronik_smart_greenhouse.temperature(TemperatureUnitList.C))
+basic.showNumber(kitronik_smart_greenhouse.humidity())
+```
+  
+## Inputs/Outputs
+  
 
-* open [https://makecode.microbit.org/](https://makecode.microbit.org/)
-* click on **Import** then click on **Import URL**
-* paste **https://github.com/kitronikltd/pxt-kitronik-smart-greenhouse** and click import
 
-## Blocks preview
 
-This image shows the blocks code from the last commit in master.
-This image may take a few minutes to refresh.
+## License
 
-![A rendered view of the blocks](https://github.com/kitronikltd/pxt-kitronik-smart-greenhouse/raw/master/.github/makecode/blocks.png)
+MIT
 
-#### Metadata (used for search, rendering)
+## Supported targets
 
 * for PXT/microbit
