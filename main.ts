@@ -1380,7 +1380,7 @@ namespace kitronik_smart_greenhouse {
     let comms = NONE
     let entryBuild = ""
     let titleBuild = ""
-    let kitronikHeader = " Kitronik Data Logger\r\n----------------------\r\n  www.kitronik.co.uk\r\n\r\n"
+    let kitronikHeader = " Kitronik Data Logger\r\n   Smart Greenhouse\r\n----------------------\r\n  www.kitronik.co.uk\r\n\r\n"
 
     export enum ListNumber{
         //% block="Send"
