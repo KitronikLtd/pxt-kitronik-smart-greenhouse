@@ -1217,11 +1217,23 @@ namespace kitronik_smart_greenhouse {
     //% subcategory="Inputs/Outputs"
     //% group=Servo
     //% blockId=kitronik_smart_greenhouse_servo_write 
-    //% block="set servo to $angle|degrees"
+    //% block="set servo on P15 to $angle|degrees"
     //% angle.shadow="protractorPicker"
     //% weight=70 blockGap=8
     export function servoWrite(angle: number): void {
         pins.servoWritePin(AnalogPin.P15, angle)
+    }
+
+    /**
+     * Turn off the servo output
+     */
+    //% subcategory="Inputs/Outputs"
+    //% group=Servo
+    //% blockId=kitronik_smart_greenhouse_servo_stop 
+    //% block="turn off servo on P15"
+    //% weight=65 blockGap=8
+    export function servoStop(): void {
+        pins.digitalWritePin(DigitalPin.P15, 0)
     }
 
     /**
