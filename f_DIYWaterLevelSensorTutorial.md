@@ -12,6 +12,8 @@ In addition to the normal container for the water pump, the following items will
 * Sticky tape
 * Scissors (always take care when using these)
 
+![Tin Foil and clips water level sensor in water pump container](https://KitronikLtd.github.io/pxt-kitronik-smart-greenhouse/assets/DIY-water-level-SMALL.png)
+
 ### Step 1
 Cut two lengths of foil. One should reach all the way to the bottom of the container with about 3cm overhang at the top and 2cm flat on the bottom, and they other should finish about 2cm above the bottom of the container, again with about 3cm overhang at the top. Use tape to stick the ends to the outside of the container, and a bit above end on the inside. (**Note:** If the very ends of the foil are taped over inside the container, the sensor will not work correctly).
 

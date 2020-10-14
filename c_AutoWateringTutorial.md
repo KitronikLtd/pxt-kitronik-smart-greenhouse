@@ -10,7 +10,7 @@ In the "Displaying Temperature, Humidity & Soil Moisture" tutorial (click [here]
 This tutorial is going to require the Prong to be connected to the Environmental Control Board using crocodile clips.  
 Connect Prong 3V to one of the 3V pads, Prong GND to one of the GND pads and Prong P1 to the Pin1 pad. Stick it into a plant pot.
 
-![Ticking Halo HD Clock animation](https://KitronikLtd.github.io/pxt-kitronik-halohd/assets/Ticking-Clock-Animation.gif)
+![Automatic watering triggered with Prong](https://KitronikLtd.github.io/pxt-kitronik-smart-greenhouse/assets/auto-watering-SMALL.png)
 
 ### Step 1
 The first thing to do is to set up the ZIP LEDs and create the status LEDs range.

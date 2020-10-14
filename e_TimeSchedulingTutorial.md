@@ -9,7 +9,7 @@ In this tutorial, the Real Time Clock (RTC) on the Environmental Control Board w
 
 This stage of the tutorial is going to require the water pump to be connected to the high power output on P13 on the Environmental Control Board (follow the instructions Smart Greenhouse booklet to connect and prime the water pump).
 
-![Picture of water pump connected to Environmental Control Board]
+![Day/Night clock face with watering at set times](https://KitronikLtd.github.io/pxt-kitronik-smart-greenhouse/assets/time-scheduling-SMALL.png)
 
 ### Step 1
 In order for the clock to be used effectively, the time first needs to be set.  

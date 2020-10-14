@@ -9,7 +9,7 @@ In the "Greenhouse Visual Thermometer" tutorial (click [here](https://makecode.m
 
 In this tutorial, learn how to use the ZIP LED hue feature to display data on a single status LED.
 
-![Ticking Halo HD Clock animation](https://KitronikLtd.github.io/pxt-kitronik-halohd/assets/Ticking-Clock-Animation.gif)
+![Environmental Control Board with status LEDs on](https://KitronikLtd.github.io/pxt-kitronik-smart-greenhouse/assets/status-leds-SMALL.png)
 
 ### Step 1
 The first thing to do is to set up the ZIP LEDs and create the status LEDs range.

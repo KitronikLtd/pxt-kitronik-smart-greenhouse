@@ -7,6 +7,8 @@
 ### Introduction Step @unplugged
 A really useful feature of the Smart Greenhouse is the data logging functionality - being able to measure, store and then transmit data to a computer. This means that the relationships between environmental factors such as temperature, humidity, soil moisture and light levels can be analysed and the results used to improve plant care and growth. This tutorial will go through the basics of gathering data readings, storing them and then transmitting them to a computer via USB. It will also cover the use of the MakeCode serial console and importing data into Microsoft Excel. 
 
+![Line graph on computer screen](https://KitronikLtd.github.io/pxt-kitronik-smart-greenhouse/assets/data-logging-SMALL.png)
+
 ### micro:bit Setup @unplugged
 For this tutorial, the BBC micro:bit plugged into the Environmental Control Board needs to be connected via USB to a computer all the time, and the micro:bit needs to be 'Paired' within MakeCode (**Note:** To be able to 'Pair' in MakeCode, the micro:bit firmware must be 0249 or higher; click [here](https://microbit.org/get-started/user-guide/firmware/) for more information).  
   
