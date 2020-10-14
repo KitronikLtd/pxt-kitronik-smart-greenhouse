@@ -7,7 +7,7 @@
 ### Introduction Step @unplugged
 Learn how to visually represent temperature using the status ZIP LEDs on the Evironmental Control Board.
 
-![Ticking Halo HD Clock animation](https://KitronikLtd.github.io/pxt-kitronik-halohd/assets/Ticking-Clock-Animation.gif)
+![Environmental Control Board with status LEDs on](https://KitronikLtd.github.io/pxt-kitronik-smart-greenhouse/assets/status-leds.png)
 
 ### Step 1
 The first thing to do is to set up the ZIP LEDs and create the status LEDs range.
