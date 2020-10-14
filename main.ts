@@ -77,7 +77,7 @@ enum PressureUnitList {
  */
 
 //% weight=100 color=#00A654 icon="\uf06c" block="Greenhouse"
-//% groups='["Set Time", "Set Date", "Read Time", "Read Date", "Alarm", "General Inputs/Outputs", "High Power Outputs", "Servo", "Setup", "Entries", "Transfer"]'
+//% groups='["Set Time", "Set Date", "Read Time", "Read Date", "Alarm", "General Inputs/Outputs", "High Power Outputs", "Servo", "Setup", "Entries", "Transfer", "Analyse"]'
 namespace kitronik_smart_greenhouse {
     ////////////////////////////////
     //           MUSIC            //
@@ -1022,11 +1022,11 @@ namespace kitronik_smart_greenhouse {
             }
         }
         if (checkHour == alarmHour && checkMin == alarmMin) {
-            alarmHandler()
             alarmTriggered = 1
             if (alarmOff == 1) {
-                basic.pause(2500)
                 alarmSetFlag = 0
+                alarmHandler()
+                basic.pause(2500)
                 if (alarmRepeat == 1) {
                     control.inBackground(() => {
                         checkMin = readTimeParameter(TimeParameter.Minutes)
@@ -1038,6 +1038,9 @@ namespace kitronik_smart_greenhouse {
                         simpleAlarmSet(AlarmType.Repeating, alarmHour, alarmMin, alarmOff) //Reset the alarm after the current minute has changed
                     })
                 }
+            }
+            else if (alarmOff == 2) {
+                alarmHandler()
             }
         }
         if (alarmTriggered == 1 && alarmOff == 2 && checkMin != alarmMin) {
@@ -1672,6 +1675,42 @@ namespace kitronik_smart_greenhouse {
 
         serial.writeString(dataEntry)
         serial.writeString("\r\n")
+    }
+
+    /**
+     * Read data at selected position in the stored data.
+     * If entered position is greater than the total number of enteries, the max entry position is outputted.
+     * @param position is the row location of the required data
+     * @param column is the column containing the specific piece of data
+     */
+    //% subcategory="Data Logging"
+    //% group=Analyse
+    //% weight=60 blockGap=8
+    //% blockId=kitronik_smart_greenhouse_read_selected
+    //% block="read data at entry %position| column %column"
+    //% position.min=1 position.max=100 position.defl=1
+    export function readSelectedData(position: number, column: number): string {
+        if (storedList.length < position){
+            position = storedList.length
+        }
+        let dataRow = storedList[position-1]
+
+        let dataEntry = dataRow.substr(((column*10)-11+column), 10) // Just fetch the 10 characters of that entry's column, works for all separators
+        
+        return dataEntry
+    }
+
+    /**
+     * Return the total number of stored data entries.
+     */
+    //% subcategory="Data Logging"
+    //% group=Analyse
+    //% weight=65 blockGap=8
+    //% blockId=kitronik_smart_greenhouse_total_entries
+    //% block="total number of data entries"
+    export function returnTotalEntries(): number {
+        let totalEntries = storedList.length
+        return totalEntries
     }
 
 } 
