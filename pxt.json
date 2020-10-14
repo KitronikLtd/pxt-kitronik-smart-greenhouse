@@ -1,6 +1,6 @@
 {
     "name": "pxt-kitronik-smart-greenhouse",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "dependencies": {
         "core": "*",
         "ws2812b": "github:KitronikLtd/pxt-ws2812b#v0.0.5",
