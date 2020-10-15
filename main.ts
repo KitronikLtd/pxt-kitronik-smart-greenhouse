@@ -279,6 +279,7 @@ namespace kitronik_smart_greenhouse {
         show() {
             //use the Kitronik version which respects brightness for all 
             ws2812b.sendBuffer(this.buf, this.pin, this.brightness);
+            control.waitMicros(100) // This looks messy, but it fixes the issue sometimes found when using multiple ZIP LED ranges, where the settings for the first range are clocked through to the next range. A short pause allows the ZIP LEDs to realise they need to stop pushing data.
         }
 
         /**
