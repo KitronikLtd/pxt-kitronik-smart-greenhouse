@@ -21,7 +21,8 @@ In addition, for the separate water container:
 
 ### Step 1
 **Separate Water Tank Only - Skip if using Smart Greenhouse Kit**  
-Cut two lengths of foil. One should reach all the way to the bottom of the container with about 3cm overhang at the top and 2cm flat on the bottom, and they other should finish about 2cm above the bottom of the container, again with about 3cm overhang at the top. Use tape to stick the ends to the outside of the container, and a bit above end on the inside. (**Note:** If the very ends of the foil are taped over inside the container, the sensor will not work correctly).
+Cut two lengths of foil. One should reach all the way to the bottom of the container with about 3cm overhang at the top and 2cm flat on the bottom, and they other should finish about 2cm above the bottom of the container, again with about 3cm overhang at the top. Use tape to stick the ends to the outside of the container, and a bit above end on the inside.  
+(**Note:** If the very ends of the foil are taped over inside the container, the sensor will not work correctly).
 
 ### Step 2
 **Separate Water Tank Only - Skip if using Smart Greenhouse Kit**  
@@ -30,7 +31,7 @@ Using two crocodile leads, clipping them over the rim of the container, connect 
 ### Step 3
 **Smart Greenhouse Kit Only - Skip if using separate water tank**  
 Take two crocodile leads and place one at each end of the water tank, taping them in place so that they're nearly touching the bottom.  
-Connect one lead tp PIN0 on the Environmental Control Board, and the other lead to one of the 3V connections.
+Connect one lead to PIN0 on the Environmental Control Board, and the other lead to one of the 3V connections.
 
 ### Step 4
 The sensor is now complete, so fill the container/tank with water.
