@@ -7,16 +7,17 @@
 ### Introduction Step @unplugged
 **Note:** There are two versions of the 'Making the Sensor' instructions - one for the Smart Greenhouse Kit and the other for a separate water container.  
   
-This tutorial will demonstrate how to make a water level sensor for the Smart Greenhouse water supply. The sensor will set off an alarm if the water container gets close to being empty, and will also stop the water pump being used until the container is refilled.
+This tutorial will demonstrate how to make a water level sensor for the Smart Greenhouse water supply. The sensor will set off an alarm if the water container gets close to being empty, and will also stop the water pump being used until the container is refilled.  
+  
+![Tin Foil and clips water level sensor in water pump container](https://KitronikLtd.github.io/pxt-kitronik-smart-greenhouse/assets/DIY-water-level-SMALL.png)
 
+### Equipment Step @unplugged
 As well as the Greenhouse and water pump, or plant pot and water container, the following items will be required to make the sensor:  
 * Sticky tape  
   
 In addition, for the separate water container:  
 * Sticky tape
 * Scissors (always take care when using these)
-  
-![Tin Foil and clips water level sensor in water pump container](https://KitronikLtd.github.io/pxt-kitronik-smart-greenhouse/assets/DIY-water-level-SMALL.png)
 
 ### Step 1
 **Separate Water Tank Only - Skip if using Smart Greenhouse Kit**  
