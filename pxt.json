@@ -1,6 +1,6 @@
 {
     "name": "pxt-kitronik-smart-greenhouse",
-    "version": "1.2.6",
+    "version": "1.2.7",
     "dependencies": {
         "core": "*",
         "ws2812b": "github:KitronikLtd/pxt-ws2812b#v0.0.5",
@@ -16,8 +16,8 @@
         "c_AutoWateringTutorial.md",
         "e_TimeSchedulingTutorial.md",
         "d_GrowLightTutorial.md",
-        "g_DataLoggingTutorial.md",
-        "f_DIYWaterLevelSensorTutorial.md"
+        "f_DIYWaterLevelSensorTutorial.md",
+        "g_DataLoggingTutorial.md"
     ],
     "testFiles": [
         "test.ts"
