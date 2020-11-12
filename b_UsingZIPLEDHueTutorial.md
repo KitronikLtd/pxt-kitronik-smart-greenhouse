@@ -23,7 +23,7 @@ let statusLEDs = zipLEDs.statusLedsRange()
 
 ### Step 2
 Next, create a new variable called ``||variables:tempHue||``. This will be used to set and store the ZIP LED colour hue based on the temperature reading from the sensor.  
-In the ``||basic:forever||`` loop, ``||variables:set tempHue to||`` ``||math:map 0 from low 0 high 1023 to low 0 high 4||`` - this block can be found in the ``||math:Math||`` category.
+In the ``||basic:forever||`` loop, ``||variables:set tempHue to||`` the ``||math:map||`` block, which can be found in the ``||math:Math||`` category.
 
 #### ~ tutorialhint
 ```blocks
@@ -33,7 +33,7 @@ basic.forever(function () {
 ```
 
 ### Step 3
-The ``||math.map||`` function changes the possible range of a value - in this case temperature - to another range, changing in relative amounts. This is very useful, as it means temperature, measured between 0 and 40°C, can then be converted to a colour hue value (these range from 0-360, red all the way round a colour wheel to red again).  
+The ``||math.map||`` function changes the possible range of a value - in this case temperature - to another range, shifting it in relative amounts. This is very useful, as it means temperature, measured between 0 and 40°C, can then be converted to a colour hue value (these range from 0-360, red all the way round a colour wheel to red again).  
 In the ``||math:map||`` block, put the ``||kitronik_smart_greenhouse.Read Temperature in °C||`` block in the first slot - this can be found in the ``||kitronik_smart_greenhouse.Sensors||`` section of the ``||kitronik_smart_greenhouse.Greenhouse||`` category. Then, set ``||math:from low 0 high 40 to low 210 high 0||`` to give blue colours for cold, and red colours for hot.
 
 #### ~ tutorialhint
@@ -66,8 +66,8 @@ Try putting the board in locations with different temperatures to see the ZIP LE
 ### Introduction Step @unplugged
 Now that temperature is working, humidity and soil moisture can be added to ZIP LEDs 1 and 2.  
   
-This stage of the tutorial is going to require the Prong to be connected to the Environmental Control Board using crocodile clips.  
-Connect Prong 3V to one of the 3V pads, Prong GND to one of the GND pads and Prong P1 to the Pin1 pad. Stick it into a plant pot.
+This stage of the tutorial is going to require the Kitronik Greenhouse, with the planting section filled with soil, and the Mini Prong to be connected to the Environmental Control Board using crocodile clips.  
+Connect Mini Prong 3V to one of the 3V pads, Mini Prong GND to one of the GND pads and Mini Prong 0 to the Pin1 pad. Stick it into the greenhouse planting section.  
 
 ![Picture of Prong connected to Environmental Control Board]
 

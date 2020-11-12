@@ -53,7 +53,7 @@ input.onButtonPressed(Button.A, function () {
 
 ### Step 4
 Within the ``||loops:repeat||`` loop, the light level will be measured and added to a data store. **Note:** There is a limit of 100 entries in the data store.  
-Inside the loop, add an ``||kitronik_smart_greenhouse.add data||`` block from the ``||kitronik_smart_greenhouse.Data Logging||`` section of the ``||kitronik_smart_greenhouse.Greenhouse||`` category. The block can only use strings, so where values measured as numbers are needed, a ``||text:convert to text||`` is required (from the ``||text:Text||`` category under **Advanced**). Insert one inside the slot in the ``||kitronik_smart_greenhouse.add data||`` block. The value to be converted to text is ``||input:light level||`` which can be found in the ``||input:Input||`` category.
+Inside the loop, add an ``||kitronik_smart_greenhouse.add data||`` block from the ``||kitronik_smart_greenhouse.Data Logging||`` section of the ``||kitronik_smart_greenhouse.Greenhouse||`` category. The block can only use strings, so where values measured as numbers are needed, a ``||text:convert to text||`` block is required (from the ``||text:Text||`` category under **Advanced**). Insert one inside the slot in the ``||kitronik_smart_greenhouse.add data||`` block. The value to be converted to text is ``||input:light level||`` which can be found in the ``||input:Input||`` category.
 
 #### ~ tutorialhint
 ```blocks
@@ -145,7 +145,7 @@ The tutorial so far has just looked at collecting and transmitting a single type
 
 ### Step 1
 When collecting data, it can be very useful to know **when** the measurements were taken, so the first addition will be setting the date and time on the Environmental Control Board.  
-From the ``||kitronik_smart_greenhouse.Clock||`` section of the ``||kitronik_smart_greenhouse.Greenhouse||`` category, add in the ``||kitronik_smart_greenhouse.Set Date||`` and ``||kitronik_smart_greenhouse.Set Time||`` blocks to the beginning of the ``||basic:on start||`` section. Set the date to today's date, and the time can be set the current time just before the program is downloaded to the micro:bit.
+From the ``||kitronik_smart_greenhouse.Clock||`` section of the ``||kitronik_smart_greenhouse.Greenhouse||`` category, add in the ``||kitronik_smart_greenhouse.Set Date||`` and ``||kitronik_smart_greenhouse.Set Time||`` blocks to the beginning of the ``||basic:on start||`` section. Set the date to today's date, and the time can be set to the current time just before the program is downloaded to the micro:bit.
 
 #### ~ tutorialhint
 ```blocks

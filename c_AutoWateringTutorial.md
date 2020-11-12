@@ -7,8 +7,8 @@
 ### Introduction Step @unplugged
 In the "Displaying Temperature, Humidity & Soil Moisture" tutorial (click [here](https://makecode.microbit.org/#tutorial:https://github.com/KitronikLtd/pxt-kitronik-smart-greenhouse/b_UsingZIPLEDHueTutorial) to view) the ZIP LED colour hue was used to display the sensor values. In this tutorial, soil moisture will be displayed in the same way, but the measurement will also be used to trigger an alarm and control when a plant is watered.  
   
-This tutorial is going to require the Prong to be connected to the Environmental Control Board using crocodile clips.  
-Connect Prong 3V to one of the 3V pads, Prong GND to one of the GND pads and Prong P1 to the Pin1 pad. Stick it into a plant pot.
+This tutorial is going to require the Kitronik Greenhouse, with the planting section filled with soil, and the Mini Prong to be connected to the Environmental Control Board using crocodile clips.  
+Connect Mini Prong 3V to one of the 3V pads, Mini Prong GND to one of the GND pads and Mini Prong 0 to the Pin1 pad. Stick it into the greenhouse planting section.  
 
 ![Automatic watering triggered with Prong](https://KitronikLtd.github.io/pxt-kitronik-smart-greenhouse/assets/auto-watering-SMALL.png)
 
@@ -24,7 +24,7 @@ let statusLEDs = zipLEDs.statusLedsRange()
 
 ### Step 2
 Next, create a new variable called ``||variables:soilHue||``. This will be used to set and store the ZIP LED colour hue based on the soil moisture reading from the sensor.  
-In the ``||basic:forever||`` loop, ``||variables:set tempHue to||`` ``||math:map 0 from low 0 high 1023 to low 0 high 4||`` - this block can be found in the ``||math:Math||`` category.
+In the ``||basic:forever||`` loop, ``||variables:set tempHue to||`` the ``||math:map||`` block, which can be found in the ``||math:Math||`` category.
 
 #### ~ tutorialhint
 ```blocks
@@ -118,19 +118,19 @@ basic.forever(function () {
 
 ### Step 8
 The soil moisture alarm is now complete, so click ``|Download|`` and transfer the code to the Environmental Control Board.  
-Try sticking the Prong in soil with different moisture levels to see when the alarm is triggered.
+Try moving the Mini Prong around the planting area to see when the alarm is triggered.
 
 ## Adding Automated Watering
 ### Introduction Step @unplugged
 The Environmental Control Board is now able to determine when the soil is too dry, and can even sound the alarm, but it would be great if it could sort out the watering as well!
   
-This stage of the tutorial is going to require the Prong as before, and also the water pump to be connected to the high power output on P13 on the Environmental Control Board (follow the instructions Smart Greenhouse booklet to connect and prime the water pump).
+This stage of the tutorial is going to require the Mini Prong as before, and also the water pump to be connected to the high power output on P13 on the Environmental Control Board (follow the instructions in the Smart Greenhouse booklet to connect the pump and fill the water tank).
 
 ![Picture of Prong and water pump connected to Environmental Control Board]
 
 ### Step 1
-In order to automate the watering process, all that needs to happen is for the water pump to be switched on in the same place in the code as the alarm is triggered. However, the water water needs to be added to the pot carefully to stop it spilling. To do this, the pump will actually need to be switched on and off in several short bursts.  
-Start by adding a ``||loops:repeat||`` loop to the ``||logic:if||`` section, just after the ``||music:stop melody||`` block. Set the number of repeats to **5**.
+In order to automate the watering process, all that needs to happen is for the water pump to be switched on in the same place in the code as the alarm is triggered. However, the water water needs to be added to the planting area carefully to stop it spilling. To do this, the pump will actually need to be switched on and off in several short bursts.  
+Start by adding a ``||loops:repeat||`` loop to the ``||logic:if||`` section, just after the ``||music:stop melody||`` block. Set the number of repeats to **3**.
 
 #### ~ tutorialhint
 ```blocks
@@ -140,7 +140,7 @@ basic.forever(function () {
         music.startMelody(music.builtInMelody(Melodies.BaDing), MelodyOptions.Forever)
         basic.pause(2000)
         music.stopMelody(MelodyStopOptions.All)
-        for (let index = 0; index < 5; index++) {
+        for (let index = 0; index < 3; index++) {
             
         }
     } else {
@@ -150,7 +150,7 @@ basic.forever(function () {
 ```
 
 ### Step 2
-Next, from the ``||kitronik_smart_greenhouse.Inputs/Outputs||`` section of the ``||kitronik_smart_greenhouse.Greenhouse||`` category, add a ``||kitronik_smart_greenhouse.turn high power P13 ON||`` block inside the ``||loops:repeat||`` loop. After this, add a 1 second ``||basic:pause||``, then turn **OFF** ``||kitronik_smart_greenhouse.high power P13||``, and finally add a 2 second ``||basic:pause||`` at the end. This section of code will now turn the water pump on for 1 second, turn it off for 2 seconds, and repeat this 5 times.
+Next, from the ``||kitronik_smart_greenhouse.Inputs/Outputs||`` section of the ``||kitronik_smart_greenhouse.Greenhouse||`` category, add a ``||kitronik_smart_greenhouse.turn high power P13 ON||`` block inside the ``||loops:repeat||`` loop. After this, add a 100ms ``||basic:pause||``, then turn **OFF** ``||kitronik_smart_greenhouse.high power P13||``, and finally add a 1 second ``||basic:pause||`` at the end. This section of code will now turn the water pump on for 100ms, turn it off for 1 second, and repeat this 3 times.
 
 #### ~ tutorialhint
 ```blocks
@@ -160,11 +160,11 @@ basic.forever(function () {
         music.startMelody(music.builtInMelody(Melodies.BaDing), MelodyOptions.Forever)
         basic.pause(2000)
         music.stopMelody(MelodyStopOptions.All)
-        for (let index = 0; index < 5; index++) {
+        for (let index = 0; index < 3; index++) {
             kitronik_smart_greenhouse.controlHighPowerPin(kitronik_smart_greenhouse.HighPowerPins.pin13, kitronik_smart_greenhouse.onOff(true))
-            basic.pause(1000)
+            basic.pause(100)
             kitronik_smart_greenhouse.controlHighPowerPin(kitronik_smart_greenhouse.HighPowerPins.pin13, kitronik_smart_greenhouse.onOff(false))
-            basic.pause(2000)
+            basic.pause(1000)
         }
     } else {
         basic.showIcon(IconNames.Happy)
@@ -202,4 +202,4 @@ basic.forever(function () {
 
 ### Step 4
 CODING COMPLETE! Click ``|Download|`` and transfer the code to the Environmental Control Board.  
-Try sticking the Prong in soil with dry soil and see the pump automatically water the plant.
+Wait for the soil to dry out and see the pump automatically water the plant.

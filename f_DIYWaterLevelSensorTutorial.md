@@ -5,29 +5,40 @@
 
 ## Making the Sensor
 ### Introduction Step @unplugged
-In this tutorial, common household items will be used to make a water level sensor for the water pump container. The sensor will set off an alarm if the water container gets close to being empty, and will also stop the water pump being used until the container is refilled.
+**Note:** There are two versions of the 'Making the Sensor' instructions - one for the Smart Greenhouse Kit and the other for a separate water container.  
+  
+This tutorial will demonstrate how to make a water level sensor for the Smart Greenhouse water supply. The sensor will set off an alarm if the water container gets close to being empty, and will also stop the water pump being used until the container is refilled.
 
-In addition to the normal container for the water pump, the following items will be required to make the sensor:  
-* Kitchen foil
+As well as the Greenhouse and water pump, or plant pot and water container, the following items will be required to make the sensor:  
+* Sticky tape  
+  
+In addition, for the separate water container:  
 * Sticky tape
 * Scissors (always take care when using these)
-
+  
 ![Tin Foil and clips water level sensor in water pump container](https://KitronikLtd.github.io/pxt-kitronik-smart-greenhouse/assets/DIY-water-level-SMALL.png)
 
 ### Step 1
+**Separate Water Tank Only - Skip if using Smart Greenhouse Kit**  
 Cut two lengths of foil. One should reach all the way to the bottom of the container with about 3cm overhang at the top and 2cm flat on the bottom, and they other should finish about 2cm above the bottom of the container, again with about 3cm overhang at the top. Use tape to stick the ends to the outside of the container, and a bit above end on the inside. (**Note:** If the very ends of the foil are taped over inside the container, the sensor will not work correctly).
 
 ### Step 2
-Using two crocodile leads, clipping them over the rim of the container, connect one foil strip to PIN0 on the Environmental Control Board, and the other strip to one of the 3V onnections.
+**Separate Water Tank Only - Skip if using Smart Greenhouse Kit**  
+Using two crocodile leads, clipping them over the rim of the container, connect one foil strip to PIN0 on the Environmental Control Board, and the other strip to one of the 3V connections.
 
 ### Step 3
-The sensor is now complete, so fill the container with water.
+**Smart Greenhouse Kit Only - Skip if using separate water tank**  
+Take two crocodile leads and place one at each end of the water tank, taping them in place so that they're nearly touching the bottom.  
+Connect one lead tp PIN0 on the Environmental Control Board, and the other lead to one of the 3V connections.
+
+### Step 4
+The sensor is now complete, so fill the container/tank with water.
 
 ## Alarm and Water Pump Control
 ### Introduction Step @unplugged
 Now that the sensor and container are ready, the low water level alarm and water pump control can be programmed.
 
-This stage of the tutorial is going to require the water pump to be connected to the high power output on P13 on the Environmental Control Board (follow the instructions Smart Greenhouse booklet to connect and prime the water pump). There also needs to be an empty container to pump water into.
+This stage of the tutorial is going to require the water pump to be connected to the high power output on P13 on the Environmental Control Board (follow the instructions in the Smart Greenhouse booklet to connect the pump and fill the water tank). If using a separate water container, there also needs to be an empty container to pump water into.
 
 ### Step 1
 The program is going to include an audio alarm, so the buzzer needs to be set up.  
@@ -46,9 +57,9 @@ To do this, add an ``||logic:if else||`` block from the ``||logic:Logic||`` cate
 ```blocks
 basic.forever(function () {
     if (kitronik_smart_greenhouse.readIOPin(kitronik_smart_greenhouse.PinType.analog, kitronik_smart_greenhouse.IOPins.p0) < 300) {
-    	
+        
     } else {
-    	
+        
     }
 })
 ```
@@ -63,7 +74,7 @@ basic.forever(function () {
         music.playTone(392, music.beat(BeatFraction.Whole))
         basic.pause(1000)
     } else {
-    	
+        
     }
 })
 ```
@@ -93,7 +104,7 @@ Inside this new ``||logic:if||`` section will be the code to actually turn the w
 ```blocks
 input.onButtonPressed(Button.A, function () {
     if (!(waterEmpty)) {
-    	
+        
     }
 })
 ```

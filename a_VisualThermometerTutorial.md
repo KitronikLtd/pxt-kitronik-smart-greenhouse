@@ -5,7 +5,7 @@
 
 ## Simple Temperature Indicator
 ### Introduction Step @unplugged
-Learn how to visually represent temperature using the status ZIP LEDs on the Evironmental Control Board.
+Learn how to visually represent temperature using the status ZIP LEDs on the Environmental Control Board.
 
 ![Environmental Control Board with status LEDs on](https://KitronikLtd.github.io/pxt-kitronik-smart-greenhouse/assets/status-leds-SMALL.png)
 
