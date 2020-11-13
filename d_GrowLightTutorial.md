@@ -5,7 +5,7 @@
 
 ## Installing the ZIP Stick
 ### Introduction Step @unplugged
-Light is one of the three ingredients - along with carbon dioxide and water - required for photosynthesis, the process by which plants produce their food. So. plants need light to grow - this is as well known fact. However, what might be less well known is that the colour of the light affects how well the photosynthesis is carried out. The red line on the graph below shows how the rate of photosynthesis is impacted by different colours of light.  
+Light is one of the three ingredients - along with carbon dioxide and water - required for photosynthesis, the process by which plants produce their food. So, plants need light to grow - this is as well known fact. However, what might be less well known is that the colour of the light affects how well the photosynthesis is carried out. The red line on the graph below shows how the rate of photosynthesis is impacted by different colours of light.  
   
 ![Photosynthesis Rate vs Light Wavelenght graph](https://KitronikLtd.github.io/pxt-kitronik-smart-greenhouse/assets/photosynthesis-vs-wavelength.jpg)
 *Photosynthetic Rate and Light Absorption, chart, viewed 3 September 2020, <https://kids.britannica.com/students/assembly/view/217902>.*
