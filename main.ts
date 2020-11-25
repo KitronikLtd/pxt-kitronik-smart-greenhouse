@@ -1337,7 +1337,7 @@ namespace kitronik_smart_greenhouse {
     //% subcategory="Inputs/Outputs"
     //% group="High Power Outputs"
     //% blockId=kitronik_environmental_board_high_power_on_off 
-    //% block="turn high power %pin|%output=on_off_toggle||at %powerOP|%"
+    //% block="turn high power %pin|%output=on_off_toggle||at %powerOP|percent"
     //% powerOP.min=0 powerOP.max=100
     //% expandableArgumentMode="toggle"
     //% weight=80 blockGap=8
