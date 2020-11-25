@@ -1332,20 +1332,20 @@ namespace kitronik_smart_greenhouse {
      * Turn high power outputs on and off
      * @param pin which high power output pin to control
      * @param output is the boolean output of the pin, either ON or OFF
-     * @param dutyCycle is an optional parameter to set the duty cycle for the pin eg: 100
+     * @param power is an optional parameter to set the power output for the pin eg: 100
      */
     //% subcategory="Inputs/Outputs"
     //% group="High Power Outputs"
     //% blockId=kitronik_environmental_board_high_power_on_off 
-    //% block="turn high power %pin|%output=on_off_toggle||with duty cycle %dutyCycle"
-    //% dutyCycle.min=0 dutyCycle.max=100
+    //% block="turn high power %pin|%output=on_off_toggle||at %power|%"
+    //% power.min=0 power.max=100
     //% expandableArgumentMode="toggle"
     //% weight=80 blockGap=8
-    export function controlHighPowerPin(pin: kitronik_smart_greenhouse.HighPowerPins, output: boolean, dutyCycle: number = 100): void {
+    export function controlHighPowerPin(pin: kitronik_smart_greenhouse.HighPowerPins, output: boolean, power: number = 100): void {
         if (pin == 13) {
             if (output == true) {
-                if (dutyCycle != 100) {
-                    let pin13Analog = dutyCycle * (1023/100)
+                if (power != 100) {
+                    let pin13Analog = power * (1023/100)
                     pins.analogWritePin(AnalogPin.P13, pin13Analog)
                 }
                 else {
@@ -1358,8 +1358,8 @@ namespace kitronik_smart_greenhouse {
         }
         else if (pin == 14) {
             if (output == true) {
-                if (dutyCycle != 100) {
-                    let pin14Analog = dutyCycle * (1023/100)
+                if (power != 100) {
+                    let pin14Analog = power * (1023/100)
                     pins.analogWritePin(AnalogPin.P14, pin14Analog)
                 }
                 else {
