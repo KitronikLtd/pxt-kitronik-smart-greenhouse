@@ -1,6 +1,6 @@
 {
     "name": "pxt-kitronik-smart-greenhouse",
-    "version": "1.3.6",
+    "version": "1.3.7",
     "dependencies": {
         "core": "*",
         "kitronik_RTC": "github:KitronikLtd/pxt-kitronik-rtc-base#v0.0.12",
