@@ -1400,7 +1400,7 @@ namespace kitronik_smart_greenhouse {
     let storedList: string[] = []
     let delimiter = " "
     let entryNumber = false
-    let listLimit = 100
+    let listLimit = 60
     let comms = NONE
     let entryBuild = ""
     let titleBuild = ""
@@ -1527,7 +1527,6 @@ namespace kitronik_smart_greenhouse {
 
     /**
      * Input title of saved data as a column header, logged in string format. Titles will only output the first 10 characters of the string.
-     * Maximum of 100 entries stored
      * @param title1 of any title to save eg: " "
      * @param title2 of any title to save eg: " "
      * @param title3 of any title to save eg: " "
@@ -1536,16 +1535,14 @@ namespace kitronik_smart_greenhouse {
      * @param title6 of any title to save eg: " "
      * @param title7 of any title to save eg: " "
      * @param title8 of any title to save eg: " "
-     * @param title9 of any title to save eg: " "
-     * @param title10 of any title to save eg: " "
      */
     //% subcategory="Data Logging"
     //% group=Setup
     //% weight=83 blockGap=8
     //% blockId=kitronik_smart_greenhouse_entry_title
-    //% block="add data entry headings: %title1|| %title2 %title3 %title4 %title5 %title6 %title7 %title8 %title9 %title10"
+    //% block="add data entry headings: %title1|| %title2 %title3 %title4 %title5 %title6 %title7 %title8"
     //% expandableArgumentMode="enabled" inlineInputMode=inline
-    export function addTitle(title1: string, title2?: string, title3?: string, title4?: string, title5?: string, title6?: string, title7?: string, title8?: string, title9?: string, title10?: string): void{
+    export function addTitle(title1: string, title2?: string, title3?: string, title4?: string, title5?: string, title6?: string, title7?: string, title8?: string): void{
         checkAndAdd(title1, "title")
         checkAndAdd(title2, "title")
         checkAndAdd(title3, "title")
@@ -1554,12 +1551,11 @@ namespace kitronik_smart_greenhouse {
         checkAndAdd(title6, "title")
         checkAndAdd(title7, "title")
         checkAndAdd(title8, "title")
-        checkAndAdd(title9, "title")
-        checkAndAdd(title10, "title")
     }
 
     /**
      * Input data to be saved to the logger in string format. To save numbers, convert numbers to a string.
+     * Maximum of 60 entries stored
      * @param entry1 of any data to save
      * @param entry2 of any data to save
      * @param entry3 of any data to save
@@ -1568,17 +1564,15 @@ namespace kitronik_smart_greenhouse {
      * @param entry6 of any data to save
      * @param entry7 of any data to save
      * @param entry8 of any data to save
-     * @param entry9 of any data to save
-     * @param entry10 of any data to save
      */
     //% subcategory="Data Logging"
     //% group=Entries
     //% weight=80 blockGap=8
     //% blockId=kitronik_smart_greenhouse_add_entry
-    //% block="add data %entry1 || %entry2 %entry3 %entry4 %entry5 %entry6 %entry7 %entry8 %entry9 %entry10"
+    //% block="add data %entry1 || %entry2 %entry3 %entry4 %entry5 %entry6 %entry7 %entry8"
     //% expandableArgumentMode="enabled" 
     //% inlineInputMode=inline
-    export function addData(entry1: string, entry2?: string, entry3?: string, entry4?: string, entry5?: string, entry6?: string, entry7?: string, entry8?: string, entry9?: string, entry10?: string): void{
+    export function addData(entry1: string, entry2?: string, entry3?: string, entry4?: string, entry5?: string, entry6?: string, entry7?: string, entry8?: string): void{
         if (comms == NONE)
             setDataForUSB()
         entryBuild = ""
@@ -1591,8 +1585,6 @@ namespace kitronik_smart_greenhouse {
         checkAndAdd(entry6, "entry")
         checkAndAdd(entry7, "entry")
         checkAndAdd(entry8, "entry")
-        checkAndAdd(entry9, "entry")
-        checkAndAdd(entry10, "entry")
 
         if (entryBuild != " ")
         {
@@ -1653,7 +1645,7 @@ namespace kitronik_smart_greenhouse {
 
     /**
      * Send selected position the stored data via comms selected.
-     * If entered position is greater than the total number of enteries, the max entry position is outputted.
+     * If entered position is greater than the total number of entries, the max entry position is output.
      * @param position is the location of required data to be sent
      */
     //% subcategory="Data Logging"
@@ -1661,7 +1653,7 @@ namespace kitronik_smart_greenhouse {
     //% weight=60 blockGap=8
     //% blockId=kitronik_smart_greenhouse_send_selected
     //% block="transmit data at entry %position"
-    //% position.min=1 position.max=100 position.defl=1
+    //% position.min=1 position.max=60 position.defl=1
     export function sendSelectedData(position: number): void{
         if (comms == NONE)
             setDataForUSB()
@@ -1688,7 +1680,7 @@ namespace kitronik_smart_greenhouse {
 
     /**
      * Read data at selected position in the stored data.
-     * If entered position is greater than the total number of enteries, the max entry position is outputted.
+     * If entered position is greater than the total number of entries, the max entry position is output.
      * @param position is the row location of the required data
      * @param column is the column containing the specific piece of data
      */
@@ -1697,7 +1689,7 @@ namespace kitronik_smart_greenhouse {
     //% weight=60 blockGap=8
     //% blockId=kitronik_smart_greenhouse_read_selected
     //% block="read data at entry %position| column %column"
-    //% position.min=1 position.max=100 position.defl=1
+    //% position.min=1 position.max=60 position.defl=1
     export function readSelectedData(position: number, column: number): string {
         if (storedList.length < position){
             position = storedList.length
