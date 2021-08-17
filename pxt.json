@@ -4,7 +4,8 @@
     "dependencies": {
         "core": "*",
         "kitronik_RTC": "github:KitronikLtd/pxt-kitronik-rtc-base#v0.0.12",
-        "kitronik_BME280": "github:KitronikLtd/pxt-kitronik-bme280-base#v0.0.10"
+        "kitronik_BME280": "github:KitronikLtd/pxt-kitronik-bme280-base#v0.0.10",
+        "microphone": "*"
     },
     "files": [
         "README.md",
@@ -21,6 +22,10 @@
     "testFiles": [
         "test.ts"
     ],
+    "targetVersions": {
+        "target": "4.0.11",
+        "targetId": "microbit"
+    },
     "supportedTargets": [
         "microbit"
     ],
