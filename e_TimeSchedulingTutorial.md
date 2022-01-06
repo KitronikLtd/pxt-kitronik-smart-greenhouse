@@ -244,4 +244,5 @@ basic.forever(function () {
 
 ### Step 8
 CODING COMPLETE! Click ``|Download|`` and transfer the code to the Environmental Control Board.  
-Leave the program running and see the plants watered when they're too dry or when the alarm is triggered.
+Leave the program running and see the plants watered when they're too dry or when the alarm is triggered.  
+**Note:** Normally when the power supply is removed from a clock, the time information will be lost. However, the board has a small capacitor which provides backup power in order to provide time for changing batteries or switching to a mains power supply. The backup supply will last for a bit less than a minute, after which the clock will need to be reset to the correct time.  
